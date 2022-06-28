@@ -1,0 +1,21 @@
+<h1 mat-dialog-title>{{ 'PROJECTS.LAYOUT.SELECT_SD_TYPE.TITLE' | translate }}</h1>
+<div mat-dialog-content fxLayout="column">
+
+    <p *ngIf="storage.type==='S:S'">{{ 'PROJECTS.LAYOUT.SELECT_SD_TYPE.D1' | translate }}</p>
+    <p *ngIf="storage.type==='S:D'">{{ 'PROJECTS.LAYOUT.SELECT_SD_TYPE.D2' | translate }}</p>
+    <p *ngIf="storage.type==='S:SD'">{{ 'PROJECTS.LAYOUT.SELECT_SD_TYPE.D3' | translate }}</p>
+
+
+    <mat-form-field style="margin-top:35px; width:100%;">
+        <mat-label>{{ 'PROJECTS.LAYOUT.SELECT_SD_TYPE.D4' | translate }}</mat-label>
+        <mat-select [(ngModel)]="storage.selectedType">
+            <mat-option *ngFor="let obj of storage.allTypes | keyvalue" [value]="obj.key">
+                {{'PROJECTS.LAYOUT.' + obj.key | translate}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+</div>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+    <button mat-button [disabled]="storage.selectedType===null" (click)="save()" cdkFocusInitial>{{ 'GLOBAL.SAVE' | translate}}</button>
+</div>

@@ -1,0 +1,43 @@
+.shift-container {
+    background-color: #fafafa;
+    padding: 10px;
+    border-radius: var(--border-radius-primary);
+    border: 2px solid #ececec;
+    margin-bottom: 20px;
+    width: 595px;
+    height: 90px;
+}
+
+.mat-button.mat-button-disabled {
+    border: 0px!important;
+}
+
+.overlay-shifts-edit{
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    border-radius: 4px;
+    position: absolute;
+    background-color: rgba(125, 125, 125, 0.65);
+    z-index: 999;
+}
+
+.overlay-shifts-edit-container {
+    padding: 15px;
+    background-color: white;
+    border-radius: 25px;
+    box-shadow: 0 2px 4px -1px rgb(0 0 0 / 20%), 0 4px 5px 0 rgb(0 0 0 / 14%), 0 1px 10px 0 rgb(0 0 0 / 12%);
+}
+
+.margin-bottom-reduce-floating-label {
+    margin-bottom: -16px;
+}
+
+.margin-bottom-center-mat {
+    margin-top: 16px;
+}
+
+.mat-form-field-reduce-half {
+    width: 90px;
+}

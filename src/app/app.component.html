@@ -1,0 +1,116 @@
+<mat-sidenav-container (backdropClick)="this.sidenav.close()" fxFlex class="onExtranet">
+    <mat-sidenav #sidenav class="sideNav" (keydown.escape)="this.sidenav.close()" disableClose>
+        <div fxFlex="100" fxLayout="column">
+            <div fxLayout="row" class="MB8">
+                <mat-icon fxFlex="50" svgIcon="LMH_Logo" class="lmhIcon" routerLink="{{ links.HOME }}"></mat-icon>
+                <div fxFlex="50" fxLayout="column" fxLayoutAlign="center center">
+                    <div class="FS12 CHL TAC MT8">{{ 'APP.TITLE' | translate}} (v{{ version }})</div>
+                    <div class="FS9 CSL TAC MT8">{{ buildTimestamp | date:'dd.MM.yyyy HH:mm:ss' }} ({{ buildTimestamp | date:'HH:mm:ss':'UTC' }} UTC)</div>
+                </div>
+            </div>
+            <mat-action-list>
+                <div *ngFor="let menu of mainMenuModel.clusteredMenuItems" class="MB20">
+                    <div class="PDL16 MB10 FS14">{{ menu.translationKey | translate }}</div>
+                    <div *ngFor="let item of menu.sections;" [class.hidden]="!acs.isVisible(item.right)">
+                        <button *ngIf="item.icon !== 'support' && item.showMobile != false"
+                                (click)="sidenav.close()" mat-list-item class="textLimit"
+                                title="{{ item.name | translate }}" [routerLink]="item.link" routerLinkActive="activeMenu">
+                            <mat-icon *ngIf="item.maticon != null" class="homeMenuIcon">{{ item.maticon }}</mat-icon>
+                            <mat-icon *ngIf="item.icon != null" class="homeMenuIcon" fontSet="LMH"
+                                      fontIcon="LMH-{{ item.icon }}"></mat-icon>
+                            <span class="FS14">{{ item.name | translate }}</span>
+                        </button>
+                    </div>
+                </div>
+            </mat-action-list>
+            <div fxFlex></div>
+            <mat-action-list class="PDB8">
+                <button mat-list-item *ngIf="acs.isVisible('/settings')" aria-label="settings" (click)="sidenav.close()" routerLink="{{ [links.HOME, routeNamesHome.SETTINGS] }}" routerLinkActive="activeMenu">
+                    <mat-icon aria-label="info icon" class="FS22" fontSet="LMH" fontIcon="LMH-settings"></mat-icon>
+                    <span fxLayout="column" class="textLimit">
+                        <span title="{{ 'HOME.SETTINGS.TITLE' | translate }}" class="textLimit FS14">{{ 'HOME.SETTINGS.TITLE' | translate }}</span>
+                    </span>
+                </button>
+                <button mat-list-item aria-label="perform Logout" (click)="performLogout()">
+                    <mat-icon aria-label="info icon" class="FS22" fontSet="LMH" fontIcon="LMH-logout"></mat-icon>
+                    <span fxLayout="column" class="textLimit">
+                        <span title="{{ 'LOGOUT' | translate }}" class="textLimit FS14">{{ 'LOGOUT' | translate }}</span>
+                        <span title="{{ user.userName }}" class="textLimit FS12"> {{ user.userName }} </span>
+                    </span>
+                </button>
+            </mat-action-list>
+        </div>
+    </mat-sidenav>
+    <mat-sidenav-content fxLayout="column" fxFlex  [class.hiddenMainToolbar]="minimizeMainToolbar == true">
+        <mat-toolbar color="primary" class="mainToolbar desktop" *displayOnDesktop>
+            <mat-icon *ngIf="currentTemplate.name === 'Linde'" svgIcon="LMH_Logo" class="lmhIcon" routerLink="{{ links.HOME }}"></mat-icon>
+            <div *ngIf="currentTemplate.name === 'Still'" class="Still_Logo" routerLink="{{ links.HOME }}"></div>
+            <div class="desktopDiv" fxLayout="row" fxLayoutAlign="space-between center">
+                <div fxFlex fxLayout="row wrap" class="desktopNav">
+                    <div fxLayout="row" fxFlex="100">
+                        <button mat-button disableRipple class="mainMenu textLimit no-hover-effect" title="{{ 'HOME.TITLE' | translate }}" routerLink="{{ links.HOME }}" routerLinkActive="activeMenu">
+                            <span class="fp-menu-main">{{ 'HOME.TITLE' | translate }}</span>
+                        </button>
+                        <button mat-button disableRipple class="mainMenu textLimit no-hover-effect" title="{{ 'GLOBAL_ADMINISTRATION.TITLE' | translate }}" routerLink="{{ links.GLOBAL_ADMINISTRATION }}" routerLinkActive="activeMenu">
+                            <span class="fp-menu-main">{{ 'GLOBAL_ADMINISTRATION.TITLE' | translate }}</span>
+                        </button>
+                    </div>
+                    <div fxLayout="row" fxFlex="100">
+                        <ng-container *ngTemplateOutlet="mainSubmenuTemplate"></ng-container>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="center center" class="userNameAndSearchToggle">
+                    <div fxLayoutAlign="center center" class="FS12 LH18" *ngIf="acs.isVisible('App/UserMenu')">
+                        <img class="userImage" [src]="user.logo" *ngIf="user.logo != null" [class.offlineIndicator]="applicationIsOnline == false" routerLink="{{ links.HOME }}" routerLinkActive="activeMenu">
+                        <mat-icon aria-label="info icon" *ngIf="user.logo == null" [class.offlineIndicator]="applicationIsOnline == false" routerLink="{{ links.HOME }}" routerLinkActive="activeMenu" class="MR4">person_outline</mat-icon>
+                        <div class="userInfo textLimit mr-2 ml-2" fxLayout="column" fxLayoutAlign="start start">
+                            <span class="text-primary">{{ user.lastName }}, {{user.firstName}}</span>
+                            <span class="text-secondary">{{ user.userName }}</span>
+                        </div>
+                        <button mat-icon-button [matMenuTriggerFor]="rootMenu" *ngIf="acs.isVisible('App/UserMenu/options')">
+                            <div fxLayout="row" fxLayoutAlign="center center">
+                                <mat-icon>expand_more</mat-icon>
+                            </div>
+                        </button>
+                    </div>
+
+                    <mat-menu #rootMenu="matMenu" class="mainMenu" xPosition="before">
+                        <mat-divider *ngIf="acs.isVisible('App/LanguageSelection')"></mat-divider>
+                        <button [disabled]="!acs.isEnabled('App/LanguageSelection')" *ngIf="acs.isVisible('App/LanguageSelection')" mat-menu-item [matMenuTriggerFor]="languageSelection">
+                            <mat-icon svgIcon="FLAG_{{ translate.currentLang | uppercase }}"></mat-icon>
+                            <span>{{ translate.currentLang | languagename }}</span>
+                        </button>
+                        <mat-divider *ngIf="acs.isVisible('Settings')"></mat-divider>
+                        <button *ngIf="acs.isVisible('Settings')" mat-menu-item routerLink="{{ links.HOME+'/'+routeNamesHome.SETTINGS }}" routerLinkActive="activeMenu">
+                            <mat-icon fontSet="LMH" fontIcon="LMH-settings"></mat-icon>
+                            <span>{{ 'HOME.SETTINGS.TITLE' | translate }}</span>
+                        </button>
+                        <mat-divider></mat-divider>
+                        <button mat-menu-item (click)="performLogout()">
+                            <mat-icon fontSet="LMH" fontIcon="LMH-logout"></mat-icon>
+                            <span>{{ 'LOGOUT' | translate }}</span>
+                        </button>
+                    </mat-menu>
+                    <mat-menu #languageSelection="matMenu">
+                        <button mat-menu-item *ngFor="let lang of translate.getLangs()" (click)="translate.use(lang)">
+                            <mat-icon svgIcon="FLAG_{{ lang | uppercase }}"></mat-icon>
+                            <span>{{ lang | languagename }}</span>
+                        </button>
+                    </mat-menu>
+                </div>
+
+            </div>
+        </mat-toolbar>
+        <div fxLayout="column" *displayOnMobile class="shadowHolder">
+            <ng-container *ngTemplateOutlet="mainSubmenuTemplate"></ng-container>
+        </div>
+        <div fxLayout="row" fxFlex fxLayout="column" class="mainContent webViewScroll" [class.theme-LMH]="currentTemplate.name === 'Linde' || currentTemplate.name === 'Still' ">
+            <pull-to-reload></pull-to-reload>
+            <router-outlet></router-outlet>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>
+
+<ng-template #mainSubmenuTemplate>
+    <router-outlet name="mainSubmenu"></router-outlet>
+</ng-template>

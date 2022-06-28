@@ -1,0 +1,214 @@
+
+/*
+    Light
+*/
+
+@font-face {
+    font-family: "Triton_Icons";
+    src: url("./Triton_Icons_Light.woff2") format("woff2"), url("./Triton_Icons_Light.woff") format("woff");
+    font-weight: 300;
+}
+
+/*
+    Regular
+*/
+
+@font-face {
+    font-family: "Triton_Icons";
+    src: url("./Triton_Icons_Regular.woff2") format("woff2"), url("./Triton_Icons_Regular.woff") format("woff");
+    font-weight: normal;
+}
+
+/*
+    Medium
+*/
+
+@font-face {
+    font-family: "Triton_Icons";
+    src: url("./Triton_Icons_Medium.woff2") format("woff2"), url("./Triton_Icons_Medium.woff") format("woff");
+    font-weight: 500;
+}
+
+
+.light {
+    font-weight: 300;
+    font-size: 24px;
+}
+
+.normal {
+    font-weight: normal;
+    font-size: 24px;
+}
+
+.medium {
+    font-weight: 500;
+    font-size: 24px;
+}
+
+
+.Triton_Icons{
+    font-family: "Triton_Icons";
+}
+
+i[class^="triton-icon-"]:before,
+i[class*=" triton-icon-"]:before {
+    font-family: Triton_Icons !important;
+    font-style: normal;
+    /* font-weight: normal; */
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
+mat-icon[ng-reflect-font-icon^="triton-icon-"]:before,
+mat-icon[fontIcon^="triton-icon-"]:before,
+mat-icon[fontIcon*=" triton-icon-"]:before {
+    font-family: Triton_Icons !important;
+    font-style: normal;
+    /* font-weight: normal; */
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1.3;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    display: table;
+    margin-left: 0.5px;
+}
+
+
+
+.triton-icon-pin:before {
+    content: "\f121";
+}
+.triton-icon-add_file:before {
+    content: "\f101";
+}
+.triton-icon-add_photo:before {
+    content: "\f102";
+}
+.triton-icon-arrow-down:before {
+    content: "\f103";
+}
+.triton-icon-arrow-left:before {
+    content: "\f104";
+}
+.triton-icon-arrow-right:before {
+    content: "\f105";
+}
+.triton-icon-arrow-up:before {
+    content: "\f106";
+}
+.triton-icon-battery:before {
+    content: "\f107";
+}
+.triton-icon-calendar:before {
+    content: "\f108";
+}
+.triton-icon-cards:before {
+    content: "\f109";
+}
+.triton-icon-checkmark:before {
+    content: "\f10a";
+}
+.triton-icon-close-cancel:before {
+    content: "\f10b";
+}
+.triton-icon-dashboard:before {
+    content: "\f10c";
+}
+.triton-icon-deactivate:before {
+    content: "\f10d";
+}
+.triton-icon-delete:before {
+    content: "\f10e";
+}
+.triton-icon-down:before {
+    content: "\f10f";
+}
+.triton-icon-download:before {
+    content: "\f110";
+}
+.triton-icon-filter:before {
+    content: "\f111";
+}
+.triton-icon-forklift:before {
+    content: "\f112";
+}
+.triton-icon-grabber:before {
+    content: "\f113";
+}
+.triton-icon-help:before {
+    content: "\f114";
+}
+.triton-icon-hierarchy:before {
+    content: "\f115";
+}
+.triton-icon-home:before {
+    content: "\f116";
+}
+.triton-icon-info:before {
+    content: "\f117";
+}
+.triton-icon-left:before {
+    content: "\f118";
+}
+.triton-icon-mail:before {
+    content: "\f119";
+}
+.triton-icon-maximize:before {
+    content: "\f11a";
+}
+.triton-icon-minimize:before {
+    content: "\f11b";
+}
+.triton-icon-minus:before {
+    content: "\f11c";
+}
+.triton-icon-needle:before {
+    content: "\f11d";
+}
+.triton-icon-notification:before {
+    content: "\f11e";
+}
+.triton-icon-pencil:before {
+    content: "\f11f";
+}
+.triton-icon-person:before {
+    content: "\f120";
+}
+.triton-icon-plus:before {
+    content: "\f122";
+}
+.triton-icon-right:before {
+    content: "\f123";
+}
+.triton-icon-search:before {
+    content: "\f124";
+}
+.triton-icon-settings:before {
+    content: "\f125";
+}
+.triton-icon-sort-down:before {
+    content: "\f126";
+}
+.triton-icon-sort-up:before {
+    content: "\f127";
+}
+.triton-icon-star_spikes:before {
+    content: "\f128";
+}
+.triton-icon-table:before {
+    content: "\f129";
+}
+.triton-icon-tasks-list:before {
+    content: "\f12a";
+}
+.triton-icon-up:before {
+    content: "\f12b";
+}
+.triton-icon-upload:before {
+    content: "\f12c";
+}

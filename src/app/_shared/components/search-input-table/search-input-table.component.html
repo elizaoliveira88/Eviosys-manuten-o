@@ -1,0 +1,9 @@
+<div fxLayout="row" class="no-label-padding" fxLayoutAlign="start center">
+    <mat-form-field class="ML8" [class.search-mobile]="isMobile" [@expandFilter]="this.isInputVisible || this.isMobile ? 'open' : 'closed'">
+        <input matInput [(ngModel)]="filter" (ngModelChange)="onChangeFilter()" [class.no-border]="!this.isInputVisible" [element-focus]="this.isInputVisible" style="border-right:0;">
+    </mat-form-field>
+    <button mat-stroked-button class="btn-icon" aria-label="Clear" (click)="toggleFilter()">
+        <mat-icon>{{this.isInputVisible ||  isMobile ? 'close' : 'search'}}</mat-icon>
+    </button>
+
+</div>

@@ -1,0 +1,272 @@
+@media only screen and (max-width: 800px) {
+    .mainToolbar {
+        height: 60px !important;
+        background-color: #A00020;
+        color:white;
+        margin-bottom: 80px;
+        position: fixed;
+        top: 0;
+        z-index: 2;
+    }
+}
+
+.extranetToolbar {
+    display: none;
+    font-family: "DaxWebPro", Arial, sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+    color: #4a595c;
+    background-color: var(--lightBackgroundGrey);
+}
+
+.extranetToolbar .xtranetLinks {
+    margin-left: 169px;
+    margin-right: 4px;
+    padding-left: 16px;
+    padding-right: 16px;
+    height: 32px;
+    min-height: 32px;
+}
+
+.extranetToolbar .xtranetLinks button {
+    background-color: transparent;
+    border: 0px;
+    font-family: "DaxWebPro", Arial, sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+}
+
+.extranetToolbar .xtranetLinks mat-icon.XTR {
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    font-size: 16px;
+    margin-right: 4px;
+}
+
+
+.extranetToolbar .main-header__divider {
+    height: 1px;
+    background-color: #e6e7eb;
+}
+
+.onExtranet .extranetToolbar {
+    display: block;
+}
+
+.mainToolbar {
+    height: 84px;
+    margin-left: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    max-width: 100vw;
+}
+
+.mainToolbar .incFont .mat-button-wrapper {
+    font-size: 16px;
+}
+
+.shadowHolder {
+    box-shadow: 0px 1px 11px 0px rgba(0,0,0,0.4);
+    z-index: 100;
+}
+
+.lmhIcon {
+    min-height: 92px;
+    min-width: 153px;
+    padding: 8px 8px 8px 8px;
+}
+
+.lmhIcon.mobile {
+    height: 100%;
+    width: 100%;
+}
+
+.mat-action-list .mat-icon {
+    margin-right: 16px;
+}
+
+.forkliftIcon{
+    margin-right: 10px;
+}
+
+div.searchEquipmentBtn.mat-menu-item:hover:not([disabled]){
+    background: transparent !important;
+}
+
+div.searchEquipmentBtn.mat-menu-item.cdk-program-focused:not([disabled]){
+    background: transparent !important;
+}
+
+mat-form-field .noLine > .mat-form-field-underline{
+    display: none;
+}
+
+.searchEquipmentInput{
+   width: 85%;
+   caret-color: rgba(0, 0, 0, 0.87);
+}
+
+.searchEquipmentInput input{
+    caret-color: rgba(0, 0, 0, 0.87) !important;
+}
+
+.searchEquipmentDivider{
+    border: 0.5px solid lightgray;
+    height: 100%
+}
+
+.searchEquipmentIcon{
+    margin-right: -10px !important;
+    margin-top: 10px !important;
+    margin-left: 6px;
+    transform: scale(1.2) !important;
+    color: rgba(0, 0, 0, 0.87);
+}
+
+.userInfo{
+    display: inline;
+    max-width: 100px;
+}
+
+.userIcon{
+    float:left;
+    margin-top: 6px;
+    margin-right: 4px;
+}
+.mainToolbar .desktopDiv {
+    width: calc(100vw - 139.695652px);
+}
+.desktopNav{
+    width:auto;
+    overflow:hidden;
+}
+.userNameAndSearchToggle{
+    width: 380px;
+    float:right;
+    /*background-color: white;*/
+    /*border-radius: 200px;*/
+    /*padding-left: 16px;*/
+    /*padding-right: 16px;*/
+    flex: 0 1 250px;
+    height: 55px;
+    /*align-self: center;*/
+    /*border: 1px solid #4a4a4a;*/
+}
+
+.userNameAndSearchToggle img.userImage {
+    height: 33px;
+    border-radius: 33px;
+    margin-right: 4px;
+}
+
+mat-sidenav .svgIcon{
+    height: 24px !important;
+    width: 24px !important;
+    margin-top: -10px;
+}
+
+.syncMenu{
+    max-height: 336px;
+}
+
+.syncListTitle{
+    color: var(--medium-grey);
+    cursor: initial;
+    font-size: 20px !important;
+    margin-top: -8px;
+    padding: 0 45px;
+}
+
+.syncListContent{
+    border-top: 1px solid var(--light-grey-border);
+    background-color: var(--light-grey-background);
+    height: 60px;
+    cursor: initial;
+}
+
+div.syncListContent.mat-menu-item:hover:not([disabled]){
+    background: var(--light-grey-background) !important;
+}
+
+div.syncListContent.mat-menu-item.cdk-program-focused:not([disabled]){
+    background: var(--light-grey-background) !important;
+}
+
+.syncListContentNoData{
+    border-top: 1px solid var(--light-grey-border);
+    background-color: var(--light-grey-background);
+}
+
+.syncListContentTitle{
+    color: var(--dark-grey);
+    font-weight: bold;
+    font-size: 13px !important;
+    padding-top: 8px;
+}
+
+.syncListContentContent{
+    font-size: 10px !important;
+}
+
+.syncListDeleteIcon{
+    color: var(--light-grey-icon);
+    margin-right: 0px;
+}
+
+.seeAll{
+    color: var(--medium-grey);
+    padding: 0 45px;
+    border-top: 1px solid var(--light-grey-border);
+    margin-bottom: -8px;
+}
+
+.arrow-up {
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+
+    border-bottom: 5px solid black;
+}
+
+mat-sidenav mat-icon[fontSet^="LMH"] {
+    font-size: 22px;
+    margin-bottom: 2px;
+}
+
+.hiddenMainToolbar .mainToolbar {
+    display: none;
+}
+.hiddenMainToolbar .mainContent {
+    top: 34px;
+}
+
+.mat-list-base .mat-list-item, .mat-list-base .mat-list-option{
+    height: 38px;
+}
+
+.selected-project-container{
+    padding: 12px;
+    border-radius: var(--border-radius-primary);
+    cursor: pointer;
+
+    .select-project-sub{
+        color:var(--gray-400);
+        font-size:var(--body-font-size-xxs);
+        line-height: var(--body-font-size-xxs);
+    }
+
+    .select-project-name{
+        font-size:var(--body-font-size-s);
+        line-height: var(--body-font-size-l);
+    }
+}
+
+.selected-project-container:hover{
+    background-color: var(--background-tertiary);
+}
+
+

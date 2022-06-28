@@ -1,0 +1,48 @@
+.table1{
+    width: 300px;
+    min-width:300px;
+}
+
+.table2{
+    width: 400px;
+    min-width:400px;
+}
+
+.table3{
+    width: 300px;
+    min-width:300px;
+}
+
+
+.highlight-row{
+    background-color: var(--brand-500)!important;
+    color:white!important;
+
+    td{
+        color:white!important;
+    }
+}
+
+.card-type-image{
+    height:55px;
+    max-width:55px;
+    border-radius: 6px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.image-right-side{
+    width: calc(100% - 55px);
+}
+
+
+.collapse-icon{
+    transition: all 0.2s ease-in-out;
+}
+
+.calculate-btn{
+    position: fixed;
+    bottom:50px;
+    right:50px;
+    z-index:9999;
+}

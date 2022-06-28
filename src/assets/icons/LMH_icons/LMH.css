@@ -1,0 +1,421 @@
+@font-face {
+    font-family: "LMH";
+    src: url("./LMH.eot?3bd4bcf376736ec106b8c2a8ef2f11ea?#iefix") format("embedded-opentype"),
+url("./LMH.woff2?3bd4bcf376736ec106b8c2a8ef2f11ea") format("woff2"),
+url("./LMH.woff?3bd4bcf376736ec106b8c2a8ef2f11ea") format("woff"),
+url("./LMH.ttf?3bd4bcf376736ec106b8c2a8ef2f11ea") format("truetype"),
+url("./LMH.svg?3bd4bcf376736ec106b8c2a8ef2f11ea#LMH") format("svg");
+}
+
+.LMHIcon {
+    font-family: "LMH";
+}
+.LMH{
+    font-family: "LMH";
+    line-height: 24px;
+    font-size: 24px;
+    text-align: center;
+}
+
+.LMH_exemple:before{
+    content: "<mat-icon fontSet="LMH" fontIcon="LMH-logout"></mat-icon>";
+}
+
+mat-icon[fontIcon^="LMH-"]:before,
+mat-icon[fontIcon*=" LMH-"]:before {
+    font-family: LMH;
+}
+/*
+i[class^="LMH-"]:before, i[class*=" LMH-"]:before {
+    font-family: LMH !important;
+    font-style: normal;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+mat-icon[fontIcon^="LMH-"]:before,
+mat-icon[fontIcon*=" LMH-"]:before {
+    font-family: LMH !important;
+    font-style: normal;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    display: table;
+    margin-left: 0.5px;
+}
+*/
+.LMH-academy:before {
+    content: "\f101";
+}
+.LMH-add_pin:before {
+    content: "\f102";
+}
+.LMH-AGV:before {
+    content: "\f103";
+}
+.LMH-aisle_width:before {
+    content: "\f104";
+}
+.LMH-application:before {
+    content: "\f105";
+}
+.LMH-arrow-down:before {
+    content: "\f106";
+}
+.LMH-arrow-left:before {
+    content: "\f107";
+}
+.LMH-arrow-right:before {
+    content: "\f108";
+}
+.LMH-arrow-up:before {
+    content: "\f109";
+}
+.LMH-automation:before {
+    content: "\f10a";
+}
+.LMH-axis:before {
+    content: "\f10b";
+}
+.LMH-bluetooth:before {
+    content: "\f10c";
+}
+.LMH-calendar:before {
+    content: "\f10d";
+}
+.LMH-camera:before {
+    content: "\f10e";
+}
+.LMH-cart:before {
+    content: "\f10f";
+}
+.LMH-cash_dollar:before {
+    content: "\f110";
+}
+.LMH-cash_euro:before {
+    content: "\f111";
+}
+.LMH-cash_pound:before {
+    content: "\f112";
+}
+.LMH-cash_ruble:before {
+    content: "\f113";
+}
+.LMH-cash_yuan:before {
+    content: "\f114";
+}
+.LMH-cellular:before {
+    content: "\f115";
+}
+.LMH-chat:before {
+    content: "\f116";
+}
+.LMH-checkmark:before {
+    content: "\f117";
+}
+.LMH-close-cancel:before {
+    content: "\f118";
+}
+.LMH-comfort:before {
+    content: "\f119";
+}
+.LMH-computer:before {
+    content: "\f11a";
+}
+.LMH-control_type:before {
+    content: "\f11b";
+}
+.LMH-dealer:before {
+    content: "\f11c";
+}
+.LMH-delete:before {
+    content: "\f11d";
+}
+.LMH-digitization:before {
+    content: "\f11e";
+}
+.LMH-dollar:before {
+    content: "\f11f";
+}
+.LMH-down:before {
+    content: "\f120";
+}
+.LMH-download:before {
+    content: "\f121";
+}
+.LMH-drive_type:before {
+    content: "\f122";
+}
+.LMH-electricity:before {
+    content: "\f123";
+}
+.LMH-endpoint:before {
+    content: "\f124";
+}
+.LMH-energy_systems:before {
+    content: "\f125";
+}
+.LMH-environment:before {
+    content: "\f126";
+}
+.LMH-euro:before {
+    content: "\f127";
+}
+.LMH-extranet_login:before {
+    content: "\f128";
+}
+.LMH-fax:before {
+    content: "\f129";
+}
+.LMH-file:before {
+    content: "\f12a";
+}
+.LMH-files:before {
+    content: "\f12b";
+}
+.LMH-filter:before {
+    content: "\f12c";
+}
+.LMH-fleet:before {
+    content: "\f12d";
+}
+.LMH-forklift:before {
+    content: "\f12e";
+}
+.LMH-growth:before {
+    content: "\f12f";
+}
+.LMH-height:before {
+    content: "\f130";
+}
+.LMH-help:before {
+    content: "\f131";
+}
+.LMH-home:before {
+    content: "\f132";
+}
+.LMH-image:before {
+    content: "\f133";
+}
+.LMH-individualization:before {
+    content: "\f134";
+}
+.LMH-info:before {
+    content: "\f135";
+}
+.LMH-inquiry:before {
+    content: "\f136";
+}
+.LMH-intralogistics:before {
+    content: "\f137";
+}
+.LMH-left:before {
+    content: "\f138";
+}
+.LMH-lift_capacity:before {
+    content: "\f139";
+}
+.LMH-load_capacity:before {
+    content: "\f13a";
+}
+.LMH-load_center:before {
+    content: "\f13b";
+}
+.LMH-logout:before {
+    content: "\f13c";
+}
+.LMH-mail:before {
+    content: "\f13d";
+}
+.LMH-maintenance:before {
+    content: "\f13e";
+}
+.LMH-manual:before {
+    content: "\f13f";
+}
+.LMH-measurement:before {
+    content: "\f140";
+}
+.LMH-menu:before {
+    content: "\f141";
+}
+.LMH-message:before {
+    content: "\f142";
+}
+.LMH-minus:before {
+    content: "\f143";
+}
+.LMH-needle:before {
+    content: "\f144";
+}
+.LMH-notification:before {
+    content: "\f145";
+}
+.LMH-order_picker:before {
+    content: "\f146";
+}
+.LMH-pallet_stacker:before {
+    content: "\f147";
+}
+.LMH-pallet_truck:before {
+    content: "\f148";
+}
+.LMH-pause:before {
+    content: "\f149";
+}
+.LMH-pdf-file:before {
+    content: "\f14a";
+}
+.LMH-performance:before {
+    content: "\f14b";
+}
+.LMH-person:before {
+    content: "\f14c";
+}
+.LMH-phone:before {
+    content: "\f14d";
+}
+.LMH-pin:before {
+    content: "\f14e";
+}
+.LMH-play:before {
+    content: "\f14f";
+}
+.LMH-plus:before {
+    content: "\f150";
+}
+.LMH-pound:before {
+    content: "\f151";
+}
+.LMH-price:before {
+    content: "\f152";
+}
+.LMH-print:before {
+    content: "\f153";
+}
+.LMH-product_type:before {
+    content: "\f154";
+}
+.LMH-rating_1_point:before {
+    content: "\f155";
+}
+.LMH-rating_2_points:before {
+    content: "\f156";
+}
+.LMH-rating_3_points:before {
+    content: "\f157";
+}
+.LMH-rating:before {
+    content: "\f158";
+}
+.LMH-reach_truck:before {
+    content: "\f159";
+}
+.LMH-reload:before {
+    content: "\f15a";
+}
+.LMH-remote_control:before {
+    content: "\f15b";
+}
+.LMH-rental:before {
+    content: "\f15c";
+}
+.LMH-right:before {
+    content: "\f15d";
+}
+.LMH-safety:before {
+    content: "\f15e";
+}
+.LMH-save:before {
+    content: "\f15f";
+}
+.LMH-search:before {
+    content: "\f160";
+}
+.LMH-service:before {
+    content: "\f161";
+}
+.LMH-settings:before {
+    content: "\f162";
+}
+.LMH-share:before {
+    content: "\f163";
+}
+.LMH-smartphone:before {
+    content: "\f164";
+}
+.LMH-star:before {
+    content: "\f165";
+}
+.LMH-star_filled:before {
+    content: "\f166";
+}
+.LMH-star_spikes:before {
+    content: "\f167";
+}
+.LMH-stop:before {
+    content: "\f168";
+}
+.LMH-support:before {
+    content: "\f169";
+}
+.LMH-tablet:before {
+    content: "\f16a";
+}
+.LMH-tasks-list:before {
+    content: "\f16b";
+}
+.LMH-tow_capacity:before {
+    content: "\f16c";
+}
+.LMH-unevenness_compensation:before {
+    content: "\f16d";
+}
+.LMH-up:before {
+    content: "\f16e";
+}
+.LMH-upload:before {
+    content: "\f16f";
+}
+.LMH-users:before {
+    content: "\f170";
+}
+.LMH-version:before {
+    content: "\f171";
+}
+.LMH-video:before {
+    content: "\f172";
+}
+.LMH-view:before {
+    content: "\f173";
+}
+.LMH-vna_k:before {
+    content: "\f174";
+}
+.LMH-ware:before {
+    content: "\f175";
+}
+.LMH-wifi:before {
+    content: "\f176";
+}
+.LMH-world:before {
+    content: "\f177";
+}
+.LMH-year_of_manufacturing:before {
+    content: "\f178";
+}
+.LMH-zip-file:before {
+    content: "\f179";
+}
+.LMH-zoom-in:before {
+    content: "\f17a";
+}
+.LMH-zoom-out:before {
+    content: "\f17b";
+}

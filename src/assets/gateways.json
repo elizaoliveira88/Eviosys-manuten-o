@@ -1,0 +1,29 @@
+[
+    {
+        "name": "Gateway 1",
+        "type": "gateway",
+        "mac": "0011001100110021",
+        "uid": "1234567890123456",
+        "secureCode": "1234",
+        "secureSerial": "1234",
+        "clientId": "testclient1"
+    },
+    {
+        "name": "Gateway 2",
+        "type": "gateway",
+        "mac": "5311001100113444",
+        "uid": "9734567890523245",
+        "secureCode": "5678",
+        "secureSerial": "1111",
+        "clientId": "testclient1"
+    },
+    {
+        "name": "Gateway 3",
+        "type": "gateway",
+        "mac": "9857610010011523",
+        "uid": "4252167890525343",
+        "secureCode": "9887",
+        "secureSerial": "2424",
+        "clientId": "testclient1"
+    }
+]

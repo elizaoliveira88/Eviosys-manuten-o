@@ -1,0 +1,10 @@
+<div class="TAC BGDTBO FW300 Title" *ngIf="data.title !== null">{{ data.title | translate }}</div>
+<mat-nav-list>
+    <a *ngFor="let row of data.options" mat-list-item (click)="close(row)" [class.BGLHL]="data.highlightKey !== null && data.highlightValue === row[data.highlightKey]">
+        <mat-icon mat-list-icon *ngIf="data.keyIcon !== null">{{ row[data.keyIcon] }}</mat-icon>
+        <span mat-line *ngIf="data.translate === false">{{ row[data.keyTitle] }}</span>
+        <span mat-line *ngIf="data.translate === true">{{ row[data.keyTitle] | translate }}</span>
+        <span mat-line *ngIf="data.keySubTitle !== null && data.translate === false" >{{ row[data.keySubTitle] }}</span>
+        <span mat-line *ngIf="data.keySubTitle !== null && data.translate === true" >{{ row[data.keySubTitle] | translate }}</span>
+    </a>
+</mat-nav-list>

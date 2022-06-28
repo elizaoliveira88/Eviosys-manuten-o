@@ -1,0 +1,11 @@
+<div fxFlex="100" fxLayout="row wrap" class="PDR30"
+     [class.hidden]="barChartLabels.length === 0">
+    <h2 fxFlex="100" class="TAC">{{'PROJECTS.APPLICATION_DETAILS.CHARTS.BAR_SUBTITLE' | translate}}</h2>
+    <canvas baseChart
+            [datasets]="barChartData"
+            [labels]="barChartLabels"
+            [options]="barChartOptions"
+            [legend]="barChartLegend"
+            [type]="barChartType">
+    </canvas>
+</div>

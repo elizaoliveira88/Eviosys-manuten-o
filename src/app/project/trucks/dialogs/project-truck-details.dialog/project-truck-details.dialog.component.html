@@ -1,0 +1,121 @@
+<h1 mat-dialog-title>{{ storage.selectedTruck.identification }}</h1>
+<h2 mat-dialog-title>{{ storage.selectedTruck.truckId ? 'PROJECTS.TRUCKS.PROJECT_TRUCK_DETAILS.SUB' : 'PROJECTS.TRUCKS.PROJECT_TRUCK_DETAILS.SUB2' | translate }}</h2>
+<div mat-dialog-content fxLayout="row" fxLayoutAlign="start stretch" class="mt-2 p-4">
+
+    <div fxLayout="column" fxLayoutAlign="start start">
+        <mat-selection-list [multiple]="false" role="list" style="padding:0;">
+            <mat-list-option [ngStyle]="storage.selectedMenu === 'financeInfo' && {'background-color':'var(--background-secondary'}" role="listitem" (click)="select('financeInfo')">{{ 'PROJECTS.TRUCKS.PROJECT_TRUCK_DETAILS.FINANCE' | translate }}</mat-list-option>
+            <mat-list-option *ngIf="storage.selectedTruck.truckId" role="listitem" (click)="select('expertCriteria')">{{ 'PROJECTS.TRUCKS.PROJECT_TRUCK_DETAILS.EXPERT' | translate }}</mat-list-option>
+            <mat-list-option role="listitem" (click)="select('energyConcept')">{{ 'PROJECTS.TRUCKS.PROJECT_TRUCK_DETAILS.ENERGY' | translate }}</mat-list-option>
+        </mat-selection-list>
+    </div>
+
+    <mat-divider [vertical]="true"></mat-divider>
+
+    <ng-container [ngSwitch]="storage.selectedMenu">
+        <div [formGroup]="financeDataGroup" *ngSwitchCase="'financeInfo'" class="pl-10 pr-10 min-w-[680px] min-h-[220px]" fxFlex fxLayout="row" fxLayoutAlign="start stretch">
+            <div fxLayout="column" fxLayoutAlign="start start">
+                <mat-form-field class="m-1">
+                    <mat-label>{{ 'GLOBAL.TRUCK.FINANCEINFO.SALESPRICE' | translate }}</mat-label>
+                    <input matInput type="number" [formControlName]="'salesPrice'">
+                </mat-form-field>
+                <mat-form-field class="m-1">
+                    <mat-label>{{ 'GLOBAL.TRUCK.FINANCEINFO.FINANCING' | translate }}</mat-label>
+                    <input matInput type="number" [formControlName]="'financingMonth'">
+                </mat-form-field>
+                <mat-form-field class="m-1">
+                    <mat-label>{{ 'GLOBAL.TRUCK.FINANCEINFO.RATE' | translate }}</mat-label>
+                    <input matInput type="number" [formControlName]="'rate'">
+                </mat-form-field>
+            </div>
+            <div class="ml-4" fxLayout="column" fxLayoutAlign="start start">
+                <mat-form-field class="m-1">
+                    <mat-label>{{ 'GLOBAL.TRUCK.FINANCEINFO.RENT' | translate }}</mat-label>
+                    <input matInput type="number" [formControlName]="'rent'">
+                </mat-form-field>
+                <mat-form-field class="m-1">
+                    <mat-label>{{ 'GLOBAL.TRUCK.FINANCEINFO.MAINTENANCECOSTS' | translate }}</mat-label>
+                    <input matInput type="number" [formControlName]="'maintenanceCosts'">
+                </mat-form-field>
+            </div>
+            <div class="ml-4" fxLayout="column" fxLayoutAlign="start start">
+                <mat-form-field class="m-1">
+                    <mat-label>{{ 'GLOBAL.TRUCK.FINANCEINFO.RESIDUALVALUE' | translate }}</mat-label>
+                    <input matInput type="number" [formControlName]="'residualValue'">
+                </mat-form-field>
+                <mat-form-field class="m-1">
+                    <mat-label>{{ 'GLOBAL.TRUCK.FINANCEINFO.GROSSPAY' | translate }}</mat-label>
+                    <input matInput type="number" [formControlName]="'grossPay'">
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div [formGroup]="expertCriteriaGroup" *ngSwitchCase="'expertCriteria'" class="pl-10 pr-10 min-w-[680px] min-h-[220px]" fxFlex fxLayout="row" fxLayoutAlign="start stretch">
+            <div fxLayout="column" fxLayoutAlign="start start">
+                <mat-form-field class="m-1">
+                    <mat-label>{{ 'GLOBAL.TRUCK.EXPERTCRITERIA.RECORDINGTIMESEC' | translate }}</mat-label>
+                    <input matInput type="number" [formControlName]="'recordingTimeSec'">
+                </mat-form-field>
+                <mat-form-field class="m-1">
+                    <mat-label>{{ 'GLOBAL.TRUCK.EXPERTCRITERIA.PALLETSPERDRIVE' | translate }}</mat-label>
+                    <input matInput type="number" [formControlName]="'palletsPerDrive'">
+                </mat-form-field>
+            </div>
+            <div class="ml-4" fxLayout="column" fxLayoutAlign="start start">
+                <mat-form-field class="m-1">
+                    <mat-label>{{ 'GLOBAL.TRUCK.EXPERTCRITERIA.DEPOSITTIMESEC' | translate }}</mat-label>
+                    <input matInput type="number" [formControlName]="'depositTimeSec'">
+                </mat-form-field>
+            </div>
+            <div class="ml-4" fxLayout="column" fxLayoutAlign="start start">
+                <mat-form-field class="m-1">
+                    <mat-label>{{ 'GLOBAL.TRUCK.EXPERTCRITERIA.EFFICIENCYFACTOR' | translate }}</mat-label>
+                    <input matInput type="number" [formControlName]="'efficiencyFactor'">
+                </mat-form-field>
+
+            </div>
+        </div>
+
+        <div [formGroup]="energyConceptGroup" *ngSwitchCase="'energyConcept'" class="pl-10 pr-10 min-w-[680px] min-h-[220px]" fxFlex fxLayout="row" fxLayoutAlign="start stretch">
+            <div fxLayout="column" fxLayoutAlign="start start">
+                <mat-form-field floatLabel="always" class="m-1" style="margin-top:4px;">
+                    <mat-label>{{ 'GLOBAL.TRUCK.ENERGYCONCEPT.BATTERYTYPE' | translate }}</mat-label>
+                    <mat-select [formControlName]="'batteryType'">
+                        <mat-option *ngFor="let opt of storage.batteryTypeOptions" [value]="opt">
+                            {{ 'GLOBAL.TRUCK.ENERGYCONCEPT.BATTERYTYPEOPTIONS.' + opt | translate}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field floatLabel="always" class="m-1">
+                    <mat-label>{{ 'GLOBAL.TRUCK.ENERGYCONCEPT.BATTERYCHARGETYPE' | translate }}</mat-label>
+                    <mat-select [formControlName]="'batteryChargeType'">
+                        <mat-option *ngFor="let opt of storage.batteryChargeTypes" [value]="opt">
+                            {{ 'GLOBAL.TRUCK.ENERGYCONCEPT.BATTERYCHARGETYPES.' + opt | translate}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+            </div>
+            <div class="ml-4" fxLayout="column" fxLayoutAlign="start start">
+                <mat-form-field floatLabel="always" class="m-1">
+                    <mat-label>{{ 'GLOBAL.TRUCK.ENERGYCONCEPT.BATTERYCAPACITY' | translate }}</mat-label>
+                    <input matInput type="number" [formControlName]="'batteryCapacity'">
+                </mat-form-field>
+            </div>
+            <div class="ml-4" fxLayout="column" fxLayoutAlign="start start">
+                <mat-form-field floatLabel="always" class="m-1">
+                    <mat-label>{{ 'GLOBAL.TRUCK.ENERGYCONCEPT.BATTERYVOLTAGE' | translate }}</mat-label>
+                    <input matInput type="number" [formControlName]="'batteryVoltage'">
+                </mat-form-field>
+
+            </div>
+        </div>
+    </ng-container>
+
+
+</div>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between center">
+    <button mat-button (click)="cancel()">{{ "GLOBAL.CANCEL" | translate}}</button>
+    <button mat-button (click)="save()" [disabled]="energyConceptGroup.invalid || financeDataGroup.invalid || energyConceptGroup.invalid" cdkFocusInitial>{{ "GLOBAL.SAVE" | translate}}</button>
+</div>

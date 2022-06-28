@@ -1,0 +1,134 @@
+<h1 mat-dialog-title>{{ 'HOME.PROJECTS.ADD_PROJECT.TITLE' | translate }}</h1>
+<div mat-dialog-content fxLayout="column" style="height:522px; overflow:hidden;">
+    <mat-horizontal-stepper [linear]="true" #stepper fxFlex="100" fxLayout="column" fxLayoutAlign=" stretch">
+        <mat-step [stepControl]="firstFormGroup" label="{{ 'HOME.PROJECTS.ADD_PROJECT.STEP1' | translate }}" fxLayout="column">
+            <div class="w-full mt-4" style="height:426px;" fxLayout="column" fxLayoutAlign="start center">
+                <div class="w-full" fxLayout="row" fxLayoutAlign="start center">
+                    <mat-icon style="color:var(--gray-400);">info_outline</mat-icon>
+                    <div class="ml-4" fxLayout="column" fxLayoutAlign="start start">
+                        <span class="text-sub"> 1. {{ 'HOME.PROJECTS.ADD_PROJECT.INFO1' | translate }}</span>
+                        <span class="text-sub"> 2. {{ 'HOME.PROJECTS.ADD_PROJECT.INFO2' | translate }}</span>
+                        <span class="text-sub"> 3. {{ 'HOME.PROJECTS.ADD_PROJECT.INFO3' | translate }}</span>
+                    </div>
+
+                </div>
+                <form class="w-full mt-16" fxFlex fxLayout="column" fxLayoutAlign="start center" [formGroup]="firstFormGroup">
+                    <mat-form-field floatLabel="always">
+                        <mat-label>Name</mat-label>
+                        <input matInput placeholder="Last name, First name" formControlName="name" required>
+                    </mat-form-field>
+                    <mat-form-field class="mt-4" floatLabel="always">
+                        <mat-label>Project ID (Sharepoint)</mat-label>
+                        <input matInput placeholder="Last name, First name" formControlName="externalId">
+                    </mat-form-field>
+                    <mat-form-field class="mt-4">
+                        <mat-label>Folder</mat-label>
+                        <mat-select formControlName="folder">
+                            <mat-option *ngFor="let folder of storage.allFolders" [value]="folder.id">
+                                {{folder.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </form>
+            </div>
+
+        </mat-step>
+        <mat-step [stepControl]="secondFormGroup" label="{{ 'HOME.PROJECTS.ADD_PROJECT.STEP2' | translate }}" fxLayout="column">
+            <div class="w-full mt-4" style="height:426px;" fxLayout="row" fxLayoutAlign="start stretch">
+                <div fxFlex fxLayout="column" [formGroup]="secondFormGroup">
+                    <span style="color:var(--brand-500)">{{ 'HOME.PROJECTS.ADD_PROJECT.INFO4' | translate }}</span>
+                    <div class="w-full h-full" fxLayout="column">
+                        <div fxLayout="row" class="w-full mt-4" fxLayoutAlign="space-between center">
+                            <mat-form-field floatLabel="always">
+                                <mat-label>Customer name</mat-label>
+                                <input matInput placeholder="Last name, First name" formControlName="customerName" required>
+                            </mat-form-field>
+                            <mat-form-field class="ml-12" floatLabel="always">
+                                <mat-label>Distance to customer</mat-label>
+                                <input matInput type="number" placeholder="Last name, First name" formControlName="distanceToCustomer">
+                            </mat-form-field>
+                        </div>
+                        <div fxLayout="row" class="w-full mt-4" fxLayoutAlign="space-between center">
+                            <mat-form-field floatLabel="always">
+                                <mat-label>Address</mat-label>
+                                <input matInput placeholder="Last name, First name" formControlName="address" required>
+                            </mat-form-field>
+                            <mat-form-field class="ml-12" floatLabel="always">
+                                <mat-label>Site</mat-label>
+                                <input matInput placeholder="Last name, First name" formControlName="site">
+                            </mat-form-field>
+                        </div>
+                        <div fxLayout="row" class="w-full mt-4" fxLayoutAlign="space-between center">
+                            <mat-form-field floatLabel="always">
+                                <mat-label>Phone</mat-label>
+                                <input matInput placeholder="Last name, First name" formControlName="tel" required>
+                            </mat-form-field>
+                            <mat-form-field class="ml-12" floatLabel="always">
+                                <mat-label>Miscellaneous</mat-label>
+                                <input matInput placeholder="Last name, First name" formControlName="fax">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="img-upload-area" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-icon>image</mat-icon>
+                        <span>{{ 'HOME.PROJECTS.ADD_PROJECT.IMG_UPLOAD' | translate }}</span>
+                    </div>
+                </div>
+                <div class="customers-list-container" fxLayout="column">
+                    <div fxLayout="row" fxLayoutAlign="center center" class="w-full">
+                        <span style="color:var(--brand-500)">{{ 'HOME.PROJECTS.ADD_PROJECT.INFO5' | translate }}</span>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="start center" class="w-full">
+                        <mat-form-field floatLabel="never" class="w-full">
+                            <input matInput placeholder="Last name, First name" (ngModelChange)="search($event)" [(ngModel)]="storage.customerSearchTerm">
+                        </mat-form-field>
+                    </div>
+
+                    <mat-selection-list *ngIf="storage.customersList && storage.customersList.length>0" [multiple]="false" fxFlex fxLayout="column" class="overflow-auto w-full">
+                        <mat-list-option *ngFor="let customer of storage.customersList; let index = index" (click)="selectCustomer(customer)" [ngStyle]="index%2===0 && {'background-color':'var(--background-secondary)'}">
+                            <mat-icon mat-list-icon>person</mat-icon>
+                            <div mat-line>{{customer.customerData.customerName}}</div>
+                            <div mat-line *ngIf="customer.customerData && customer.customerData.address && customer.customerData.address!=''">{{customer.customerData.address}}<ng-container *ngIf="customer.customerData && customer.customerData.site && customer.customerData.site!=''">, {{customer.customerData.site}}</ng-container></div>
+                            <div mat-line *ngIf="!customer.customerData || !customer.customerData.site || customer.customerData.site==''">-</div>
+                        </mat-list-option>
+                    </mat-selection-list>
+                    <div *ngIf="!storage.customersList || storage.customersList.length===0" class="w-full mt-4" fxLayout="row" fxLayoutAlign="center center">
+                        <mat-icon>info_outline</mat-icon>
+                        <span class="ml-2">{{ 'HOME.PROJECTS.ADD_PROJECT.NO_CUSTOMERS' | translate }}</span>
+                    </div>
+
+                </div>
+            </div>
+
+        </mat-step>
+        <mat-step [stepControl]="thirdFormGroup" label="{{ 'HOME.PROJECTS.ADD_PROJECT.STEP3' | translate }}" fxLayout="column">
+            <div class="w-full mt-4" style="height:426px;" fxLayout="column" fxLayoutAlign="start stretch">
+                <mat-slide-toggle [(ngModel)]="storage.useShifts" (ngModelChange)="changeThirdFormGroup()"><span>{{ 'HOME.PROJECTS.ADD_PROJECT.USE_SHIFTS' | translate }}</span></mat-slide-toggle>
+                <div fxFlex class="w-full mt-16" fxLayout="column" fxLayoutAlign="start center" [formGroup]="thirdFormGroup">
+                    <div *ngIf="!storage.useShifts" fxLayout="row" fxLayoutAlign="center center">
+                        <mat-form-field floatLabel="always">
+                            <mat-label>Observation Time</mat-label>
+                            <input matInput type="time" placeholder="hh:mm" formControlName="observationTime" required>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </mat-step>
+    </mat-horizontal-stepper>
+</div>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between center">
+    <div>
+        <button mat-button (click)="enableEdit()" *ngIf="stepper.selectedIndex===1 && storage.customerSelected && secondFormGroup.disabled">
+            <mat-icon>edit</mat-icon>
+            Edit selected customer
+        </button>
+        <mat-checkbox [disabled]="!storage.customerChanged || secondFormGroup.invalid" *ngIf="stepper.selectedIndex===1 && storage.customerSelected && secondFormGroup.enabled" [(ngModel)]="storage.saveAsNewCustomer" (change)="checkCheckboxes('saveAsNewCustomer')">{{ 'HOME.PROJECTS.ADD_PROJECT.SAVE_AS_NEW_CUSTOMER' | translate }}</mat-checkbox>
+        <mat-checkbox [disabled]="!storage.customerChanged || secondFormGroup.invalid" *ngIf="stepper.selectedIndex===1 && storage.customerSelected && secondFormGroup.enabled" class="ml-4" [(ngModel)]="storage.changeCustomer" (change)="checkCheckboxes('changeCustomer')">{{ 'HOME.PROJECTS.ADD_PROJECT.CHANGE_CUSTOMER' | translate }}</mat-checkbox>
+    </div>
+    <div>
+        <button mat-button (click)="cancel()">{{ 'GLOBAL.CANCEL' | translate}}</button>
+        <button mat-button *ngIf="stepper.selectedIndex<2" (click)="next()" [disabled]="!validateCurrentStep()" >{{ 'GLOBAL.NEXT' | translate}}</button>
+        <button mat-button *ngIf="stepper.selectedIndex===2" (click)="save()" [disabled]="!validateAllStep()" >{{ 'GLOBAL.CREATE' | translate}}</button>
+    </div>
+
+</div>

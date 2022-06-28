@@ -1,0 +1,24 @@
+<div fxFlex="100" fxLayout="row wrap" class="PDR30"
+     [class.hidden]="lineChartData.length === 0">
+    <h2 fxFlex="100" class="TAC">{{'PROJECTS.APPLICATION_DETAILS.CHARTS.LINE_SUBTITLE' | translate}}</h2>
+    <canvas baseChart
+            [datasets]="lineChartData"
+            [labels]="lineChartLabels"
+            [options]="lineChartOptions"
+            [legend]="lineChartLegend"
+            [type]="lineChartType">
+    </canvas>
+    <div fxFlex="100" fxLayoutAlign="start center" class="MB10">
+        <span class="MR8"> {{'PROJECTS.APPLICATION_DETAILS.SLIDER.LABEL' | translate}}</span>
+        <mat-slider min="1" max="10" step="1"class="MR8"
+                    (valueChange)="updateChartYears($event)" [value]="chartYears"></mat-slider>
+        <mat-form-field style="width:70px">
+            <input matInput type="number" min="1" max="10"
+                   [ngModel]="chartYears" (ngModelChange)="updateChartYears($event)">
+        </mat-form-field>
+    </div>
+    <div fxFlex="100" fxLayoutAlign="start center">
+        <mat-icon class="MR8 ML0">info_outline</mat-icon>
+        <span> {{'PROJECTS.APPLICATION_DETAILS.SLIDER.INFO' | translate}}</span>
+    </div>
+</div>

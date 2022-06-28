@@ -1,0 +1,78 @@
+.project-trucks-table-column-identification{
+    min-width: 30%;
+    max-width: 30%;
+}
+
+.project-trucks-table-column-model{
+    min-width: 20%;
+    max-width: 20%;
+}
+
+.project-trucks-table-column-classification{
+    min-width: 20%;
+    max-width: 20%;
+}
+
+.project-trucks-table-column-truckClass{
+    min-width: 10%;
+    max-width: 10%;
+}
+
+.project-trucks-table-column-BTN_REMOVE{
+    text-align: end;
+    justify-content: flex-end;
+}
+
+.project-trucks-table-column-BTN_ADD{
+    text-align: end;
+    justify-content: flex-end;
+}
+
+.project-trucks-table-column-IMG{
+    min-width: 80px;
+    max-width: 80px;
+}
+
+
+
+.truck-type-selection{
+    width:100%;
+}
+
+.truck-type-input{
+    max-width:200px;
+}
+
+.truck-class-container{
+    min-height:80px;
+    max-height:80px;
+    min-width:80px;
+    max-width:80px;
+    margin-right:14px;
+    background-color: var(--background-secondary);
+    border-radius: 4px;
+    box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.35);
+    cursor:pointer;
+    position: relative;
+    float:left;
+}
+
+.selected-class{
+    background-color: #e1f6ea;
+}
+
+.selected-indicator{
+    position: absolute;
+    bottom: -10px;
+    right:-10px;
+    color: #A8DEBF;
+}
+
+.table-type-image{
+    height:44px;
+    max-height:44px;
+    max-width:44px;
+    border-radius: 6px;
+    object-fit: cover;
+    object-position: center;
+}

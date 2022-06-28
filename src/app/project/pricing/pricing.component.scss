@@ -1,0 +1,223 @@
+.mat-table{
+    min-width:1200px;
+}
+
+.totals-price{
+    background-color: var(--brand-500);
+    color:white!important;
+}
+
+.totals-priceTotal{
+    background-color: var(--background-tertiary);
+}
+.totals-purchasePriceTotal{
+    background-color: var(--background-tertiary);
+}
+.totals-span-endCustomerPrice{
+    font-size: 12px!important;
+}
+
+.totals-span-price{
+    color:white!important;
+}
+
+.totals-marginRisk-endCustomerPrice{
+
+}
+.totals-marginRisk-endCustomerPriceTotal{
+    background-color: var(--background-tertiary);
+}
+
+.pricing-table-column-collected{
+    min-width:40px;
+    max-width:40px;
+}
+
+.pricing-table-column-category{
+    min-width:210px;
+    max-width:210px;
+}
+.pricing-table-column-truck{
+    min-width:210px;
+    max-width:210px;
+}
+
+.pricing-table-column-name{
+    min-width:180px;
+    max-width:180px;
+}
+
+.pricing-table-column-comment{
+    min-width:130px;
+    max-width:130px;
+}
+
+.pricing-table-column-number{
+    min-width:65px;
+    max-width:65px;
+}
+
+.pricing-table-column-unit{
+    min-width:65px;
+    max-width:65px;
+}
+
+.pricing-table-column-price{
+    min-width:180px;
+    max-width:180px;
+}
+
+.pricing-table-column-priceTotal{
+    min-width:150px;
+    max-width:150px;
+}
+
+.pricing-table-column-purchasePrice{
+    min-width:150px;
+    max-width:150px;
+}
+
+.pricing-table-column-purchasePriceTotal{
+    min-width:150px;
+    max-width:150px;
+}
+
+.pricing-table-column-endCustomerPrice{
+    min-width:150px;
+    max-width:150px;
+}
+
+.pricing-table-column-endCustomerPriceTotal{
+    min-width:150px;
+    max-width:150px;
+}
+
+.pricing-table-column-BTN_REMOVE{
+    min-width:60px;
+    max-width:60px;
+}
+
+.pricing-table-column-BTN_DISCOUNTS{
+    min-width:60px;
+    max-width:60px;
+    border:none!important;
+}
+
+.pricing-table-column-BTN_SAVE{
+    min-width:60px;
+    max-width:60px;
+    padding:0;
+    border:none!important;
+}
+
+.pricing-table-column-BTN_RESTORE{
+    min-width:60px;
+    max-width:60px;
+    padding:0;
+    border:none!important;
+}
+
+.cell-no-border{
+    border:none!important;
+}
+
+.mat-header-cell{
+    justify-content: center;
+    border-right: 1px dashed #e5e5e5;
+}
+
+.mat-cell{
+    justify-content: center;
+    text-align: end;
+    max-height: 48px;
+}
+
+mat-cell:first-of-type, mat-header-cell:first-of-type, mat-footer-cell:first-of-type {
+    padding-left: 10px;
+}
+
+.mat-cell:not(:first-child){
+     border-left: 1px dashed #e5e5e5;
+ }
+
+.element-row{
+    height:48px !important;
+}
+
+.input-text {
+    padding-right: 8px;
+}
+
+::ng-deep mat-cell span{
+    font-size: 14px!important;
+}
+
+.select-large{
+    width:190px!important;
+    max-width:190px!important;
+    border:none;
+    background-color: transparent;
+}
+
+.select-medium{
+    width:170px!important;
+    max-width:170px!important;
+    border:none;
+    background-color: transparent;
+}
+
+.select-small{
+    width:150px!important;
+    max-width:150px!important;
+    border:none;
+    background-color: transparent;
+}
+
+.pricing-input-small{
+    height:38px !important;
+    width:45px;
+    background-color: var(--background-tertiary);
+    justify-content: end;
+    text-align: end;
+    border-radius: 2px;
+}
+
+.pricing-input-medium{
+    height:38px !important;
+    width:110px;
+    background-color: var(--background-tertiary);
+    justify-content: end;
+    text-align: end;
+    border-radius: 2px;
+}
+
+.pricing-input-large{
+    height:38px !important;
+    background-color: var(--background-tertiary);
+    justify-content: end;
+    text-align: end;
+    border-radius: 2px;
+}
+
+.pricing-input-xl{
+    height:38px !important;
+    width:190px;
+    background-color: var(--background-tertiary);
+    justify-content: end;
+    text-align: end;
+    border-radius: 2px;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+
+    opacity: 1;
+
+}
+
+.btn-icon-large{
+    min-width:60px!important;
+    max-width:60px!important;
+    padding:0!important;
+    margin:0!important;
+}

@@ -1,0 +1,26 @@
+[
+    {
+        "both": {
+            "additionalProp1": {
+                "additionalProp1": {},
+                "additionalProp2": {},
+                "additionalProp3": {}
+            },
+            "additionalProp2": {
+                "additionalProp1": {},
+                "additionalProp2": {},
+                "additionalProp3": {}
+            },
+            "additionalProp3": {
+                "additionalProp1": {},
+                "additionalProp2": {},
+                "additionalProp3": {}
+            }
+        },
+        "diffs": [
+            "string"
+        ],
+        "relatedEntityId": 0,
+        "variationId": 0
+    }
+]

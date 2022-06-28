@@ -1,0 +1,40 @@
+<h1 mat-dialog-title>{{ "DIALOGS.SEGMENTS.HEADER" | translate }}</h1>
+<div mat-dialog-content fxLayout="column">
+    <div class="w-full mt-4" *ngFor="let shift of data.shiftInputs; let shiftIndex = index" fxLayout="column" fxLayoutAlign="start center">
+        <div class="shift-header w-full" fxLayout="row" fxLayoutAlign="start center">
+            <span>{{shift.name}}</span>
+        </div>
+        <div class="content-container w-full" fxLayout="row" fxLayoutAlign="start start">
+            <table class="w-full">
+                <tr>
+                    <th>{{ 'DIALOGS.SEGMENTS.SHIFT_SEGMENTS_TH1' | translate }}</th>
+                    <th>{{ 'DIALOGS.SEGMENTS.SHIFT_SEGMENTS_TH2' | translate }}</th>
+                    <th *ngIf="!displayedValue">{{ 'DIALOGS.SEGMENTS.SHIFT_SEGMENTS_TH4' | translate }}</th>
+                    <th *ngIf="!displayedValue && !value">{{ 'DIALOGS.SEGMENTS.SHIFT_SEGMENTS_TH3' | translate }}</th>
+                    <th *ngIf="!displayedValue && value">{{ 'INPUTVALUES.APPLICATION_' + value.toUpperCase() | translate }}</th>
+                    <th *ngIf="displayedValue">{{ 'INPUTVALUES.APPLICATION_' + data.displayedValue.toUpperCase() | translate }}</th>
+                </tr>
+                <tr *ngFor="let row of shift.segments; let i = index;" [ngStyle]="row.breakTime>0 && !displayedValue && {'background-color':'#bbbbbb'}">
+                    <td style="text-align:center;padding:2px;">{{row.fromDate | date:'HH:mm'}}</td>
+                    <td style="text-align:center;padding:2px;">{{row.toDate | date:'HH:mm'}}</td>
+                    <td *ngIf="!displayedValue" style="text-align:center;padding:2px;">
+                        <span>{{row.breakTime}}</span>
+                    </td>
+                    <td style="text-align:center;padding:2px;">
+                        <input *ngIf="!displayedValue" class="simple-input" type="number" [(ngModel)]="row.inputValues[value]">
+                        <span *ngIf="displayedValue">
+                            <ng-container *ngIf="displayedValue.indexOf('financeInfo')>-1">{{data.shiftValues[shiftIndex].calculationSegmentResults[i][displayedValue.split('financeInfo.').pop()] | number:'1.0-2'}}</ng-container>
+                            <ng-container *ngIf="displayedValue.indexOf('calculationResult')>-1">{{data.shiftValues[shiftIndex].calculationSegmentResults[i][displayedValue.split('calculationResult.').pop()] | number:'1.0-2'}}</ng-container>
+                        </span>
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+</div>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between center">
+    <button *ngIf="displayedValue" mat-button (click)="cancel()">{{ 'GLOBAL.CLOSE' | translate}}</button>
+    <button *ngIf="!displayedValue" mat-button (click)="cancel()">{{ 'GLOBAL.CANCEL' | translate}}</button>
+    <button *ngIf="!displayedValue"  mat-stroked-button (click)="save()" cdkFocusInitial>{{ 'GLOBAL.SAVE' | translate}}</button>
+</div>

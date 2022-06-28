@@ -1,0 +1,95 @@
+<div class="appFrame" fxLayout="column" fxLayoutAlign="start start">
+    <div fxLayout="column">
+        <h1>{{'GLOBAL_ADMINISTRATION.USERS.TITLE' | translate}}</h1>
+        <h2>{{'GLOBAL_ADMINISTRATION.USERS.SUB' | translate}}</h2>
+    </div>
+
+    <div class="w-full" fxLayout="row" fxLayoutAlign="space-between start">
+        <div fxFlex="45" fxLayout="column">
+
+            <h3 class="!mt-8">{{'GLOBAL_ADMINISTRATION.USERS.GROUPS' | translate}}</h3>
+            <div fxLayout="row wrap" fxLayoutAlign="start center" class="tableToolbar">
+                <button mat-button aria-label="refresh data" (click)="addGroup()">
+                    <mat-icon aria-label="add">add</mat-icon>
+                    Add
+                </button>
+                <div fxFlex=""></div>
+                <div fxLayoutAlign="start center" class="PDL8">
+                    <div fxLayoutAlign="start center">
+                        <div class="divider"></div>
+                        <search-input-table [(filter)]="dataSource1.filter"></search-input-table>
+                        <button mat-button aria-label="refresh data" (click)="refreshData()">
+                            <mat-icon aria-label="refresh" fontIcon="LMH-reload"></mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <ito-flex-table (onClick)="handleClick($event.source, $event.row, $event.index, 'groups')" [dataSource]="dataSource1" [tableDefinition]="tableDefinition1" [sort]="sort1" [maxHeight]="440"></ito-flex-table>
+            </div>
+        </div>
+
+        <div fxFlex="45" fxLayout="column">
+
+            <h3 class="!mt-8">{{'GLOBAL_ADMINISTRATION.USERS.USERS' | translate}}</h3>
+            <div fxLayout="row wrap" fxLayoutAlign="start center" class="tableToolbar">
+                <button mat-button aria-label="refresh data" (click)="addUserToGroup()">
+                    <mat-icon aria-label="add">add</mat-icon>
+                    Add
+                </button>
+                <div fxFlex=""></div>
+                <div fxLayoutAlign="start center" class="PDL8">
+                    <div fxLayoutAlign="start center">
+                        <div class="divider"></div>
+                        <search-input-table [(filter)]="dataSource2.filter"></search-input-table>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <ito-flex-table (onClick)="handleClick($event.source, $event.row, $event.index, 'users')" [dataSource]="dataSource2" [tableDefinition]="tableDefinition2" [sort]="sort2" [maxHeight]="440"></ito-flex-table>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="w-full" fxLayout="column" fxLayoutAlign="start start">
+        <h3 class="!mt-16 !mb-6">{{'GLOBAL_ADMINISTRATION.USERS.FEATURELIST' | translate}}</h3>
+
+        <mat-table mat-table [dataSource]="dataSource3">
+
+            <!--- Note that these columns can be defined in any order.
+                  The actual rendered columns are set as a property on the row definition" -->
+
+            <ng-container *ngFor="let col of displayedColumns" [matColumnDef]="col.name">
+                <mat-header-cell class="element-column-big" mat-header-cell *matHeaderCellDef><span>{{col.name}}</span></mat-header-cell>
+                <mat-cell class="element-column-big" *matCellDef="let element">
+                    <div *ngIf="col.id===-1">
+                        {{'GLOBAL_ADMINISTRATION.'+element.name | translate }}
+                    </div>
+                    <div *ngIf="col.id!==-1">
+                        <mat-checkbox (change)="toggleRight(element,col)" [checked]="hasFeatureRight(element.allowedGroups,col.id)"></mat-checkbox>
+                    </div>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumnsStrings"></mat-header-row>
+            <mat-row class="element-row-big" [class.even]="i % 2 !== 0" mat-row *matRowDef="let row; columns: displayedColumnsStrings; let i = index;"></mat-row>
+        </mat-table>
+       <!-- <h2 style="padding-left:15px;">Feature list</h2>
+        <div style="width:100%; overflow-y:auto;">
+            <table cellpadding="10" style="padding: 15px;">
+                <tr>
+                    <th>{{ 'ROLES_FEATURES' | translate }}</th>
+                    <th ng-repeat="userGroup in storage.allUserGroups | orderBy: 'name'" ng-style="(userGroup.id === storage.selectedGroup.info.id) && {'color':'#ba1126'}"> {{ userGroup.name }} </th>
+                </tr>
+                <tr ng-repeat="row in storage.allFeatures" ng-style="($index%2===0) && {'background-color':'#eeeff3'}">
+                    <td style="height:30px;">{{row.name | translate}}</td>
+                    <td ng-repeat="userGroup in storage.allUserGroups | orderBy: 'name'"  ng-click="toggleRight(row,userGroup)" style="text-align: center; cursor:pointer;">
+                        <md-icon ng-if="hasFeatureRight(row.allowedGroups,userGroup.id)" ng-style="(userGroup.name === 'SysAdmin' || userGroup.name === 'BasicUser') && {'color':'#d4d4d4'} || (userGroup.id === storage.selectedGroup.info.id) && {'color':'#ba1126'}">check_box</md-icon>
+                        <md-icon ng-if="!hasFeatureRight(row.allowedGroups,userGroup.id)" ng-style="(userGroup.id === storage.selectedGroup.info.id) && {'color':'#ba1126'}">check_box_outline_blank</md-icon>
+                    </td>
+                </tr>
+            </table>
+        </div>-->
+    </div>
+</div>

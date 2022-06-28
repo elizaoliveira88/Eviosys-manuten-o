@@ -1,0 +1,555 @@
+{
+    "durationShiftSec": {
+        "label": "APPLICATION_CALCINFO3",
+        "type": "duration",
+        "default": 0,
+        "info": "app.distance",
+        "size": 1,
+        "required": true
+    },
+    "loadUnload": {
+        "label": "APPLICATION_TYPE",
+        "type": "radio",
+        "options": [
+            {
+                "value": "loading",
+                "label": "APPLICATION_LOADING"
+            },
+            {
+                "value": "unloading",
+                "label": "APPLICATION_UNLOADING"
+            }
+        ],
+        "default": "loading",
+        "info": null,
+        "size": 1
+    },
+    "stackNoStack": {
+        "label": "APPLICATION_STACK",
+        "type": "radio",
+        "options": [
+            {
+                "value": "stack",
+                "label": "APPLICATION_YES"
+            },
+            {
+                "value": "noStack",
+                "label": "APPLICATION_NO"
+            }
+        ],
+        "default": "stack",
+        "info": "app.stack_noStack",
+        "size": 1
+    },
+    "flow": {
+        "label": "APPLICATION_CALCINFO7",
+        "type": "number",
+        "default": 0,
+        "info": "app.distance",
+        "size": 1,
+        "min": 0,
+        "max": 15000000,
+        "minWarn": 0,
+        "maxWarn": 250000,
+        "required": true
+    },
+    "distance": {
+        "label": "APPLICATION_CALCINFO1",
+        "min": 1,
+        "max": 1000.0,
+        "minWarn": 0,
+        "maxWarn": 600.0,
+        "type": "number",
+        "required": true,
+        "default": 0,
+        "info": "app.distance",
+        "size": 1
+    },
+    "timeCarrier": {
+        "label": "APPLICATION_CALCINFO5",
+        "min": 0,
+        "max": 600.0,
+        "minWarn": 0,
+        "maxWarn": 60.0,
+        "type": "number",
+        "required": true,
+        "default": 0,
+        "info": "app.timeCarrier",
+        "size": 1
+    },
+    "load": {
+        "label": "APPLICATION_CALCINFO8",
+        "min": 1,
+        "max": 40000000.0,
+        "minWarn": 0,
+        "maxWarn": 100000.0,
+        "type": "number",
+        "required": true,
+        "default": 0,
+        "info": "app.distance",
+        "size": 1
+    },
+    "numLorries": {
+        "label": "APPLICATION_NUMLORRIES",
+        "min": 1,
+        "max": 5000.0,
+        "minWarn": 0,
+        "maxWarn": 500.0,
+        "type": "number",
+        "required": true,
+        "default": 0,
+        "info": "app.numLorries",
+        "size": 1
+    },
+    "numLoadsLorry": {
+        "label": "APPLICATION_NUMLOADSLORRY",
+        "min": 1,
+        "max": 300.0,
+        "minWarn": 0,
+        "maxWarn": 50.0,
+        "type": "number",
+        "required": true,
+        "default": 0,
+        "info": "app.distance",
+        "size": 1
+    },
+    "additionalTime": {
+        "label": "APPLICATION_ADDITIONALTIME",
+        "min": 0,
+        "max": 3600.0,
+        "minWarn": 0,
+        "maxWarn": 60.0,
+        "type": "number",
+        "required": false,
+        "default": 0,
+        "info": "app.distance",
+        "size": 1
+    },
+    "pickPallet": {
+        "label": "APPLICATION_PALLETHANDLING",
+        "type": "toggle",
+        "options": [
+            {
+                "value": "groundPick",
+                "label": "APPLICATION_GROUND"
+            },
+            {
+                "value": "liftingPick",
+                "label": "APPLICATION_LIFTING"
+            }
+        ],
+        "default": "groundPick",
+        "info": "app.pickPallet",
+        "size": 1
+    },
+    "pickPalletValue": {
+        "label": "APPLICATION_PALLETHANDLING",
+        "min": 1,
+        "max": 13.0,
+        "minWarn": 0,
+        "maxWarn": 4.0,
+        "type": "number",
+        "required": true,
+        "default": 0,
+        "info": "app.pickPalletValue",
+        "displayRule": {
+            "pickPallet": "liftingPick"
+        },
+        "size": 1
+    },
+    "depositPallet": {
+        "label": "APPLICATION_PALLETHANDLING2",
+        "type": "toggle",
+        "options": [
+            {
+                "value": "groundDeposit",
+                "label": "APPLICATION_GROUND"
+            },
+            {
+                "value": "liftingDeposit",
+                "label": "APPLICATION_LIFTING"
+            }
+        ],
+        "default": "groundDeposit",
+        "info": "app.depositkPallet",
+        "size": 1
+    },
+    "depositPalletValue": {
+        "label": "APPLICATION_PALLETDEPOSIT",
+        "min": 0,
+        "max": 4.0,
+        "minWarn": 0,
+        "maxWarn": 2.0,
+        "type": "number",
+        "required": true,
+        "default": 0,
+        "info": "app.depositPalletValue",
+        "displayRule": {
+            "depositPallet": "liftingDeposit"
+        },
+        "size": 1
+    },
+    "loadingBayTime": {
+        "label": "APPLICATION_LOADINGBAYTIME",
+        "min": 1,
+        "max": 60.0,
+        "minWarn": 0,
+        "maxWarn": 45.0,
+        "type": "number",
+        "required": true,
+        "default": 0,
+        "info": "app.loadingBayTime",
+        "size": 1
+    },
+    "nightShift": {
+        "label": "APPLICATION_NIGHTSHIFT",
+        "min": 0,
+        "max": 100.0,
+        "minWarn": 0,
+        "maxWarn": 100.0,
+        "type": "number",
+        "required": true,
+        "default": 0,
+        "info": "app.nightShift",
+        "size": 1
+    },
+    "emptyCarrier": {
+        "label": "APPLICATION_EMPTYCARRIER",
+        "type": "toggle",
+        "options": [
+            {
+                "value": true,
+                "label": "APPLICATION_YES"
+            },
+            {
+                "value": false,
+                "label": "APPLICATION_NO"
+            }
+        ],
+        "default": false,
+        "info": "app.emptyCarrier",
+        "size": 1
+    },
+    "pickDistribution": {
+        "label": "APPLICATION_DISTRIBUTION",
+        "type": "radio",
+        "options": [
+            {
+                "value": "abcDistribution",
+                "label": "APPLICATION_ABCDIS"
+            },
+            {
+                "value": "evenlyDistribution",
+                "label": "APPLICATION_EVENLYDIS"
+            }
+        ],
+        "default": "evenlyDistribution",
+        "info": null,
+        "size": 1
+    },
+    "doubleCycles": {
+        "label": "APPLICATION_CALCINF12",
+        "min": 0,
+        "max": 100.0,
+        "minWarn": 0,
+        "maxWarn": 100.0,
+        "type": "number",
+        "required": true,
+        "default": 0,
+        "info": "app.doubleCycles",
+        "size": 1
+    },
+    "rackHigh": {
+        "label": "APPLICATION_RACKINGBEAM",
+        "min": 1,
+        "max": 20.0,
+        "minWarn": 0,
+        "maxWarn": 18.0,
+        "type": "number",
+        "required": true,
+        "default": 0,
+        "info": "app.rackHigh",
+        "size": 1
+    },
+    "distancePickPallet": {
+        "label": "APPLICATION_DISTANCEPICKPALLET",
+        "min": 1,
+        "max": 1000.0,
+        "minWarn": 0,
+        "maxWarn": 200.0,
+        "type": "number",
+        "required": true,
+        "default": 0,
+        "info": "app.distancePickPallet",
+        "size": 1
+    },
+    "distancePickingZone": {
+        "label": "APPLICATION_DISTANCEPICKINGZONE",
+        "min": 1,
+        "max": 1000.0,
+        "minWarn": 0,
+        "maxWarn": 200.0,
+        "default": 0,
+        "type": "number",
+        "required": true,
+        "info": "app.distancePickingZone",
+        "size": 1
+    },
+    "numberOfShelfs": {
+        "label": "APPLICATION_NUMBERSHELFS",
+        "min": 1,
+        "max": 100.0,
+        "minWarn": 0,
+        "maxWarn": 50.0,
+        "default": 0,
+        "type": "number",
+        "required": true,
+        "info": "app.numberOfShelfs",
+        "size": 1
+    },
+    "lengthOfShelf": {
+        "label": "APPLICATION_SHELFLENGTH",
+        "type": "number",
+        "min": 1,
+        "max": 1000.0,
+        "minWarn": 0,
+        "default": 0,
+        "maxWarn": 75.0,
+        "required": true,
+        "info": "app.lengthOfShelf",
+        "size": 1
+    },
+    "distanceInPickingZone": {
+        "label": "APPLICATION_DISTANCEINPICKINGZONE",
+        "min": 1,
+        "max": 100000.0,
+        "minWarn": 0,
+        "maxWarn": 37500.0,
+        "default": 0,
+        "type": "number",
+        "required": true,
+        "info": "app.distanceInPickingZone",
+        "size": 1
+    },
+    "distanceDepositPallet": {
+        "label": "APPLICATION_DISTANCEDEPOSITPALLET",
+        "min": 1,
+        "max": 1000.0,
+        "minWarn": 0,
+        "maxWarn": 200.0,
+        "default": 0,
+        "type": "number",
+        "required": true,
+        "info": "app.distanceDepositPallet",
+        "size": 1
+    },
+    "rackChanges": {
+        "label": "APPLICATION_RACKCHANGES",
+        "min": 0,
+        "max": 100.0,
+        "minWarn": 0,
+        "maxWarn": 100.0,
+        "type": "number",
+        "required": true,
+        "default": 0,
+        "info": "app.rackChanges",
+        "size": 1
+    },
+    "percentageAbove": {
+        "label": "APPLICATION_PICKINHEIGHT",
+        "type": "number",
+        "min": 0,
+        "max": 100,
+        "minWarn": 0,
+        "maxWarn": 100.0,
+        "default": 0,
+        "required": true,
+        "info": "app.percentageAbove",
+        "size": 1
+    },
+    "scanDuration": {
+        "label": "APPLICATION_INSPECTIONTIME",
+        "type": "number",
+        "min": 0,
+        "max": 600.0,
+        "minWarn": 0,
+        "maxWarn": 60.0,
+        "default": 0,
+        "required": true,
+        "info": "app.scanDuration",
+        "size": 1
+    },
+    "averageCapacity": {
+        "label": "APPLICATION_AVERAGECAPACITY",
+        "type": "number",
+        "min": 1,
+        "max": 12.0,
+        "minWarn": 0,
+        "maxWarn": 3.0,
+        "default": 0,
+        "required": true,
+        "info": "app.averageCapacity",
+        "size": 1
+    },
+    "averageWeight": {
+        "label": "APPLICATION_AVERAGEWEIGHT",
+        "type": "number",
+        "min": 0.1,
+        "max": 50.0,
+        "minWarn": 0,
+        "maxWarn": 30.0,
+        "default": 0,
+        "required": true,
+        "info": "app.averageWeight",
+        "size": 1
+    },
+    "numOrdersProcessed": {
+        "label": "APPLICATION_NUMORDERSPROCESSED",
+        "type": "number",
+        "min": 1,
+        "max": 50.0,
+        "minWarn": 0,
+        "maxWarn": 30.0,
+        "default": 0,
+        "required": true,
+        "info": "app.numOrdersProcessed",
+        "size": 1
+    },
+    "numItemsLine": {
+        "label": "APPLICATION_NUMITEMSLINE",
+        "type": "number",
+        "min": 1,
+        "max": 1000,
+        "minWarn": 0,
+        "maxWarn": 20.0,
+        "default": 0,
+        "required": true,
+        "info": "app.numItemsLine",
+        "size": 1
+    },
+    "numLinesPicking": {
+        "label": "APPLICATION_NUMLINESPICKING",
+        "type": "number",
+        "min": 1,
+        "max": 200,
+        "minWarn": 0,
+        "maxWarn": 100.0,
+        "default": 0,
+        "required": true,
+        "info": "app.numLinesPicking",
+        "size": 1
+    },
+    "maxNumOrderShift": {
+        "label": "APPLICATION_MAXNUMORDERSHIFT",
+        "type": "number",
+        "min": 1,
+        "max": 10000,
+        "minWarn": 0,
+        "maxWarn": 10000,
+        "default": 0,
+        "required": true,
+        "info": "app.maxNumOrderShift",
+        "size": 1
+    },
+    "numbPackageDay": {
+        "label": "APPLICATION_NUMBPACKAGEDAY",
+        "type": "number",
+        "min": 1,
+        "max": 2000000000,
+        "minWarn": 0,
+        "maxWarn": 2000000,
+        "default": 0,
+        "required": true,
+        "info": "app.numbPackageDay",
+        "size": 1
+    },
+    "pickInHeightValue": {
+        "label": "APPLICATION_PICKHEIGHT",
+        "type": "number",
+        "min": 1,
+        "max": 2.5,
+        "minWarn": 0,
+        "maxWarn": 2.0,
+        "default": 0,
+        "required": true,
+        "info": "app.pickInHeightValue",
+        "size": 1
+    },
+    "traffic": {
+        "label": "APPLICATION_TRAFFIC",
+        "type": "toggle",
+        "options": [
+            {
+                "value": true,
+                "label": "APPLICATION_YES"
+            },
+            {
+                "value": false,
+                "label": "APPLICATION_NO"
+            }
+        ],
+        "default": "false",
+        "info": "app.traffic",
+        "size": 1
+    },
+    "numberOfScans": {
+        "label": "APPLICATION_NUMBEROFSCANS",
+        "type": "number",
+        "min": 1,
+        "max": 10.0,
+        "minWarn": 0,
+        "maxWarn": 3.0,
+        "default": 0,
+        "required": true,
+        "info": "app.numberOfScans",
+        "size": 1
+    },
+    "numberOfContainers": {
+        "label": "APPLICATION_NUMBEROFCONTAINERS",
+        "type": "number",
+        "min": 1,
+        "max": 25.0,
+        "minWarn": 0,
+        "maxWarn": 10.0,
+        "default": 0,
+        "required": true,
+        "info": "app.numberOfContainers",
+        "size": 1
+    },
+    "trainDistance": {
+        "label": "APPLICATION_ROUTEDISTANCE",
+        "type": "number",
+        "min": 1,
+        "max": 3000,
+        "minWarn": 0,
+        "maxWarn": 1000,
+        "default": 0,
+        "required": true,
+        "info": "app.trainDistance",
+        "size": 1
+    },
+    "numberOfCurves": {
+        "label": "APPLICATION_NUMBERCURVES",
+        "type": "number",
+        "min": 0,
+        "max": 1000,
+        "minWarn": 0,
+        "maxWarn": 1000,
+        "default": 0,
+        "required": true,
+        "info": "app.numberOfCurves",
+        "size": 1
+    },
+    "numberOfStops": {
+        "label": "APPLICATION_NUMBEROFSTOPPS",
+        "type": "number",
+        "min": 1,
+        "max": 50.0,
+        "minWarn": 0,
+        "maxWarn": 20.0,
+        "default": 0,
+        "required": true,
+        "info": "app.numberOfStops",
+        "size": 1
+    }
+}

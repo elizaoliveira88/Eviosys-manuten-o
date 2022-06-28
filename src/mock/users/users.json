@@ -1,0 +1,13 @@
+[{
+    "id": "0",
+    "username": "superadmin@it-objects.de",
+    "firstName": "Super",
+    "lastName": "Admin",
+    "isSuperAdmin": true
+},{
+    "id": "1",
+    "username": "anotheruser@it-objects.de",
+    "firstName": "Another",
+    "lastName": "User",
+    "isSuperAdmin": false
+}]

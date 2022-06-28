@@ -1,0 +1,7 @@
+.search-mobile{
+    width: calc( 100% - 72px) !important
+}
+
+.no-border{
+    border:none!important;
+}

@@ -1,0 +1,178 @@
+.full-width{
+    width:calc(100% - 46px);
+}
+
+.btns-container{
+    width: 220px;
+    padding:8px 0;
+    border-radius:2px;
+    height:100%;
+}
+
+.options-container{
+    width: 220px;
+    padding:8px;
+    border-radius:2px;
+    background-color:var(--background-secondary);
+}
+
+.content-container{
+    position: relative;
+    padding:8px;
+    border-radius:2px;
+    background-color:var(--background-secondary);
+    overflow: hidden;
+    min-height:100%;
+}
+
+.ramani{
+    position: absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:220px;
+
+    ::ng-deep canvas{
+        position: absolute;
+    }
+}
+
+
+.right-menu{
+    position: absolute;
+    right:0;
+    width:220px;
+    bottom:0;
+    top:0;
+    padding:4px;
+    z-index:999;
+    background-color: var(--background-secondary);
+    border-left: 1px solid #dadbdd;
+}
+
+.zoomBtn{
+    color:#6b6b6b;
+    max-width:40px;
+    min-height:40px;
+    max-height:40px;
+    min-width:40px;
+    margin:0;
+
+}
+
+.missionList:hover{
+    background-color:var(--background-tertiary);
+}
+.elementList:hover{
+    background-color:var(--background-tertiary);
+}
+
+.missionSelectedIndicatorLEFT{
+    transition: opacity 0.5s ease-in-out;
+    width:4px;
+    height:41px;
+    opacity:0;
+    background-color: white;
+    position: absolute;
+    left:2px;
+    top:2px;
+}
+
+.missionSelectedIndicator{
+    width:6px;
+    height:41px;
+    position: absolute;
+    right:2px;
+    top:2px;
+}
+
+::ng-deep .mat-tab-body-wrapper{
+    height:100%;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    transition: height 500ms cubic-bezier(0.35, 0, 0.25, 1);
+}
+
+
+.selectedItemMenuContainer{
+    position: absolute;
+    right:-290px;
+    top:0;
+    bottom:0;
+    width:220px;
+    z-index:1;
+    background-color: transparent;
+    border-left: 1px solid #dadbdd;
+}
+
+
+.menu_hide{
+    right:-221px;
+    transition: right 0.2s ease-in-out;
+}
+
+.menu_show{
+    right:220px;
+    transition: right 0.2s ease-in-out;
+}
+
+.selectedItemMenu{
+    position: relative;
+    height:100%;
+    width:100%;
+    background-color: var(--background-secondary);
+    z-index: 999999;
+    border-radius: 4px 0 0 4px;
+}
+
+.mini-input-selectedItemMenu{
+    border: 0;
+    padding: 0;
+    text-align: right;
+    width: 40px;
+    color:var(--gray-900);
+    background-color: transparent;
+    cursor:pointer;
+}
+
+.editorInfoMenuSpan {
+    max-width: 115px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    color:var(--gray-900);
+    font-size:14px;
+}
+
+.designer-input{
+    text-align: right;
+    border-radius: 2px;
+    border: none;
+    width: 80px;
+    padding: 2px 4px;
+}
+
+.input_small{
+    width: 60px;
+}
+
+.itemMenuSquare{
+    min-height:27px;
+    max-height:27px;
+    min-width:27px;
+    max-width:27px;
+    line-height:27px;
+    border-radius: 0;
+}
+
+.colorIndicator{
+    width:25px;
+    height:25px;
+    border-radius:var(--border-radius-primary);
+    margin: 0;
+    cursor:pointer;
+}
+
+mat-form-field{
+    margin: 4px 0 4px 0;
+}

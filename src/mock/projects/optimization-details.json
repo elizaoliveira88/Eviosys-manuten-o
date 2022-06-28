@@ -1,0 +1,286 @@
+{
+    "id": 0,
+    "name": "My first Optimization",
+    "creationDate": "2022-04-05T10:07:43.000+00:00",
+    "createdBy": "itoTest1234",
+    "lastModified": "2022-04-02T10:07:43.000+00:00",
+    "optimizationApplications": [
+        {
+            "id": 0,
+            "application": {
+                "id": 5171,
+                "applicationType": "A1",
+                "archive": false,
+                "creationDate": "2022-03-25T11:05:37.000+00:00",
+                "lastModified": "2022-03-28T07:51:15.000+00:00",
+                "name": "A1",
+                "flowPlan": true
+            },
+            "selected": true,
+            "group": null,
+            "optimizationTrucks": [
+                {
+                    "id": 0,
+                    "applicationTruck": {
+                            "id": 8137,
+                            "creationDate": "2022-03-28T07:18:45.000+00:00",
+                            "truck": {
+                                "id": 2,
+                                "identification": "T 25 SP (131-07)",
+                                "model": "T 25 SP",
+                                "truckClass": "131-07",
+                                "possibleApplications": ["A1_1",
+                                    "A3",
+                                    "A6"],
+                                "classification": "pallet_trucks",
+                                "truckPicId": "pallet_truck-T20AP_SP_T25AP_SP",
+                                "palletsPerDrive": 1
+                            },
+                            "modifiedName": null
+                        },
+                    "selected": true
+                }
+            ]
+        },
+        {
+            "id": 1,
+            "application": {
+                "id": 5172,
+                "applicationType": "A3",
+                "archive": false,
+                "creationDate": "2022-03-25T11:05:37.000+00:00",
+                "lastModified": "2022-03-28T07:51:15.000+00:00",
+                "name": "A3",
+                "flowPlan": false
+            },
+            "selected": true,
+            "group": null,
+            "optimizationTrucks": [
+                {
+                    "id": 0,
+                    "applicationTruck": {
+                        "id": 8137,
+                        "creationDate": "2022-03-28T07:18:45.000+00:00",
+                        "truck": {
+                            "id": 2,
+                            "identification": "T 25 SP (131-07)",
+                            "model": "T 25 SP",
+                            "truckClass": "131-07",
+                            "possibleApplications": ["A1_1",
+                                "A3",
+                                "A6"],
+                            "classification": "pallet_trucks",
+                            "truckPicId": "pallet_truck-T20AP_SP_T25AP_SP",
+                            "palletsPerDrive": 1
+                        },
+                        "modifiedName": null
+                    },
+                    "selected": true
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "application": {
+                "id": 5173,
+                "printedComment": null,
+                "nonPrintedComment": null,
+                "applicationType": "A5",
+                "archive": false,
+                "creationDate": "2022-03-25T11:05:37.000+00:00",
+                "lastModified": "2022-03-28T07:51:15.000+00:00",
+                "name": "This is A5",
+                "flowPlan": false
+            },
+            "selected": true,
+            "group": null,
+            "optimizationTrucks": [
+                {
+                    "id": 0,
+                    "applicationTruck": {
+                        "id": 8137,
+                        "creationDate": "2022-03-28T07:18:45.000+00:00",
+                        "truck": {
+                            "id": 2,
+                            "identification": "T 25 SP (131-07)",
+                            "model": "T 25 SP",
+                            "truckClass": "131-07",
+                            "possibleApplications": ["A1_1",
+                                "A3",
+                                "A6"],
+                            "classification": "pallet_trucks",
+                            "truckPicId": "pallet_truck-T20AP_SP_T25AP_SP",
+                            "palletsPerDrive": 1
+                        },
+                        "modifiedName": null
+                    },
+                    "selected": true
+                },
+                {
+                    "id": 1,
+                    "applicationTruck": {
+                        "id": 8138,
+                        "creationDate": "2022-03-28T07:18:45.000+00:00",
+                        "truck": {
+                            "id": 2,
+                            "identification": "R17 X HD (116-02)",
+                            "model": "R17 X HD",
+                            "truckClass": "116-02",
+                            "possibleApplications": ["A1_1",
+                                "A3",
+                                "A6"],
+                            "classification": "reach_trucks",
+                            "truckPicId": "reach_truck-R14_R25",
+                            "palletsPerDrive": 1
+                        },
+                        "modifiedName": null
+                    },
+                    "selected": false
+                }
+            ]
+        }
+    ],
+    "optData": [
+        {
+            "truck": {
+                "id": 2,
+                "identification": "T 25 SP (131-07)",
+                "model": "T 25 SP",
+                "truckClass": "131-07",
+                "possibleApplications": ["A1_1",
+                    "A3",
+                    "A6"],
+                "classification": "pallet_trucks",
+                "truckPicId": "pallet_truck-T20AP_SP_T25AP_SP",
+                "palletsPerDrive": 1
+            },
+            "preOpt": {
+                "apps": 1,
+                "costs": {
+                    "overallCarCosts": 0,
+                    "overallConsumptionsCosts": 41.8,
+                    "overallMaintenanceCosts": 0,
+                    "overallPersonalCosts": 0
+                },
+                "shifts": [
+                    {
+                    "info": {
+                        "id": 0,
+                        "name": "Shift 1"
+                    },
+                    "costs": {
+                        "overallCarCosts": 0,
+                        "overallConsumptionsCosts": 15.4,
+                        "overallMaintenanceCosts": 0,
+                        "overallPersonalCosts": 0
+                    },
+                    "totalCost": 15.4,
+                    "totalCount": 1,
+                    "totalCountDriver": 1,
+                    "totalNumber": 0.06,
+                    "workload": 6
+                }, {
+                    "info": {
+                        "id": 1,
+                        "name": "Shift 2"
+                    },
+                    "costs": {
+                        "overallCarCosts": 0,
+                        "overallConsumptionsCosts": 11,
+                        "overallMaintenanceCosts": 0,
+                        "overallPersonalCosts": 0
+                    },
+                    "totalCost": 11,
+                    "totalCount": 1,
+                    "totalCountDriver": 1,
+                    "totalNumber": 0.08,
+                    "workload": 8
+                }, {
+                    "info": {
+                        "id": 2,
+                        "name": "Shift 3"
+                    },
+                    "costs": {
+                        "overallCarCosts": 0,
+                        "overallConsumptionsCosts": 25.4,
+                        "overallMaintenanceCosts": 0,
+                        "overallPersonalCosts": 0
+                    },
+                    "totalCost": 15.4,
+                    "totalCount": 1,
+                    "totalCountDriver": 1,
+                    "totalNumber": 0.06,
+                    "workload": 6
+                }],
+                "totalCost": 41.8,
+                "totalCount": 1,
+                "totalCountDriver": 3,
+                "totalNumber": 0.08,
+                "workload": 8
+            },
+            "postOpt": {
+                "apps": 1,
+                "costs": {
+                    "overallCarCosts": 0,
+                    "overallConsumptionsCosts": 41.8,
+                    "overallMaintenanceCosts": 0,
+                    "overallPersonalCosts": 0
+                },
+                "shifts": [{
+                    "info": {
+                        "id": 0,
+                        "name": "Shift 1"
+                    },
+                    "costs": {
+                        "overallCarCosts": 0,
+                        "overallConsumptionsCosts": 15.4,
+                        "overallMaintenanceCosts": 0,
+                        "overallPersonalCosts": 0
+                    },
+                    "totalCost": 15.4,
+                    "totalCount": 1,
+                    "totalCountDriver": 1,
+                    "totalNumber": 0.06,
+                    "workload": 6
+                }, {
+                    "info": {
+                        "id": 1,
+                        "name": "Shift 2"
+                    },
+                    "costs": {
+                        "overallCarCosts": 0,
+                        "overallConsumptionsCosts": 11,
+                        "overallMaintenanceCosts": 0,
+                        "overallPersonalCosts": 0
+                    },
+                    "totalCost": 11,
+                    "totalCount": 1,
+                    "totalCountDriver": 1,
+                    "totalNumber": 0.08,
+                    "workload": 8
+                }, {
+                    "info": {
+                        "id": 2,
+                        "name": "Shift 3"
+                    },
+                    "costs": {
+                        "overallCarCosts": 0,
+                        "overallConsumptionsCosts": 25.4,
+                        "overallMaintenanceCosts": 0,
+                        "overallPersonalCosts": 0
+                    },
+                    "totalCost": 15.4,
+                    "totalCount": 1,
+                    "totalCountDriver": 1,
+                    "totalNumber": 0.06,
+                    "workload": 6
+                }],
+                "totalCost": 41.8,
+                "totalCount": 1,
+                "totalCountDriver": 3,
+                "totalNumber": 0.08,
+                "workload": 8
+            }
+        }
+    ]
+}

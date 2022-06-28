@@ -1,0 +1,29 @@
+<h1 mat-dialog-title>{{ 'PROJECTS.LAYOUT.ADDELEMENTTOMISSIONDIALOG_H2' | translate }}</h1>
+<div mat-dialog-content [formGroup]="form" fxLayout="column">
+
+    <div fxLayout="column">
+        <mat-form-field style="margin:5px 0 0 0; width:220px;">
+            <mat-label>{{ 'PROJECTS.LAYOUT.ADDELEMENTSTOMISSIONDIALOG_D2' | translate }}</mat-label>
+            <input matInput formControlName="name">
+        </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start center" class="mt-2">
+
+
+        <mat-form-field>
+            <mat-label>{{ 'PROJECTS.LAYOUT.ADDELEMENTSTOMISSIONDIALOG_D3' | translate }}</mat-label>
+            <input matInput type="number" formControlName="flow">
+        </mat-form-field>
+        <div class="colorIndicator !ml-4 !mt-4" (click)="changeColor()" [ngStyle]="{'background-color':form.controls['color'].value}"></div>
+
+        <mat-checkbox class="!mt-4 !ml-12" [disabled]="!bothDirPossible" formControlName="bothDir" aria-label="bothDir" style="margin:0;">
+            <span style="line-height:20px;">{{ 'PROJECTS.LAYOUT.ADDELEMENTSTOMISSIONDIALOG_D5' | translate }}</span>
+        </mat-checkbox>
+    </div>
+
+</div>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between center">
+    <button mat-button (click)="cancel()">{{ 'GLOBAL.CANCEL' | translate}}</button>
+    <button mat-button [disabled]="form.invalid" (click)="save()" cdkFocusInitial>{{ 'GLOBAL.SAVE' | translate}}</button>
+</div>

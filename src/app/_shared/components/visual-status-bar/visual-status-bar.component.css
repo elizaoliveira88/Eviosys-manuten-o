@@ -1,0 +1,66 @@
+.container{
+    width:100%;
+    height:  45px;
+    border-radius: 10px;
+    position: relative;
+    z-index:100;
+    margin: 16px 0 10px 0;
+}
+
+.error{
+    border-radius: 10px;
+    height:45px;
+    background-color: #ec960f;
+    transition: all 1s ease-in-out;
+}
+
+.in-progress{
+    border-radius: 10px;
+    height:45px;
+    transition: all 1s ease-in-out;
+    background-color: lightgrey;
+}
+
+.completed{
+    right:0;
+    border-radius: 10px;
+    height:45px;
+    transition: all 1s ease-in-out;
+    background-color: #bcde97;
+}
+
+.info{
+    opacity: 0;
+    color:white;
+    font-family: "LindeDax" !important;
+    margin-right: 10px;
+    font-size: 14px;
+    font-weight: 100;
+}
+
+.contrast{
+    opacity: 0;
+    color: #4D4F5C;
+    font-family: "LindeDax" !important;
+    margin-right: 10px;
+    font-size: 14px;
+    font-weight: 100;
+}
+
+.fade-in {
+    animation-name: fadeInOpacity;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in;
+    animation-duration: 0.3s;
+    animation-delay: 1s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fadeInOpacity {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}

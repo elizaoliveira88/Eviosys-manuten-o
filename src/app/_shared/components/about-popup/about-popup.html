@@ -1,0 +1,19 @@
+<mat-toolbar>
+    <span fxFlex class="dragHandle" cdkDrag cdkDragRootElement=".cdk-overlay-pane" cdkDragHandle>{{ 'TITLE' | translate}}</span>
+</mat-toolbar>
+<mat-dialog-content>
+    <div fxLayout="row">
+        <div fxFlex class="FB">Version {{ version }}</div>
+        <div class="FB CHL" *ngIf="isDeveloper">DEVELOPER</div>
+    </div>
+    <p>Build {{ buildTimestamp | date:'dd.MM.yyyy HH:mm:ss' }} ({{ buildTimestamp | date:'HH:mm:ss':'UTC' }} UTC)</p>
+    <div fxLayout="row" fxLayoutAlign="start center">
+        <p style="line-height: 8px; padding-top: 2px;" class="MR8">by it-objects GmbH </p>
+        <img src="assets/icons/external/it-objects.png" style="height: 30px;" title="https://www.it-objects.de" (click)="cnt()">
+    </div>
+</mat-dialog-content>
+<div mat-dialog-actions>
+    <button *ngIf="acs.isVisible('App/About/ReleaseNotes')" class="textLimit" title="{{ 'RELEASE_NOTES' | translate}}"  mat-flat-button color="accent" cdkFocusInitial (click)="showReleaseNotes()">{{ 'RELEASE_NOTES' | translate }}</button>
+    <div fxFlex>&nbsp;</div>
+    <button mat-flat-button color="accent" class="textLimit" title="{{ 'GLOBAL.OK' | translate}}"  cdkFocusInitial (click)="close()">{{ 'GLOBAL.OK' | translate }}</button>
+</div>

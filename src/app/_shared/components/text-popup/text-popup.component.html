@@ -1,0 +1,16 @@
+<mat-toolbar>
+    <span fxFlex class="lindeFont dragHandle" cdkDrag cdkDragRootElement=".cdk-overlay-pane" cdkDragHandle>
+        <div>{{data.title | translate }}</div>
+        <div class="FS9 CSL textLimit" *ngIf="data.subtitle">
+            {{data.subtitle | translate }}
+        </div>
+    </span>
+</mat-toolbar>
+<mat-dialog-content>
+    <p *ngFor="let row of options.text">{{ row }}</p>
+    <div class="MB8" *ngFor="let row of options.rows">{{ row | translate }}</div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <div fxFlex>&nbsp;</div>
+    <button mat-flat-button color="accent" (click)="closePopup()">{{ 'GLOBAL.OK' | translate }}</button>
+</mat-dialog-actions>

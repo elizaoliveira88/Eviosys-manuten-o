@@ -1,0 +1,86 @@
+.mat-column-downloadButton {
+    max-width: 45px;
+}
+.mat-column-expandButton,
+.mat-column-editButton,
+.mat-column-addButton,
+.mat-column-deleteButton {
+    max-width: 40px;
+}
+
+.mat-column-Vbeln,
+.mat-column-Id {
+    max-width: 60px;
+}
+.matActionIcons div:not(:first-child) {
+    border-top: 1px solid #EEEFF3;
+}
+
+span.deleted {
+    text-decoration: line-through;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+.iconsTable {
+    max-width: 60px !important;
+}
+
+.mat-column-Arktx {
+    min-width: 120px;
+}
+.mat-column-Matnr {
+    min-width: 80px;
+}
+
+.truckImage-mobile-container{
+    max-width: 25%;
+    width: 40px;
+    height: 70px;
+}
+device-image {
+    max-width: 70px;
+    max-height: 45px ;
+    padding: 10px 0 !important;
+    height: 100%;
+    width: 100%;
+    display: flex;
+}
+
+.editingRow {
+    background-color: #ffffff;
+}
+
+.input_value{
+    font-size: 12px !important;
+    width: 100px;
+    padding: 10px;
+}
+
+.input_value:enabled{
+    border: 1px solid #e1e1e1 !important;
+    background-color: white;
+    border-radius: 2px;
+}
+
+.input_value:disabled{
+    color: #000000 !important;
+    background-color: transparent !important;
+    border-color: transparent !important;
+    padding: 10px 0px 10px 0px;
+}
+
+::ng-deep .mat-progress-spinner circle, .mat-spinner circle {
+    stroke: grey!important;
+}
+
+.expanded-bg{
+    background-color: #fbfbfb!important;
+}
+
+.small{
+    min-height:28px;
+    max-height:28px;
+}

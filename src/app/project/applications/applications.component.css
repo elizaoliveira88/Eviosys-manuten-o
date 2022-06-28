@@ -1,0 +1,57 @@
+.card-type-image{
+    height:55px;
+    max-width:55px;
+    border-radius: 6px;
+    object-fit: cover;
+    object-position: center;
+}
+.image-right-side{
+    width: calc(100% - 55px);
+}
+
+.applications-table-column-name{
+    min-width: 25%;
+    max-width: 25%;
+}
+
+.applications-table-column-applicationType{
+    min-width: 35%;
+    max-width: 35%;
+}
+
+.applications-table-column-flowPlan{
+    min-width: 5%;
+    max-width: 5%;
+}
+
+.applications-table-column-lastModified{
+    min-width: 15%;
+    max-width: 15%;
+}
+
+.applications-table-column-BTN_REMOVE{
+    text-align: end;
+    justify-content: flex-end;
+    min-width: 60px;
+    max-width: 60px;
+}
+
+.applications-table-column-BTN_ARCHIVE{
+    text-align: end;
+    justify-content: flex-end;
+}
+
+.img-container-table{
+    min-width:55px;
+    max-width: 55px;
+    overflow: hidden;
+}
+
+.table-type-image{
+    height:44px;
+    max-height:44px;
+    max-width:44px;
+    border-radius: 6px;
+    object-fit: cover;
+    object-position: center;
+}

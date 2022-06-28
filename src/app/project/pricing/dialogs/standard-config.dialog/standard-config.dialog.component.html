@@ -1,0 +1,21 @@
+<h1 mat-dialog-title>{{ "PROJECTS.PRICING.STANDARDCONFIG.TITLE" | translate }}</h1>
+<div mat-dialog-content fxLayout="column">
+
+    <table style="margin:0 0 5px 0; width:100%; min-width:280px;">
+        <col width="50">
+        <col>
+        <col>
+        <col>
+        <tr *ngFor="let comp of standardComponents" >
+            <td>{{comp.property}}</td>
+            <td>{{comp.category}}</td>
+            <td>{{comp.name}}</td>
+            <td *ngIf="comp.hasOwnProperty('additionalInfo') && comp.additionalInfo!==null && comp.additionalInfo!==''" >({{comp.additionalInfo}})</td>
+        </tr>
+    </table>
+
+
+</div>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+    <button mat-button (click)="close()" cdkFocusInitial>{{ "GLOBAL.OK" | translate}}</button>
+</div>

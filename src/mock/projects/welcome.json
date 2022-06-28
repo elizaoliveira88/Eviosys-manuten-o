@@ -1,0 +1,254 @@
+{
+    "recentProjects": [
+        {
+            "id": 2234,
+            "name": "test 31.5",
+            "createdBy": "itoTest1234",
+            "archive": false,
+            "creationDate": "2021-05-31T09:24:24.000+00:00",
+            "lastOpenedDate": "2021-12-17T09:04:34.000+00:00",
+            "customerData": {
+                "id": 2431,
+                "customerName": "Kerim",
+                "site": "Essen",
+                "contactPerson": null,
+                "address": "Street",
+                "tel": "41434",
+                "fax": "52423423",
+                "mobile": null,
+                "email": null,
+                "distanceToCustomer": 125.0
+            },
+            "vendorData": {
+                "id": 2212,
+                "name": "IT-Objects",
+                "address": "Ruschenstr. 18",
+                "tel": "2",
+                "email": null,
+                "firstName": "ITO",
+                "lastName": "Test",
+                "mobile": null,
+                "fax": ""
+            }
+        },
+        {
+            "id": 2237,
+            "name": "Rent Bug",
+            "createdBy": "itoTest1234",
+            "archive": false,
+            "creationDate": "2021-12-17T09:05:37.000+00:00",
+            "lastOpenedDate": "2022-04-05T10:07:43.000+00:00",
+            "customerData": {
+                "id": 2439,
+                "customerName": "Kerim",
+                "site": "Essen",
+                "contactPerson": null,
+                "address": "Street",
+                "tel": "41434",
+                "fax": "52423423",
+                "mobile": null,
+                "email": null,
+                "distanceToCustomer": 125.0
+            },
+            "vendorData": {
+                "id": 2215,
+                "name": "IT-Objects",
+                "address": "Ruschenstr. 18",
+                "tel": "2",
+                "email": null,
+                "firstName": "ITO",
+                "lastName": "Test",
+                "mobile": null,
+                "fax": ""
+            }
+        },
+        {
+            "id": 2238,
+            "name": "Demo for Rent Bug",
+            "createdBy": "itoTest1234",
+            "archive": false,
+            "creationDate": "2021-12-20T13:42:18.000+00:00",
+            "lastOpenedDate": "2022-05-02T17:01:29.000+00:00",
+            "customerData": {
+                "id": 2440,
+                "customerName": "Linde Material Handling",
+                "site": "Essen",
+                "contactPerson": null,
+                "address": "Ruschenstr. 18",
+                "tel": "",
+                "fax": "",
+                "mobile": null,
+                "email": null,
+                "distanceToCustomer": 50.0
+            },
+            "vendorData": {
+                "id": 2216,
+                "name": "IT-Objects GmbH",
+                "address": "Ruschenstr. 18",
+                "tel": "6345453345",
+                "email": "string",
+                "firstName": "Kerim",
+                "lastName": "Rohs",
+                "mobile": "string",
+                "fax": "243643645"
+            }
+        },
+        {
+            "id": 2243,
+            "name": "Test",
+            "createdBy": "itoTest1234",
+            "archive": false,
+            "creationDate": "2022-02-07T11:35:23.000+00:00",
+            "lastOpenedDate": "2022-04-27T09:55:26.000+00:00",
+            "customerData": {
+                "id": 2455,
+                "customerName": "Kerim",
+                "site": "Essen",
+                "contactPerson": null,
+                "address": "Street",
+                "tel": "41434",
+                "fax": "52423423",
+                "mobile": null,
+                "email": null,
+                "distanceToCustomer": 125.0
+            },
+            "vendorData": {
+                "id": 2221,
+                "name": "IT-Objects",
+                "address": "Ruschenstr. 18",
+                "tel": "2",
+                "email": null,
+                "firstName": "ITO",
+                "lastName": "Test",
+                "mobile": null,
+                "fax": ""
+            }
+        },
+        {
+            "id": 2254,
+            "name": "Patrick",
+            "createdBy": "itoTest1234",
+            "archive": false,
+            "creationDate": "2022-05-02T13:02:56.000+00:00",
+            "lastOpenedDate": "2022-05-02T16:32:52.000+00:00",
+            "customerData": {
+                "id": 2473,
+                "customerName": "Patrick",
+                "site": "Portugal",
+                "contactPerson": null,
+                "address": "Street",
+                "tel": "41434",
+                "fax": "52423423",
+                "mobile": null,
+                "email": null,
+                "distanceToCustomer": 126.0
+            },
+            "vendorData": {
+                "id": 2232,
+                "name": "IT-Objects",
+                "address": "Ruschenstr. 18",
+                "tel": "2",
+                "email": "max.mustermann@it-objects.de",
+                "firstName": null,
+                "lastName": null,
+                "mobile": null,
+                "fax": "Test"
+            }
+        }
+    ],
+    "sharedProjects": [
+        {
+            "id": 2238,
+            "name": "Shared with itoTest1234",
+            "createdBy": "Kerim",
+            "archive": false,
+            "creationDate": "2021-12-20T13:42:18.000+00:00",
+            "lastOpenedDate": "2022-05-02T17:01:29.000+00:00",
+            "customerData": {
+                "id": 2440,
+                "customerName": "Linde Material Handling",
+                "site": "Essen",
+                "contactPerson": null,
+                "address": "Ruschenstr. 18",
+                "tel": "",
+                "fax": "",
+                "mobile": null,
+                "email": null,
+                "distanceToCustomer": 50.0
+            },
+            "vendorData": {
+                "id": 2216,
+                "name": "IT-Objects GmbH",
+                "address": "Ruschenstr. 18",
+                "tel": "6345453345",
+                "email": "string",
+                "firstName": "Kerim",
+                "lastName": "Rohs",
+                "mobile": "string",
+                "fax": "243643645"
+            }
+        }
+    ],
+    "shortcuts": [
+        {
+            "id": 0,
+            "project": {
+                "projectId": 2237,
+                "projectName": "Rent Bug",
+                "sub": "applications"
+            },
+            "folder": null,
+            "application": null
+        },
+        {
+            "id": 1,
+            "project": {
+                "projectId": 2238,
+                "projectName": "Demo for Rent Bug",
+                "sub": "info"
+            },
+            "folder": null,
+            "application": null
+        },
+        {
+            "id": 2,
+            "application": {
+                "projectId": 2238,
+                "projectName": "Demo for Rent Bug",
+                "applicationId": 5131,
+                "applicationName": "Neue Anwendung"
+            },
+            "project": null,
+            "folder": null
+        },
+        {
+            "id": 3,
+            "application": {
+                "projectId": 2237,
+                "projectName": "Rent Bug",
+                "applicationId": 5171,
+                "applicationName": "A1"
+            },
+            "project": null,
+            "folder": null
+        },
+        {
+            "id": 4,
+            "project": null,
+            "folder": {
+                "folderId": 1,
+                "folderName": "Amazon"
+            },
+            "application": null
+        },
+        {
+            "id": 5,
+            "project": null,
+            "folder": {
+                "folderId": 4,
+                "folderName": "Amazon Europe"
+            },
+            "application": null
+        }
+    ]
+}

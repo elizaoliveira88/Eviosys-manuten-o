@@ -1,0 +1,4 @@
+<mat-button-toggle-group class="container" [(ngModel)]="value" aria-label="Select view">
+    <mat-button-toggle class="btn" [value]="true" fxLayout="column" fxLayoutAlign="center center">{{ 'COMPONENTS.CARDS_TABLE_SWITCH.CARDS' | translate }}</mat-button-toggle>
+    <mat-button-toggle class="btn" [value]="false" fxLayout="column" fxLayoutAlign="center center">{{ 'COMPONENTS.CARDS_TABLE_SWITCH.TABLE' | translate }}</mat-button-toggle>
+</mat-button-toggle-group>

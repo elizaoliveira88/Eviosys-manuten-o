@@ -1,0 +1,2 @@
+<img class="deviceImage" *ngIf="!isCircle" [src]="'assets/img/devices/' + device.deviceType + '.png'" err-src="assets/img/devices/default.png" alt="{{ device.name }}" style="width: 100%;">
+<img class="deviceImage" *ngIf="isCircle" [src]="'assets/img/devices/sgImgRtlsZoneCircle.png'" err-src="assets/img/devices/default.png" alt="{{ device.name }}" style="width: 100%;">

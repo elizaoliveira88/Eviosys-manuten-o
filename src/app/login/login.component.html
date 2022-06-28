@@ -1,0 +1,33 @@
+
+<div class="loginImage theme-LMH"  fxLayoutAlign="center center" fxLayout="column">
+    <div class="centered">
+        <div class="main">
+            <form [formGroup]="loginForm" fxLayout="column">
+
+                <mat-form-field>
+                    <mat-label>{{ 'LOGIN.USERNAME' | translate }}</mat-label>
+                    <input matInput required type="text" formControlName="userName">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>{{ 'LOGIN.PASSWORD' | translate }}</mat-label>
+                    <input matInput required type="password" formControlName="password">
+                </mat-form-field>
+
+                <div fxlayout="row" fxLayoutAlign="space-between center">
+                    <div fxLayoutAlign="start start">
+                        <span>{{'LOGIN.FORGOT_PASSWORD' | translate}}</span>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="end center">
+                        <mat-slide-toggle
+                            formControlName="showPassword">
+                            {{ 'LOGIN.SHOWPASSWORD' | translate }}
+                        </mat-slide-toggle>
+                    </div>
+                </div>
+                <button class="loginFormButton" mat-raised-button (click)="makeLogin()">
+                    {{ 'LOGIN.LOGIN' | translate }}
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

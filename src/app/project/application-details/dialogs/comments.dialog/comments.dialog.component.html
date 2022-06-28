@@ -1,0 +1,18 @@
+<h1 mat-dialog-title>{{ 'PROJECTS.APPLICATION_DETAILS.COMMENTS_DIALOG.TITLE' | translate }}</h1>
+<div mat-dialog-content fxLayout="column">
+    <p>{{ 'PROJECTS.APPLICATION_DETAILS.COMMENTS_DIALOG.CONTENT' | translate }}</p>
+
+    <mat-form-field class="w-full mt-4">
+        <mat-label>{{ 'PROJECTS.APPLICATION_DETAILS.COMMENTS_DIALOG.PRINTED_COMMENT' | translate }}</mat-label>
+        <textarea matInput [(ngModel)]="storage.printedComment"></textarea>
+    </mat-form-field>
+
+    <mat-form-field class="w-full mt-6">
+        <mat-label>{{ 'PROJECTS.APPLICATION_DETAILS.COMMENTS_DIALOG.NOTEPAD' | translate }}</mat-label>
+        <textarea matInput [(ngModel)]="storage.nonPrintedComment"></textarea>
+    </mat-form-field>
+</div>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between center">
+    <button mat-button (click)="cancel()">{{ 'GLOBAL.CANCEL' | translate}}</button>
+    <button mat-button (click)="save()" cdkFocusInitial>{{ 'GLOBAL.SAVE' | translate}}</button>
+</div>

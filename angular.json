@@ -1,0 +1,299 @@
+{
+    "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+    "version": 1,
+    "newProjectRoot": "projects",
+    "projects": {
+        "FleetPlan": {
+            "projectType": "application",
+            "schematics": {
+                "@schematics/angular:component": {
+                    "style": "scss"
+                }
+            },
+            "root": "",
+            "sourceRoot": "src",
+            "prefix": "app",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "outputPath": "www",
+                        "index": "src/index.html",
+                        "main": "src/main.ts",
+                        "polyfills": "src/polyfills.ts",
+                        "tsConfig": "tsconfig.app.json",
+                        "allowedCommonJsDependencies": [
+                            "@angular/common/locales/de",
+                            "@angular/common/locales/es",
+                            "@angular/common/locales/fr",
+                            "@angular/common/locales/hu",
+                            "@angular/common/locales/it",
+                            "@angular/common/locales/pl",
+                            "@angular/common/locales/pt",
+                            "@angular/common/locales/se",
+                            "file-saver",
+                            "chart.js",
+                            "kjua",
+                            "angular-calendar/date-adapters/date-fns",
+                            "calendar-utils/date-adapters/date-fns",
+                            "@mattlewis92/dom-autoscroller",
+                            "dom-plane",
+                            "dom-set",
+                            "jszip",
+                            "zone.js/dist/zone-error",
+                            "@babel/runtime-corejs3/core-js-stable/instance/starts-with",
+                            "@babel/runtime-corejs3/core-js-stable/reflect/get-prototype-of",
+                            "@babel/runtime-corejs3/core-js-stable/reflect/apply",
+                            "@babel/runtime-corejs3/core-js-stable/map",
+                            "@babel/runtime-corejs3/core-js-stable/instance/slice",
+                            "@babel/runtime-corejs3/core-js-stable/symbol",
+                            "@babel/runtime-corejs3/core-js-stable/parse-int",
+                            "@babel/runtime-corejs3/core-js-stable/instance/values",
+                            "@babel/runtime-corejs3/core-js-stable/reflect/delete-property",
+                            "@babel/runtime-corejs3/core-js-stable/instance/fill",
+                            "@babel/runtime-corejs3/core-js-stable/instance/index-of",
+                            "@babel/runtime-corejs3/core-js-stable/instance/includes",
+                            "@babel/runtime-corejs3/core-js-stable/instance/some",
+                            "@babel/runtime-corejs3/core-js-stable/instance/reverse",
+                            "@babel/runtime-corejs3/core-js-stable/reflect/construct",
+                            "@babel/runtime-corejs3/core-js-stable/instance/trim",
+                            "@babel/runtime-corejs3/core-js-stable/instance/bind",
+                            "@babel/runtime-corejs3/core-js-stable/promise",
+                            "@babel/runtime-corejs3/core-js-stable/instance/every",
+                            "@babel/runtime-corejs3/core-js-stable/instance/reduce",
+                            "@babel/runtime-corejs3/core-js-stable/instance/concat",
+                            "@babel/runtime-corejs3/core-js-stable/instance/filter",
+                            "@babel/runtime-corejs3/core-js-stable/instance/map",
+                            "@babel/runtime-corejs3/core-js-stable/instance/for-each",
+                            "@babel/runtime-corejs3/core-js-stable/parse-float",
+                            "@babel/runtime-corejs3/core-js/get-iterator-method",
+                            "@babel/runtime-corejs3/core-js/get-iterator",
+                            "@babel/runtime-corejs3/core-js-stable/array/is-array",
+                            "@babel/runtime-corejs3/core-js-stable/array/from",
+                            "@babel/runtime-corejs3/helpers/get",
+                            "@babel/runtime-corejs3/helpers/toConsumableArray",
+                            "@babel/runtime-corejs3/helpers/getPrototypeOf",
+                            "@babel/runtime-corejs3/helpers/possibleConstructorReturn",
+                            "@babel/runtime-corejs3/helpers/inherits",
+                            "@babel/runtime-corejs3/helpers/createClass",
+                            "@babel/runtime-corejs3/helpers/defineProperty",
+                            "@babel/runtime-corejs3/helpers/asyncToGenerator",
+                            "@babel/runtime-corejs3/helpers/slicedToArray",
+                            "@babel/runtime-corejs3/core-js-stable/date/now",
+                            "@babel/runtime-corejs3/core-js-stable/object/keys",
+                            "@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols",
+                            "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor",
+                            "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors",
+                            "@babel/runtime-corejs3/core-js-stable/object/define-properties",
+                            "@babel/runtime-corejs3/core-js-stable/object/define-property",
+                            "@babel/runtime-corejs3/regenerator",
+                            "raf"
+                        ],
+                        "assets": [
+                            "src/favicon.ico",
+                            "src/assets",
+                            "src/manifest.webmanifest"
+                        ],
+                        "styles": [
+                            "src/styles/styles.scss",
+                            "src/styles/LMH-XTRNT-theme.scss",
+                            "src/assets/fonts/material-design/material-icons.css",
+                            "src/assets/fonts/Roboto/Roboto.css",
+                            "node_modules/ngx-toastr/toastr.css",
+                            "src/styles/toolbox.css",
+                            "src/styles/LMH-styles/LMH-other.scss",
+                            "src/styles/LMH-styles/LMH-buttons.scss",
+                            "src/styles/LMH-styles/LMH-menu.scss",
+                            "src/styles/LMH-styles/LMH-checkboxes.scss",
+                            "src/styles/LMH-styles/LMH-inputs.scss",
+                            "src/styles/LMH-styles/LMH-radio-buttons.scss",
+                            "src/styles/LMH-styles/LMH-tables.scss",
+                            "src/styles/fleetplan.scss",
+                            "node_modules/leaflet/dist/leaflet.css",
+                            "node_modules/leaflet-draw/dist/leaflet.draw.css"
+                        ],
+                        "scripts": [
+                            "src/assets/libs/static.js",
+                            "src/assets/libs/code128.js",
+                            "src/assets/libs/pdfjs/pdf.js",
+                            "src/assets/libs/pdfjs/pdf.worker.js",
+                            "src/assets/libs/xml2json.min.js",
+                            "src/assets/libs/kjua.min.js",
+                            "node_modules/jszip/dist/jszip.js",
+                            "src/assets/libs/RamaniMap.js"
+                        ],
+                        "vendorChunk": true,
+                        "extractLicenses": false,
+                        "buildOptimizer": false,
+                        "sourceMap": true,
+                        "optimization": false,
+                        "namedChunks": true
+                    },
+                    "configurations": {
+                        "production": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.prod.ts"
+                                }
+                            ],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "namedChunks": false,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [
+                                {
+                                    "type": "initial",
+                                    "maximumWarning": "10mb",
+                                    "maximumError": "14mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "100kb"
+                                }
+                            ]
+                        },
+                        "lindeD97": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.d97.ts"
+                                }
+                            ],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "namedChunks": false,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [
+                                {
+                                    "type": "initial",
+                                    "maximumWarning": "9mb",
+                                    "maximumError": "12mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "60kb"
+                                }
+                            ]
+                        },
+                        "dev": {
+                            "budgets": [
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "6kb"
+                                }
+                            ],
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.dev.ts"
+                                }
+                            ]
+                        }
+                    },
+                    "defaultConfiguration": ""
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "options": {
+                        "browserTarget": "FleetPlan:build",
+                        "port": 4200,
+                        "proxyConfig": "proxy.conf.json"
+                    },
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "FleetPlan:build:production"
+                        },
+                        "dev": {
+                            "browserTarget": "FleetPlan:build:dev"
+                        }
+                    }
+                },
+                "extract-i18n": {
+                    "builder": "@angular-devkit/build-angular:extract-i18n",
+                    "options": {
+                        "browserTarget": "FleetPlan:build"
+                    }
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "src/test.ts",
+                        "polyfills": "src/polyfills.ts",
+                        "tsConfig": "tsconfig.spec.json",
+                        "karmaConfig": "karma.conf.js",
+                        "assets": [
+                            "src/favicon.ico",
+                            "src/assets",
+                            "src/manifest.webmanifest",
+                            "src/favicon.ico",
+                            "src/assets",
+                            {
+                                "glob": "**/*",
+                                "input": "node_modules/ngx-extended-pdf-viewer/assets/locale",
+                                "output": "/assets/locale/"
+                            },
+                            {
+                                "glob": "**/*",
+                                "input": "node_modules/ngx-extended-pdf-viewer/assets/images",
+                                "output": "/assets/images/"
+                            },
+                            {
+                                "glob": "**/pdf.worker*.js",
+                                "input": "node_modules/ngx-extended-pdf-viewer/assets",
+                                "output": "/assets/"
+                            },
+                            "src/manifest.webmanifest"
+                        ],
+                        "styles": [
+                            "src/styles.scss",
+                            "src/toolbox.css",
+                            "node_modules/leaflet/dist/leaflet.css",
+                            "node_modules/leaflet-draw/dist/leaflet.draw.css"
+                        ],
+                        "scripts": [
+                            "src/assets/libs/static.js",
+                            "src/assets/libs/code128.js",
+                            "src/assets/libs/pdfjs/pdf.js",
+                            "src/assets/libs/STPadServerLib-3.1.0.js",
+                            "src/assets/libs/xml2json.min.js",
+                            "node_modules/ngx-extended-pdf-viewer/assets/pdf.js",
+                            "node_modules/ngx-extended-pdf-viewer/assets/viewer.js",
+                            "src/assets/libs/RamaniMap.js"
+                        ]
+                    }
+                },
+                "e2e": {
+                    "builder": "@angular-devkit/build-angular:protractor",
+                    "options": {
+                        "protractorConfig": "e2e/protractor.conf.js",
+                        "devServerTarget": "FleetPlan:serve"
+                    },
+                    "configurations": {
+                        "production": {
+                            "devServerTarget": "FleetPlan:serve:production"
+                        }
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-eslint/builder:lint",
+                    "options": {
+                        "lintFilePatterns": [
+                            "src/**/*.ts",
+                            "src/**/*.html"
+                        ]
+                    }
+                }
+            }
+        }
+    },
+    "defaultProject": "FleetPlan",
+    "cli": {
+      "analytics": "60e6bdb2-a4fc-40e4-8f6f-e8bd87f26b13",
+        "defaultCollection": "@angular-eslint/schematics"
+    }
+}

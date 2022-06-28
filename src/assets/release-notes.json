@@ -1,0 +1,20 @@
+{
+	"LSM_V1.0.0b0": {
+		"d": null,
+		"v": "1.0.0b0",
+		"en": {
+			"t": "FleetPlan - Version 1.0.0",
+			"CHANGE": [
+				"This relase fixes:",
+				" - new version"
+			]
+		},
+		"de": {
+            "t": "FleetPlan - Version 1.0.0",
+			"CHANGE": [
+				"Neuigkeiten:",
+				" - neue version"
+			]
+		}
+	}
+}

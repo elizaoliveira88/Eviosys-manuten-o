@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=0"/>
+        <meta charset="utf-8">
+        <title>Aplicação Cunhos</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta http-equiv="encoding" content="utf-8">
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta http-equiv="Content-Security-Policy"
+              content="default-src * blob:; object-src *; img-src * 'self' data:; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+        <!-- todo: change script src and img src and style src and font src back to 'self' and only allow google api -->
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+        <link rel="icon" type="image/x-icon" href="favicon.ico">
+        <link rel="manifest" href="assets/manifest.json">
+        <meta name="theme-color" content="#BA1126">
+
+        <meta name="application-name" content="FP">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+        <meta name="apple-mobile-web-app-title" content="FleetPlan">
+        <link rel="apple-touch-icon" href="assets/icons/lms_app_icon.png"/>
+        <meta name="msapplication-starturl" content="/index.html">
+        <link href="assets/splashscreens/iphone5_splash.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image"/>
+        <link href="assets/splashscreens/iphone6_splash.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image"/>
+        <link href="assets/splashscreens/iphoneplus_splash.png" media="(device-width: 621px) and (device-height: 1104px) and (-webkit-device-pixel-ratio: 3)" rel="apple-touch-startup-image"/>
+        <link href="assets/splashscreens/iphonex_splash.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)" rel="apple-touch-startup-image"/>
+        <link href="assets/splashscreens/iphonexr_splash.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image"/>
+        <link href="assets/splashscreens/iphonexsmax_splash.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3)" rel="apple-touch-startup-image"/>
+        <link href="assets/splashscreens/ipad_splash.png" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image"/>
+        <link href="assets/splashscreens/ipadpro1_splash.png" media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image"/>
+        <link href="assets/splashscreens/ipadpro3_splash.png" media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image"/>
+        <link href="assets/splashscreens/ipadpro2_splash.png" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image"/>
+
+        <!-- Load environment variables -->
+        <script src="assets/env/env.js"></script>
+
+    </head>
+    <body class="notranslate">
+        <app-boot>
+            <style>
+                app-root,
+                app-boot {
+                    color: #fcb900;
+                    text-align: center;
+                    vertical-align: middle;
+                }
+
+                .loading {
+                    text-align: center;
+                    position: fixed;
+                    top: 50%;
+                    left: 0px;
+                    right: 0px;
+                    margin: 16px;
+                    padding: 16px;
+                    border-radius: 10px;
+                    margin-top: -70px;
+                }
+
+                .loading .loadingDataInfo {
+                    width: 320px;
+                    margin: 0 auto;
+                    text-align: left;
+                    font-family: monospace !important;
+                }
+
+                .loading .loadingDataInfo.ok {
+                    color: green;
+                }
+
+                .loading .loadingDataInfo.inprogress {
+                    color: orange;
+                }
+
+                .loading .loadingDataInfo.error {
+                    font-weight: bold;
+                }
+
+                @media only screen and (max-width: 801px) {
+                    .loading {
+                        background-color: rgba(0,0,0,0.7);
+                    }
+                }
+
+                .loading .loadingDataInfo.inprogress::after {
+                    font-family: monospace !important;
+                    content: '';
+                	animation: textSpinner 0.8s linear infinite;
+                }
+
+                @keyframes textSpinner {
+                    0% {
+                        content: " |";
+                    }
+                    25% {
+                        content: " /";
+                    }
+                    50% {
+                        content: " -";
+                    }
+                    75% {
+                        content: " \\";
+                    }
+                    100% {
+                        content: " |";
+                    }
+                }
+            </style>
+            <div class="loading" id="loadingInfo">
+                <div style="margin-bottom: 16px;">LOADING APP CUNHOS APPLICATION .....</div>
+            </div>
+        </app-boot>
+        <noscript>Please enable JavaScript to continue using this application.</noscript>
+    </body>
+</html>

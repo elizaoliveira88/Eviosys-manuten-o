@@ -1,0 +1,32 @@
+.container{
+    margin: 12px 0;
+    height: 40px;
+    box-shadow: var(--box-shadow);
+    border-color:transparent!important;
+}
+
+.btn{
+    font-size: var(--font-size-txt);
+    border-color:transparent!important;
+    min-width:94px;
+}
+:first-child{
+    border-radius: var(--btn-border-radius)  0 0 var(--btn-border-radius);
+}
+:last-child{
+    border-radius: 0 var(--btn-border-radius) var(--btn-border-radius) 0;
+}
+.btn.mat-button-toggle{
+    background-color: var(--btn-background);
+    color: var(--txt-on-btn)!important;
+}
+.btn.mat-button-toggle-checked {
+    background-color: var(--btn-background-selected);
+    color: var(--txt-on-btn-selected)!important;
+}
+
+::ng-deep .mat-button-toggle-ripple { border-radius: inherit }
+
+::ng-deep.mat-button-toggle-button{
+    height:100%;
+}

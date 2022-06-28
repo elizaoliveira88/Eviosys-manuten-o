@@ -1,0 +1,80 @@
+[
+    {
+        "name": "Beeper 1",
+        "type": {
+            "name": "beeper"
+        },
+        "mac": "0011001100110021",
+        "firmware": "2.3.1",
+        "bootloader": "1",
+        "warningRange": 2,
+        "posX": 100,
+        "posY": 700
+    },
+    {
+        "name": "Beeper 2",
+        "type": {
+            "name": "beeper"
+        },
+        "mac": "0044001100110033",
+        "firmware": "2.3.1",
+        "bootloader": "2",
+        "warningRange": 1.5,
+        "posX": 30,
+        "posY": 5
+    },
+    {
+        "name": "Beeper 3",
+        "type": {
+            "name": "beeper"
+        },
+        "mac": "0099001100110099",
+        "firmware": "2.3.1",
+        "bootloader": "4",
+        "warningRange": 2,
+        "posX": 20,
+        "posY": 15
+    },
+    {
+        "name": "Zone Marker 1",
+        "type": {
+            "name": "zonemarker"
+        },
+        "mac": "0086001100110086",
+        "firmware": "2.3.1",
+        "bootloader": "1",
+        "warningRange": 5,
+        "posX": 20,
+        "posY": 10
+    },
+    {
+        "name": "Zone Marker 2",
+        "type": {
+            "name": "zonemarker"
+        },
+        "mac": "0031001100110031",
+        "firmware": "2.3.1",
+        "bootloader": "2",
+        "warningRange": 10,
+        "posX": 25,
+        "posY": 20
+    },
+    {
+        "name": "TruckUnit 1",
+        "type": {
+            "name": "truckUnit"
+        },
+        "mac": "5631001100110031",
+        "firmware": "2.3.1",
+        "bootloader": "2"
+    },
+    {
+        "name": "TruckUnit 2",
+        "type": {
+            "name": "truckUnit"
+        },
+        "mac": "9991001100110999",
+        "firmware": "2.3.1",
+        "bootloader": "1"
+    }
+]

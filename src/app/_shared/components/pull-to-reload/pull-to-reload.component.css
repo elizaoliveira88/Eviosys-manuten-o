@@ -1,0 +1,7 @@
+::ng-deep .mat-progress-spinner circle,
+.mat-spinner circle {
+    stroke: #aa0020;
+}
+::ng-deep .mat-progress-spinner circle {
+    transition: unset !important;
+}

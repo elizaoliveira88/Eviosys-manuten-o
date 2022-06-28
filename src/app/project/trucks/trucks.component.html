@@ -1,0 +1,216 @@
+<div class="appFrame" fxLayout="column" fxLayoutAlign="start start">
+    <div fxLayout="column">
+        <h1>{{'PROJECTS.TRUCKS.TITLE' | translate}}</h1>
+        <h2>{{'PROJECTS.TRUCKS.SUB' | translate}}</h2>
+    </div>
+
+    <div fxLayout="row wrap" fxLayoutAlign="start center" class="w-full tableToolbar">
+        <h3>{{'PROJECTS.TRUCKS.TYPES' | translate}} ({{storage.selectedTruckTypes.length}} {{'PROJECTS.TRUCKS.OF' | translate}} {{storage.allTruckTypes.length}} {{'PROJECTS.TRUCKS.SELECTED' | translate}})</h3>
+        <div fxFlex></div>
+    </div>
+    <mat-divider class="w-full"></mat-divider>
+    <div class="w-full" fxLayout="row" fxLayoutAlign="start center">
+        <mat-form-field class="truck-type-selection" appearance="standard">
+            <mat-chip-list #chipList aria-label="Truck type selection">
+                <input class="truck-type-input"
+                    placeholder="New fruit..."
+                    #typeInput
+                    [formControl]="truckTypeSelectionForm"
+                    [matAutocomplete]="auto"
+                    [matChipInputFor]="chipList"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
+                <mat-chip
+                    *ngFor="let type of storage.selectedTruckTypes"
+                    (removed)="removeType(type)">
+                    {{'TRUCK_TYPES.'+type.toUpperCase() | translate}}
+                    <button matChipRemove>
+                        <mat-icon>cancel</mat-icon>
+                    </button>
+                </mat-chip>
+            </mat-chip-list>
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="typeSelected($event)">
+                <mat-option *ngFor="let tr of filteredTruckTypes | async" [value]="tr">
+                    {{'TRUCK_TYPES.'+tr.toUpperCase() | translate}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </div>
+
+    <div fxLayout="row wrap" fxLayoutAlign="start center" class="w-full tableToolbar">
+        <h3>{{'PROJECTS.TRUCKS.SERIES' | translate}} ({{storage.selectedTruckClasses.length}} {{'PROJECTS.TRUCKS.OF' | translate}} {{storage.displayedTruckClasses.length}} {{'PROJECTS.TRUCKS.SELECTED' | translate}})</h3>
+        <div fxFlex></div>
+    </div>
+    <mat-divider class="w-full"></mat-divider>
+    <div class="w-full">
+        <div class="truck-class-container mt-4" [ngClass]="{'selected-class':storage.selectedTruckClasses.indexOf(truckClass)>-1}" fxLayout="column" fxLayoutAlign="center center" *ngFor="let truckClass of storage.displayedTruckClasses" (click)="selectTruckClass(truckClass)">
+            <img src="{{('assets/img/truckPics/'+storage.truckClassImages[truckClass] +'.png')}}" onerror="this.src='assets/img/truckPics/default_stapler.png'" style="height: 50px;width: 50px;" />
+            <span class="text-tertiary mt-1">{{truckClass}}</span>
+            <mat-icon *ngIf="storage.selectedTruckClasses.indexOf(truckClass)>-1" class="selected-indicator">check_circle_outline</mat-icon>
+        </div>
+        <div class="truck-class-container mt-4" [ngClass]="{'selected-class':storage.selectedTruckClasses.indexOf(trailerClass)>-1}" fxLayout="column" fxLayoutAlign="center center" *ngFor="let trailerClass of storage.displayedTrailerClasses" (click)="selectTruckClass(trailerClass)">
+            <img src="{{('assets/img/Trailer/'+storage.truckClassImages[trailerClass] +'.png')}}" onerror="this.src='assets/img/Trailer/defaultTrailer.png'" style="height: 50px;width: 50px;" />
+            <span class="text-tertiary mt-1">{{trailerClass}}</span>
+            <mat-icon *ngIf="storage.selectedTruckClasses.indexOf(trailerClass)>-1" class="selected-indicator">check_circle_outline</mat-icon>
+        </div>
+    </div>
+
+
+    <div fxLayout="row wrap" fxLayoutAlign="start center" class="w-full tableToolbar mt-8">
+        <h3>{{'PROJECTS.TRUCKS.SELECTABLE_TRUCKS' | translate}} ({{storage.selectableTrucks.length}})</h3>
+        <div fxFlex></div>
+    </div>
+    <mat-divider class="w-full"></mat-divider>
+    <mat-table mat-table class="w-full mt-4" [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" [matSortActive]="displayedColumns[1]" matSortDirection="asc" matSortDisableClear>
+
+        <ng-container *ngFor="let col of displayedColumns; let index = index" [matColumnDef]="col">
+            <mat-header-cell mat-header-cell mat-sort-header="{{col}}" class="project-trucks-table-column-{{col}}" *matHeaderCellDef>
+                <span *ngIf="col.indexOf('BTN_')===-1 && col!=='IMG'">{{col}}</span>
+            </mat-header-cell>
+            <mat-cell class="project-trucks-table-column-{{col}}" *matCellDef="let element">
+                <ng-container *ngIf="col.indexOf('BTN')===-1 && col !== 'IMG' && col!=='class'">
+                    <span *ngIf="element[col] && element[col]!==''">{{element[col]}}</span>
+                    <span *ngIf="!element[col] || element[col]===''">-</span>
+                </ng-container>
+
+                <ng-container *ngIf="col === 'class'">
+                   <ng-container *ngIf="element['type']==='truck'">
+                       <span *ngIf="element[col] && element[col]!==''">{{element['truckClass']}}</span>
+                       <span *ngIf="!element[col] || element[col]===''">-</span>
+                   </ng-container>
+                    <ng-container *ngIf="element['type']==='trailer'">
+                        <span *ngIf="element[col] && element[col]!==''">{{element['trailerClass']}}</span>
+                        <span *ngIf="!element[col] || element[col]===''">-</span>
+                    </ng-container>
+                </ng-container>
+
+                <ng-container *ngIf="col === 'IMG'">
+                    <div class="img-container-table mr-2" fxLayout="row" fxLayoutAlign="start center">
+                        <img *ngIf="element['type']==='truck'" class="table-type-image" src="{{('assets/img/truckPics/'+element['truckPicId']+'.png')}}">
+                        <img *ngIf="element['type']==='trailer'" class="table-type-image" src="{{('assets/img/Trailer/'+element['trailerPicId']+'.png')}}">
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="col==='BTN_ADD'">
+                    <button *ngIf="element['type']==='truck'" [disabled]="storage.selectedTrucksStrings.indexOf(element.id)>-1" mat-icon-button (click)="addProjectTruck(element, 'truck'); $event.stopPropagation()">
+                        <mat-icon style="margin:0!important;">add_circle_outline</mat-icon>
+                    </button>
+                    <button *ngIf="element['type']==='trailer'" [disabled]="storage.selectedTrailerStrings.indexOf(element.id)>-1" mat-icon-button (click)="addProjectTruck(element, 'trailer'); $event.stopPropagation()">
+                        <mat-icon style="margin:0!important;">add_circle_outline</mat-icon>
+                    </button>
+                </ng-container>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row class="element-row" [class.even]="i % 2 !== 0" mat-row
+                 *matRowDef="let row; columns: displayedColumns; let i = index;"></mat-row>
+        <div class="w-full h-[48px]" fxLayout="row" fxLayoutAlign="center center" *matNoDataRow>
+            <mat-icon>info_outline</mat-icon>
+            <span class="ml-2">{{ 'PROJECTS.TRUCKS.NOCOMPONENTS' | translate }}</span>
+        </div>
+    </mat-table>
+
+
+    <div fxLayout="row wrap" fxLayoutAlign="start center" class="w-full tableToolbar mt-8">
+        <h3>{{'PROJECTS.TRUCKS.PROJECT_TRUCKS' | translate}} ({{storage.selectedTrucks.length}})</h3>
+        <div fxFlex></div>
+    </div>
+    <mat-divider class="w-full"></mat-divider>
+    <mat-table mat-table class="w-full mt-4" [dataSource]="dataSourceSelectedTrucks" matSort (matSortChange)="sortDataSelected($event)" [matSortActive]="displayedColumnsSelected[1]" matSortDirection="asc" matSortDisableClear>
+
+        <ng-container *ngFor="let col of displayedColumnsSelected; let index = index" [matColumnDef]="col">
+            <mat-header-cell mat-header-cell mat-sort-header="{{col}}" class="project-trucks-table-column-{{col}}" *matHeaderCellDef>
+                <span *ngIf="col.indexOf('BTN_')===-1 && col!=='IMG'">{{col}}</span>
+            </mat-header-cell>
+            <mat-cell class="project-trucks-table-column-{{col}}" *matCellDef="let element">
+                <ng-container *ngIf="col==='BTN_ACTIVE'">
+                    <mat-checkbox [(ngModel)]="element['active']" (change)="toggleProjectTruck(element, $event);" (click)="$event.stopPropagation()"></mat-checkbox>
+                </ng-container>
+
+                <ng-container *ngIf="col.indexOf('BTN')===-1 && col !== 'IMG' && col!=='class'">
+                    <span *ngIf="element[col] && element[col]!==''">{{element[col]}}</span>
+                    <span *ngIf="!element[col] || element[col]===''">-</span>
+                </ng-container>
+
+                <ng-container *ngIf="col === 'IMG'">
+                    <div class="img-container-table mr-2" fxLayout="row" fxLayoutAlign="start center">
+                        <img class="table-type-image" src="{{('assets/img/truckPics/'+element['truckPicId']+'.png')}}">
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="col === 'class'">
+                    <span *ngIf="element['truckClass'] && element['truckClass']!==''">{{element['truckClass']}}</span>
+                    <span *ngIf="!element['truckClass'] || element['truckClass']===''">-</span>
+                </ng-container>
+
+
+                <ng-container *ngIf="col==='BTN_REMOVE'">
+                    <button mat-icon-button (click)="removeProjectTruck(element); $event.stopPropagation()">
+                        <mat-icon style="margin:0!important;">remove_circle_outline</mat-icon>
+                    </button>
+                </ng-container>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumnsSelected"></mat-header-row>
+        <mat-row class="element-row" [class.even]="i % 2 !== 0" mat-row
+                 *matRowDef="let row; columns: displayedColumnsSelected; let i = index;" style="cursor:pointer;" (click)="openTruckDetails(row)"></mat-row>
+        <div class="w-full h-[48px]" fxLayout="row" fxLayoutAlign="center center" *matNoDataRow>
+            <mat-icon>info_outline</mat-icon>
+            <span class="ml-2">{{ 'PROJECTS.TRUCKS.NOCOMPONENTS' | translate }}</span>
+        </div>
+    </mat-table>
+
+
+    <div fxLayout="row wrap" fxLayoutAlign="start center" class="w-full tableToolbar mt-8">
+        <h3>{{'PROJECTS.TRUCKS.PROJECT_TRAILERS' | translate}} ({{storage.selectedTrailers.length}})</h3>
+        <div fxFlex></div>
+    </div>
+    <mat-divider class="w-full"></mat-divider>
+    <mat-table mat-table class="w-full mt-4" [dataSource]="dataSourceSelectedTrailers" matSort (matSortChange)="sortDataSelected($event)" [matSortActive]="displayedColumnsSelected[1]" matSortDirection="asc" matSortDisableClear>
+
+        <ng-container *ngFor="let col of displayedColumnsSelected; let index = index" [matColumnDef]="col">
+            <mat-header-cell mat-header-cell mat-sort-header="{{col}}" class="project-trucks-table-column-{{col}}" *matHeaderCellDef>
+                <span *ngIf="col.indexOf('BTN_')===-1 && col!=='IMG'">{{col}}</span>
+            </mat-header-cell>
+            <mat-cell class="project-trucks-table-column-{{col}}" *matCellDef="let element">
+                <ng-container *ngIf="col==='BTN_ACTIVE'">
+                    <mat-checkbox [(ngModel)]="element['active']" (change)="toggleProjectTruck(element, $event);" (click)="$event.stopPropagation()"></mat-checkbox>
+                </ng-container>
+
+                <ng-container *ngIf="col.indexOf('BTN')===-1 && col !== 'IMG' && col!=='class'">
+                    <span *ngIf="element[col] && element[col]!==''">{{element[col]}}</span>
+                    <span *ngIf="!element[col] || element[col]===''">-</span>
+                </ng-container>
+
+                <ng-container *ngIf="col === 'IMG'">
+                    <div class="img-container-table mr-2" fxLayout="row" fxLayoutAlign="start center">
+                        <img class="table-type-image" src="{{('assets/img/Trailer/'+element['trailerPicId']+'.png')}}">
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="col === 'class'">
+                    <span *ngIf="element['trailerClass'] && element['trailerClass']!==''">{{element['trailerClass']}}</span>
+                    <span *ngIf="!element['trailerClass'] || element['trailerClass']===''">-</span>
+                </ng-container>
+
+
+                <ng-container *ngIf="col==='BTN_REMOVE'">
+                    <button mat-icon-button (click)="removeProjectTruck(element); $event.stopPropagation()">
+                        <mat-icon style="margin:0!important;">remove_circle_outline</mat-icon>
+                    </button>
+                </ng-container>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumnsSelected"></mat-header-row>
+        <mat-row class="element-row" [class.even]="i % 2 !== 0" mat-row
+                 *matRowDef="let row; columns: displayedColumnsSelected; let i = index;" style="cursor:pointer;" (click)="openTruckDetails(row)"></mat-row>
+        <div class="w-full h-[48px]" fxLayout="row" fxLayoutAlign="center center" *matNoDataRow>
+            <mat-icon>info_outline</mat-icon>
+            <span class="ml-2">{{ 'PROJECTS.TRUCKS.NOCOMPONENTS' | translate }}</span>
+        </div>
+    </mat-table>
+
+
+</div>

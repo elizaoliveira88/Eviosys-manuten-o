@@ -1,0 +1,5 @@
+{
+    "alternativeTranslationJson": {
+    },
+    "INTERPOLATION LIKE {{ orderid }} IS !!!NOT!!!! WORKING HERE CAUSE ITS THE missingTranslation HANDLER .. to test it copy it to translation file ...": ""
+}

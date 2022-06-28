@@ -1,0 +1,30 @@
+
+.templaterRowLayoutBtn{
+    width:100px;
+    min-width:100px;
+    max-width:100px;
+    height:100px;
+    min-height:100px;
+    max-height:100px;
+    margin:10px 5px;
+    border-radius:4px;
+    background-color: #717171;
+    position: relative;
+    cursor:pointer;
+}
+
+.templaterRowLayoutBtn:hover{
+    background-color: #b5b5b5;
+}
+
+.formContainer{
+    background-color: white;
+    border: 1px solid #8c8c8c;
+    position: relative;
+    width:80px;
+    min-width:80px;
+    max-width:80px;
+    height:60px;
+    min-height:60px;
+    max-height:60px;
+}

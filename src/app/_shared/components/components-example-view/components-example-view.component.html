@@ -1,0 +1,170 @@
+<div fxLayout="row" fxLayoutAlign="start start">
+
+    <mat-radio-group aria-label="Select an option" [(ngModel)]="selectedTheme" (ngModelChange)="switchTheme(selectedTheme)" class="m-8">
+        <mat-radio-button value="Linde"><span style="color:#aa0020; font-weight:var(--font-weight-bold)">Linde</span></mat-radio-button>
+        <mat-radio-button value="Still"><span style="color:#F96915; font-weight:var(--font-weight-bold)">Still</span></mat-radio-button>
+    </mat-radio-group>
+
+
+    <div fxFlex="50">
+        <ng-template [ngTemplateOutlet]="allExamples"></ng-template>
+    </div>
+    <div fxFlex="50" style="background-color: lightgrey;">
+        <ng-template [ngTemplateOutlet]="allExamples"></ng-template>
+    </div>
+
+</div>
+
+
+<ng-template #allExamples>
+    <div class="margin-all" fxLayout="column" fxLayoutAlign="start start" style="padding:12px;">
+        <div fxLayout="column">
+            <h1>Example Header 1</h1>
+            <h2>Subheader example</h2>
+        </div>
+        <button><span>Text in span in button</span></button>
+        <button><span>Text in button</span></button>
+        <span>Text in span</span>
+        <div class="w-full" fxLayout="row" fxLayoutAlign="space-between center">
+            <div class="margin-all" fxLayout="column">
+                <button mat-button><mat-icon>person</mat-icon><span>{{'HOME.WELCOME.ADD_PROJECT_BTN' | translate}}</span></button>
+                <button mat-raised-button><mat-icon>create_new_folder</mat-icon>{{'HOME.WELCOME.ADD_FOLDER_BTN' | translate}}</button>
+                <button mat-stroked-button><mat-icon>person</mat-icon>Basic</button>
+            </div>
+        </div>
+
+        <span matBadge="4" matBadgeOverlap="false" class="mt-8">Text with a badge</span>
+
+        <mat-tab-group animationDuration="0ms">
+            <mat-tab label="First">Content 1</mat-tab>
+            <mat-tab label="Second Label Test">Content 2</mat-tab>
+            <mat-tab label="Third">Content 3</mat-tab>
+        </mat-tab-group>
+
+        <mat-slider [disabled]="true" aria-label="unit(s)"></mat-slider>
+
+        <mat-slider
+            thumbLabel
+            tickInterval="1000"
+            step="1000"
+            min="0"
+            max="100000"
+            aria-label="units"></mat-slider>
+
+        <mat-spinner></mat-spinner>
+
+        <mat-slide-toggle><span>Slide me!</span></mat-slide-toggle>
+
+        <ito-flex-table style="width:100%;" [dataSource]="dataSource" [tableDefinition]="tableDefinition"></ito-flex-table>
+
+        <ito-flex-table style="width:100%; margin-top:30px;" [small]="true" [dataSource]="dataSource" [tableDefinition]="tableDefinition"></ito-flex-table>
+
+        <button mat-button [matMenuTriggerFor]="menu">Menu</button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item>Item 1</button>
+            <button mat-menu-item>Item 2</button>
+        </mat-menu>
+
+        <mat-chip-list aria-label="Fish selection">
+            <mat-chip>One fish</mat-chip>
+            <mat-chip>Two fish</mat-chip>
+            <mat-chip color="primary" selected>Primary fish</mat-chip>
+            <mat-chip color="accent" selected>Accent fish</mat-chip>
+        </mat-chip-list>
+
+        <mat-form-field class="example-chip-list" style="width:100%">
+            <mat-label>Favorite Fruits</mat-label>
+            <mat-chip-list #chipList aria-label="Fruit selection">
+                <mat-chip *ngFor="let fruit of fruits" (removed)="remove(fruit)">
+                    {{fruit.name}}
+                    <button matChipRemove>
+                        <mat-icon>cancel</mat-icon>
+                    </button>
+                </mat-chip>
+                <input placeholder="New fruit..." matInput
+                       [matChipInputFor]="chipList"
+                       [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                       [matChipInputAddOnBlur]="addOnBlur"
+                       (matChipInputTokenEnd)="add($event)">
+            </mat-chip-list>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Favorite food</mat-label>
+            <mat-select [value]="'test'">
+                <mat-option [value]="'x'">
+                    test
+                </mat-option>
+                <mat-option [value]="'test'">
+                    test 2
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+
+        <section class="example-section">
+            <mat-checkbox class="example-margin">Check me!</mat-checkbox>
+            <mat-checkbox class="example-margin ml-4" [disabled]="true" [checked]="true">Disabled</mat-checkbox>
+        </section>
+
+        <mat-radio-group aria-label="Select an option">
+            <mat-radio-button value="1">Option 1</mat-radio-button>
+            <mat-radio-button value="2">Option 2</mat-radio-button>
+        </mat-radio-group>
+
+        <mat-radio-group disabled aria-label="Select an option">
+            <mat-radio-button value="1">Option 1</mat-radio-button>
+            <mat-radio-button value="2">Option 2</mat-radio-button>
+        </mat-radio-group>
+
+        <mat-form-field>
+            <mat-label>Favorite food</mat-label>
+            <input matInput>
+        </mat-form-field>
+
+        <mat-form-field class="mt-4">
+            <mat-select multiple>
+                <div fxLayout="row" class="no-label-padding">
+                    <mat-form-field floatLabel="never" class="select-search" fxFlex>
+                        <mat-label>Search...</mat-label>
+                        <input class="search-inset" matInput [(ngModel)]="searchTerm" />
+                    </mat-form-field>
+                </div>
+
+                <mat-option *ngFor="let el of fruits" [value]="el">{{el.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <button mat-button>Basic</button>
+        <button mat-button class="btn-icon"><mat-icon>add</mat-icon></button>
+        <button mat-button class="btn-gray"><mat-icon>add</mat-icon>Add</button>
+        <button mat-button class="btn-gray btn-icon"><mat-icon>close</mat-icon></button>
+        <button mat-button color="primary" class="btn-small"><mat-icon>person</mat-icon>Test</button>
+        <button mat-button color="primary" class="btn-small"><mat-icon>person</mat-icon></button>
+        <button mat-raised-button class="btn-small"><mat-icon>person</mat-icon>Test</button>
+        <button mat-button color="accent">Accent</button>
+        <button mat-button color="warn">Warn</button>
+        <button mat-button disabled>Disabled</button>
+        <button mat-button class="btn-icon" [disabled]="true"><mat-icon>delete</mat-icon></button>
+
+
+        <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+            <mat-button-toggle value="bold">Bold</mat-button-toggle>
+            <mat-button-toggle value="italic">Italic</mat-button-toggle>
+            <mat-button-toggle value="underline">Underline</mat-button-toggle>
+        </mat-button-toggle-group>
+
+        <button mat-raised-button>Basic</button>
+        <button mat-raised-button color="primary">Primary</button>
+        <button mat-raised-button color="accent">Accent</button>
+        <button mat-raised-button color="warn">Warn</button>
+        <button mat-raised-button disabled>Disabled</button>
+
+        <button mat-stroked-button><mat-icon>person</mat-icon>Basic</button>
+        <button mat-stroked-button color="primary">Primary</button>
+        <button mat-stroked-button color="accent">Accent</button>
+        <button mat-stroked-button color="warn">Warn</button>
+        <button mat-stroked-button disabled>Disabled</button>
+    </div>
+
+</ng-template>

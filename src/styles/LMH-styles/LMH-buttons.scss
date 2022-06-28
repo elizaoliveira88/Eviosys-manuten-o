@@ -1,0 +1,154 @@
+.theme-LMH {
+
+    .topSlot .mat-button {
+        font-size: 12px;
+        text-transform: uppercase;
+        top: 2px;
+        position: relative;
+        color: var(--gray-600);
+    }
+    .topSlot .mat-button mat-icon {
+        top: -3px;
+        position: relative;
+    }
+
+    .mat-button-toggle {
+        border: var(--border-width-primary) transparent;
+        color:var(--gray-900)!important;
+    }
+
+    .mat-button-toggle:not(.mat-button-toggle-checked) {
+        border: var(--border-width-primary) var(--button-gray-border);
+    }
+
+    .mat-button-toggle-checked {
+        background-color: var(--brand-500)!important;
+        color:var(--white)!important;
+    }
+
+    .mat-button-toggle-standalone.mat-button-toggle-appearance-standard, .mat-button-toggle-group-appearance-standard {
+        border: none!important;
+        border-radius: 0!important;
+    }
+
+    .mat-raised-button{
+        min-width: 160px!important;
+        height: 48px!important;
+        line-height: 48px!important;
+        font-weight:var(--font-weight-regular)!important;
+        border-radius: 0!important;
+        background: var(--button-primary)!important;
+        box-shadow: none!important;
+        color:var(--white)!important;
+        font-size: var(--body-font-size-m)!important;
+    }
+
+    .mat-raised-button.mat-button-disabled{
+        background: var(--button-secondary)!important;
+        color:var(--text-400)!important;
+        font-size: var(--body-font-size-m)!important;
+    }
+
+    .mat-button:not(.mainMenu):not(.subMenu):not(.btn-small):not([disabled]){
+        height: 48px!important;
+        line-height: 48px!important;
+        font-weight:var(--font-weight-regular)!important;
+        border-radius: 0!important;
+        background: transparent!important;
+        color:var(--gray-900)!important;
+        font-size: var(--body-font-size-m)!important;
+    }
+
+    .mat-button[disabled] {
+        height: 48px!important;
+        line-height: 48px!important;
+        font-weight:var(--font-weight-regular)!important;
+        border-radius: 0!important;
+        font-size: var(--body-font-size-m)!important;
+    }
+
+    .mat-button:not(.btn-icon), .mat-raised-button:not(.btn-icon), .mat-stroked-button:not(.btn-icon){
+        .mat-button-wrapper{
+            .mat-icon{
+                margin-right: var(--s-space-xxs)!important;
+            }
+        }
+    }
+
+    .mat-button.mat-button-disabled{
+        border: var(--border-width-primary) var(--button-light-gray-border)!important;
+        color:var(--text-400)!important;
+        font-size: var(--body-font-size-m)!important;
+    }
+
+    .mat-stroked-button{
+        min-width: 160px!important;
+        height: 48px!important;
+        line-height: 48px!important;
+        font-weight:var(--font-weight-regular)!important;
+        border-radius: 0!important;
+        background: var(--white)!important;
+        border: var(--border-width-primary) var(--brand-500)!important;
+        color:var(--brand-500)!important;
+        font-size: var(--body-font-size-m)!important;
+
+        .mat-icon{
+            font-size: 24px!important;
+        }
+    }
+
+    .mat-stroked-button.mat-button-disabled{
+        border: var(--border-width-primary) var(--button-light-gray-border)!important;
+        color:var(--text-400)!important;
+        font-size: var(--body-font-size-m)!important;
+    }
+
+    .mat-button.mat-accent, .mat-icon-button.mat-accent {
+        color:var(--brand-500)!important;
+    }
+
+    .btn-small{
+        font-weight:var(--font-weight-regular)!important;
+        border-radius: 0!important;
+        min-width: 120px!important;
+        height: 32px!important;
+        line-height: 32px!important;
+        font-size: var(--body-font-size-s)!important;
+
+        .mat-icon{
+            font-size: 21px!important;
+        }
+
+    }
+    .mat-button.btn-small{
+        background: transparent!important;
+        color:var(--gray-900)!important;
+    }
+
+    .btn-gray{
+        background: var(--button-secondary)!important;
+        color:var(--brand-500)!important;
+    }
+
+    .btn-icon:not(.mat-mini-fab){
+        min-width:48px!important;
+        max-width:48px!important;
+        padding:0!important;
+        margin:0!important;
+    }
+
+    .btn-icon.mat-mini-fab{
+        .mat-icon{
+            margin:0!important;
+            font-size: var(--title-font-size-xs)!important;
+        }
+    }
+
+    .mat-icon-button.mat-button-disabled.mat-button-disabled{
+        span{
+            color:var(--text-400)!important;
+        }
+    }
+
+
+}

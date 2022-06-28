@@ -1,0 +1,55 @@
+<div class="appFrame" fxLayout="column" fxLayoutAlign="start start">
+    <div fxLayout="column">
+        <h1>{{'PROJECTS.OPTIMIZATIONS.TITLE' | translate}}</h1>
+        <h2>{{'PROJECTS.OPTIMIZATIONS.SUB' | translate}}</h2>
+    </div>
+
+    <div class="w-full h-[65px]" fxLayout="row" fxLayoutAlign="start center">
+        <button mat-button class="btn-small" (click)="addOptimization()"><mat-icon>add</mat-icon>{{'PROJECTS.OPTIMIZATIONS.ADD_OPTIMIZATION_BTN' | translate}}</button>
+    </div>
+
+    <div class="pt-2 pl-10 w-full">
+        <div fxLayout="row wrap" fxLayoutAlign="start center" class="tableToolbar">
+            <h3>{{'PROJECTS.OPTIMIZATIONS.ALL_OPTIMIZATIONS' | translate}}</h3>
+            <div fxFlex=""></div>
+            <div fxLayoutAlign="start center" class="PDL8">
+                <div fxLayoutAlign="start center">
+                    <div class="divider"></div>
+                    <search-input-table [(filter)]="dataSource.filter"></search-input-table>
+                    <button mat-button aria-label="refresh data" (click)="refreshData()">
+                        <mat-icon aria-label="refresh" fontIcon="LMH-reload"></mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <mat-divider class="w-full"></mat-divider>
+        <mat-table mat-table class="mt-4" [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" [matSortActive]="displayedColumns[0]" matSortDirection="asc" matSortDisableClear>
+            <ng-container *ngFor="let col of displayedColumns; let index = index" [matColumnDef]="col">
+                <mat-header-cell mat-header-cell mat-sort-header="{{col}}" class="optimizations-table-column-{{col}}" *matHeaderCellDef>
+                    <span *ngIf="col.indexOf('BTN_')===-1 && col!=='collected'">{{col}}</span>
+                </mat-header-cell>
+                <mat-cell class="optimizations-table-column-{{col}}" *matCellDef="let element">
+                    <ng-container *ngIf="col.indexOf('BTN')===-1">
+                        <span>{{element[col]}}</span>
+                    </ng-container>
+
+                    <ng-container *ngIf="col.indexOf('BTN')>-1">
+                        <button mat-icon-button (click)="deleteOptimization(element); $event.stopPropagation()">
+                            <mat-icon style="margin:0!important;">remove_circle_outline</mat-icon>
+                        </button>
+                    </ng-container>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+            <mat-row class="element-row" [class.even]="i % 2 !== 0" mat-row
+                     *matRowDef="let row; columns: displayedColumns; let i = index;" (click)="openOptimization(row); $event.stopPropagation()" style="cursor:pointer;"></mat-row>
+            <div class="w-full h-[48px]" fxLayout="row" fxLayoutAlign="center center" *matNoDataRow>
+                <mat-icon>info_outline</mat-icon>
+                <span class="ml-2">{{ 'PROJECTS.OPTIMIZATIONS.NOCOMPONENTS' | translate }}</span>
+            </div>
+        </mat-table>
+
+    </div>
+</div>

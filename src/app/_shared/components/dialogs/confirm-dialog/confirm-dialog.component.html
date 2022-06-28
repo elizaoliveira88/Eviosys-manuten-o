@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>{{ labels.title | translate }}</h1>
+<div mat-dialog-content fxLayout="column">
+    <p>{{ labels.content | translate }}</p>
+</div>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between center">
+    <button mat-button (click)="cancel()">{{ labels.cancel | translate}}</button>
+    <button mat-stroked-button (click)="save()" cdkFocusInitial>{{ labels.save | translate}}</button>
+</div>

@@ -1,0 +1,18 @@
+<mat-toolbar>
+    <h2 class="dragHandle" cdkDrag cdkDragRootElement=".cdk-overlay-pane" cdkDragHandle mat-dialog-title>{{ data.title | translate}}</h2>
+</mat-toolbar>
+<mat-dialog-content style="padding-top:0;">
+    <div fxLayout="column">
+        <p *ngIf="data.lable">{{ data.lable | translate }} <span *ngIf="data.info">{{data.info}}</span></p>
+    </div>
+</mat-dialog-content>
+<div mat-dialog-actions>
+    <div fxLayout="row" fxLayoutAlign="start center" style="width:100%;">
+        <button mat-button color="accent" (click)="closePopup(false)" >{{ data.buttonTextNo | translate }}</button>
+        <div fxFlex></div>
+        <button mat-button color="accent" (click)="closePopup(true)" >{{ data.buttonTextYes | translate }}</button>
+    </div>
+</div>
+
+
+

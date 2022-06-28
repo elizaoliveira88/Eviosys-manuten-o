@@ -1,0 +1,768 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import '../../node_modules/angular-calendar/css/angular-calendar.css';
+@import '../assets/icons/LMH_icons/LMH.css';
+@import '~@circlon/angular-tree-component/css/angular-tree-component.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root{
+    --brand-700: #94001D;
+    --brand-500: #fcb900;
+
+    --gray-900: #222222;
+    --gray-700: #444444;
+    --gray-600: #6A6B6E;
+    --gray-400: #9B9B9E;
+    --gray-300: #CCCDD1;
+    --gray-100: #EEEFF3;
+    --gray-50: #F4F5F7;
+    --white: #FFFFFF;
+    --black: #000000;
+
+    --success: #35CD05;
+    --warning: #FFAD00;
+    --background-warning-alert: #FFEFCC;
+    --danger: #FF0000;
+    --background-danger-alert: #FFCCCC;
+    --promotion: #55E9F4;
+
+    /* background colors */
+    --background-primary: #FFFFFF;
+    --background-secondary: #F4F5F7;
+    --background-tertiary: #EEEFF3;
+    --background-quarternary: #94001D;
+    --background-modal: rgba(0,0,0,0.7);
+    --background-danger: #FFCCCC;
+    --background-warning: #FFEFFC;
+
+    /* button colors */
+    --button-primary: #fcb900;
+    --button-hover: #94991D;
+    --button-secondary: #EEEFF3;
+    --button-disabled: #EEEFF4;
+
+    /* border colors */
+    --button-primary-border: #fcb900;
+    --button-primary-hover-border: #fcb900;
+    --button-dark-gray-border: #444444;
+    --button-gray-border: #9B9B9E;
+    --button-light-gray-border: #CCCdd1;
+
+    /* text colors */
+    --text-900: #222222;
+    --text-700: #444444;
+    --text-600: #6A6B6E;
+    --text-400: #9B9B9E;
+    --text-300: #CCCDD1;
+    --text-white: #FFFFFF;
+    --text-brand-500: #fcb900;
+    --text-danger: #ff0000;
+    --text-success: #36cd05;
+
+    /* toast colors */
+    --toast-error: #FF0000;
+    --toast-success: #35CD05;
+    --toast-warning: #FFAD00;
+
+    /* promotion colors */
+    --promotion-info: #55E9F4;
+
+
+
+
+    /* font weight */
+    --font-weight-regular: 400;
+    --font-weight-bold: 700;
+
+    /* font sizes */
+    --title-font-size-xxl: 54px;
+    --title-font-size-xl: 46px;
+    --title-font-size-l: 40px;
+    --title-font-size-m: 32px;
+    --title-font-size-s: 24px;
+    --title-font-size-xs: 20px;
+    --body-font-size-l: 18px;
+    --body-font-size-m: 16px;
+    --body-font-size-s: 14px;
+    --body-font-size-xs: 12px;
+    --body-font-size-xxs: 10px;
+
+    --title-line-height-xxl: 130%;
+    --title-line-height-xl: 150%;
+    --title-line-height-l: 150%;
+    --title-line-height-m: 150%;
+    --title-line-height-s: 150%;
+    --title-line-height-xs: 150%;
+    --body-line-height-l: 150%;
+    --body-line-height-m: 150%;
+    --body-line-height-s: 150%;
+    --body-line-height-xs: 125%;
+    --body-line-height-xxs: 125%;
+
+
+
+
+    /* spaces (same for Linde and Still) */
+    --no-space: 0px;
+    --s-space-xxxs: 4px;
+    --s-space-xxs: 8px;
+    --s-space-xs: 12px;
+    --s-space-s: 16px;
+    --s-space-m: 24px;
+    --s-space-l: 32px;
+    --s-space-xl: 40px;
+    --l-space-s: 48px;
+    --l-space-m: 64px;
+    --l-space-l: 80px;
+    --l-space-xl: 100px;
+
+
+
+
+    /* box-shadows */
+    --small-shadow: 0px 2px 6px 0px rgba(0,0,0,0.1);
+    --regular-shadow: 1px 6px 15px 0px rgba(0,0,0,0.25);
+    --large-shadow: 1px 10px 19px 0px rgba(0,0,0,0.25);
+
+
+
+
+    /* borders */
+    --border-radius-primary: 0px;
+    --border-radius-secondary: 0px;
+
+    --border-width-primary: 1px solid;
+    --border-width-secondary: 2px solid;
+
+    --font-family: 'LMH';
+}
+
+@font-face {
+    font-family: "LMH";
+    src: url('fonts/DaxWebPro.woff');
+    ascent-override: 100%;
+    font-style: normal;
+    font-display: block;
+}
+
+@font-face {
+    font-family: "LMH";
+    src: url('fonts/DaxPro-Light.woff');
+    font-weight: 300;
+    ascent-override: 100%;
+    font-style: normal;
+    font-display: block;
+}
+
+@font-face {
+    font-family: "LMH";
+    src: url('fonts/DaxWebPro.woff');
+    font-weight: 400;
+    ascent-override: 100%;
+    font-style: normal;
+    font-display: block;
+}
+
+@font-face {
+    font-family: "LMH";
+    src: url('fonts/DaxWebPro-Medi.woff');
+    font-weight: 500;
+    ascent-override: 100%;
+    font-style: normal;
+    font-display: block;
+}
+
+@font-face {
+    font-family: "LMH";
+    src: url("fonts/DaxWebPro-Bold.woff");
+    font-weight: bold;
+    ascent-override: 100%;
+    font-style: normal;
+    font-display: block;
+}
+
+@font-face {
+    font-family: "Still";
+    src: url('fonts/Still/STILLType-Regular.woff');
+    ascent-override: 100%;
+    font-style: normal;
+    font-display: block;
+}
+
+@font-face {
+    font-family: "Still";
+    src: url('fonts/Still/STILLType-Bold.woff');
+    ascent-override: 100%;
+    font-weight: bold;
+    font-style: normal;
+    font-display: block;
+}
+
+body [class^='mat-']:not(mat-icon), body [class*='mat-']:not(mat-icon)  {
+    font-family: var(--font-family), Roboto, sans-serif!important;
+}
+
+html,
+body,
+app-root {
+    height: 100%;
+    touch-action: manipulation;
+}
+
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+.spin {
+    animation:spin 4s linear infinite;
+}
+
+:focus {
+    outline: 0px transparent;
+}
+
+.dragHandle {
+    cursor: move;
+}
+
+html,
+app-boot {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+}
+
+.inputRequired::after {
+    content: ' *';
+    color: #BA1126;
+}
+
+.mainContent {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+
+body.isOnMobile .mat-toolbar:not(.mainToolbar) span {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-size: 13px;
+}
+
+
+body.theme-default .mat-toolbar.mat-primary,
+app-sub-menu .mat-toolbar.mat-primary {
+   background-color: #BA1126;
+    color: #FFFFFF;
+}
+
+body.theme-default .mat-toolbar.mat-primary.mainToolbar {
+    background-color: var(--brand-500) !important;
+    color: black;
+    box-shadow: 0 1px 3px #0000001a;
+    z-index:2;
+}
+body.theme-default .mobileNavigationContainer .mat-toolbar.mat-primary.mainToolbar {
+    background-color: var(--brand-500) !important;
+    color: black;
+}
+body.theme-default.isOnDesktop .mat-toolbar.mat-primary.mainToolbar {
+    min-height: 108px;
+}
+
+@media only screen and (min-width: 1540px) {
+    .mainContent .appFrame.large {
+        margin-left: 145px;
+        max-width: unset;
+    }
+    .mainContent .appFrame {
+        margin-left: 145px;
+    }
+
+}
+
+.mainContent {
+    background-color: white;
+    padding: 8px 23px 23px 23px;
+    overflow: auto;
+    position: absolute;
+    left: 0;
+    top: 133px;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+}
+@media only screen and (max-width: 800px) {
+    .mainContent {
+        top: 65px;
+    }
+}
+
+.badge {
+    position:relative;
+    overflow: visible !important;
+}
+.badge[data-badge]:after {
+    content: attr(data-badge);
+    position: absolute;
+    bottom: -6px;
+    right: -8px;
+    font-size: 10px;
+    color: #000;
+    width: 18px;
+    height: 18px;
+    text-align: center;
+    line-height: 18px;
+    border-radius: 50%;
+}
+.svgIcon.badge[data-badge]:after {
+    bottom: -1px;
+    right: -6px;
+}
+
+.offlineIndicator,
+.onlineIndicator {
+    position:relative;
+    overflow: visible !important;
+}
+.offlineIndicator:before,
+.onlineIndicator:before {
+    font-weight: bold;
+    content:'';
+    position:absolute;
+    bottom: 17px;
+    right: 12px;
+    font-size:9px;
+    background: rgba(0,255,0,0.2);
+    width:9px;
+    height:9px;
+    text-align:center;
+    line-height:18px;
+    border-radius:50%;
+}
+.offlineIndicator:before {
+    background: rgba(255,0,0,0.2);
+}
+
+/*  THIS MAKES A POPUP USING FLEX LAYOUT ! */
+mat-dialog-content, mat-dialog-container {
+    max-height: unset;
+    min-width: unset;
+    flex-grow: 1;
+}
+.mat-dialog-content {
+    max-height: unset !important;
+}
+mat-dialog-container {
+    display: flex;
+}
+mat-dialog-container > * {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+body.isOnMobile .paddingLess {
+    height: 100%;
+    width: 100%;
+}
+body.isOnMobile .width90 {
+    width: 90vw !important;
+}
+body.isOnDesktop .paddingLess {
+    height: 90%;
+    width: 95vw !important;
+    max-width: 1200px !important;
+}
+body.isOnDesktop .paddingLess.maxHeight {
+    height: 98%;
+    width: 98vw !important;
+}
+body.isOnDesktop .paddingLess.maxWidth {
+    max-width: unset !important;
+}
+body.isOnDesktop .noHeightDialog {
+    min-width: 510px !important;
+}
+body.isOnDesktop .mediumDialog {
+    max-height: 510px;
+    height: 90%;
+    min-width: 510px !important;
+}
+body.isOnDesktop .stepperDialog {
+    max-height: 650px;
+    min-height: 650px;
+    min-width: 728px !important;
+    max-width: 728px !important;
+}
+body.isOnDesktop .largeDialog {
+    max-height: 98%;
+    min-width: 700px !important;
+}
+body.isOnDesktop .smallDialog {
+    max-height: 280px;
+    min-width: 320px !important;
+    max-width:500px!important;
+}
+body.isOnDesktop .mat-dialog-actions {
+    min-height: unset;
+    margin-top:12px!important;
+}
+.mat-dialog-actions{
+    z-index: 1;
+    padding: 8px !important;
+    margin: 0 !important;
+}
+.mat-dialog-actions > button {
+    max-width: 49%;
+}
+body.isOnDesktop .paddingLessPopup .mat-dialog-container {
+    height: auto;
+}
+body.isOnDesktop .paddingLessPopup {
+    width: 320px;
+    min-width: 320px;
+    max-height: 90%;
+}
+
+body.isOnMobile .paddingLessPopup .mat-dialog-container {
+    height: auto;
+}
+body.isOnMobile .paddingLessPopup {
+    width: 100%;
+    max-height: 100%;
+}
+
+body.isOnMobile .simplePaddingLessPopup {
+    height: 100%;
+    width: 100%;
+}
+
+::ng-deep .mat-bottom-sheet-container{
+    padding: 0px;
+    padding-bottom: env(safe-area-inset-bottom);
+    width: 100%;
+    max-width: 100%;
+}
+mat-bottom-sheet-container.mat-bottom-sheet-container{
+    padding: 0px !important;
+    padding-bottom: env(safe-area-inset-bottom);
+}
+
+/*  THIS MAKES A POPUP USING FLEX LAYOUT ! */
+
+.mat-drawer-content.mat-sidenav-content {
+    overflow: hidden;
+    background-color: #FFFFFF;
+}
+
+.mat-toolbar-row, .mat-toolbar-single-row {
+    height: 64px;
+    min-height: 64px;
+}
+
+@media only screen and (max-width: 801px) {
+    .mat-toolbar-row, .mat-toolbar-single-row {
+        height: 64px;
+        min-height: 64px;
+    }
+
+    .mainToolbar > div {
+        width: 100%;
+        padding: 0 40px;
+        z-index: 0;
+    }
+    .mainToolbar span{
+        white-space: nowrap;
+        overflow: hidden !important;
+        text-overflow: ellipsis
+    }
+    .mainToolbar > div + button{
+        right: 16px;
+    }
+    .mainToolbar button{
+        z-index: 1;
+        position: absolute;
+    }
+    .viewTitle,
+    .mat-button.activeMenu,
+    .mat-icon-button.activeMenu,
+    .mat-stroked-button.activeMenu {
+        font-weight: normal !important;
+    }
+
+    .viewTitle button:last-child {
+        right: 0;
+        left: auto;
+    }
+
+    .viewTitle button {
+        left: 0;
+        position: absolute;
+    }
+
+    .viewTitle {
+        width: 100%;
+        place-content: center;
+        align-items: center;
+        padding: 0 40px;
+        position: relative;
+    }
+
+    .PD24 {
+        padding: 15px !important;
+    }
+
+    .cdk-global-overlay-wrapper > .cdk-overlay-pane {
+        max-width: 100vw !important;
+    }
+
+    .scheduleView::-webkit-scrollbar {
+        height: 0 !important;
+    }
+    .ngx-slider{
+        margin-top: 25px !important;
+        margin-bottom: 35px !important;
+    }
+    .ngx-slider-limit{
+        opacity: 1 !important;
+        top: 12px;
+        bottom: 0 !important;
+    }
+}
+
+.sideNav {
+    width: 75vw;
+    max-width: 300px;
+    max-height: 100vh;
+}
+
+.sideNavItem {
+    font-weight: 300!important;
+}
+
+.sideNav .svgIcon svg{
+    transform: translateX(-4px) scale(0.75) !important;
+}
+.bottomMenu{
+    z-index: 1000;
+    background: #363636 !important;
+    color: #c3c3c3 !important;
+    min-height: 48px;
+    padding-bottom: env(safe-area-inset-bottom);
+}
+@media all and (display-mode: standalone) {
+    .bottomMenu {
+        height: 75px;
+    }
+}
+
+.bottomMenu *:not(.material-icons){
+    font-size: 10px !important;
+}
+.bottomMenu mat-toolbar-row, .bottomMenu .mat-button{
+    padding: 0 !important;
+    line-height: 20px;
+}
+.bottomMenu .navigation{
+    display: flex;
+    justify-content: space-evenly;
+    padding-bottom: 5px;
+    width: 100%;
+}
+.bottomMenu mat-icon{
+    display: block;
+    margin: 5px auto 0;
+    height: 20px;
+    width: 20px;
+    font-size: 20px;
+}
+
+app-sub-menu{
+    max-width: 100%;
+}
+
+.subMenuMobile{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: black;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    font-weight: 400;
+}
+.subMenuMobile .container{
+    height: 40px;
+    /*border-radius: 6px;
+    border: 1px solid #EEEFF3;
+    box-shadow: 0px 1px 5px 0px #00000004;*/
+    display: flex;
+    max-width: 90%;
+    min-width: 90%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    font-weight: 400;
+}
+.subMenuMobile .mat-button{
+    border-radius: 6px;
+    width: auto;
+    color: black;
+    font-size: 11px !important;
+    padding: 5px 5px !important;
+    line-height: 13px !important;
+    white-space: pre-line;
+    font-weight: 400;
+}
+.subMenuMobile .activeMenu{
+    color: #B21122;
+    /*color: #fff !important;*/
+    /*border-right: 1px solid #EEEFF3;*/
+}
+.subMenuMobile button:last-child.activeMenu {
+    /*border-right: unset;
+    border-left: 1px solid #EEEFF3;*/
+}
+
+navbar-submenu .mat-button {
+    width: 100%;
+    background-color: #E6E5E5;
+}
+navbar-submenu .mat-button.activeMenu {
+    border: 1px solid gold;
+}
+
+body.theme-default .lssActionSpinner .mat-dialog-container {
+    box-shadow: none;
+    background-color: transparent;
+}
+
+.mat-dialog-actions{
+    padding:0!important;
+}
+
+.simplePaddingLessPopup .mat-dialog-container,
+.paddingLessPopup .mat-dialog-container,
+.paddingLess .mat-dialog-container,
+.mediumDialog .mat-dialog-container,
+.stepperDialog .mat-dialog-container,
+.largeDialog .mat-dialog-container,
+.noHeightDialog .mat-dialog-container,
+.smallDialog .mat-dialog-container{
+    padding:16px !important;
+    overflow:hidden;
+}
+.simplePaddingLessPopup .mat-dialog-actions,
+.paddingLessPopup .mat-dialog-actions,
+.paddingLess .mat-dialog-actions {
+    margin-bottom: 0px;
+    margin-left: 8px;
+    margin-right: 8px;
+    margin-bottom: env(safe-area-inset-bottom);
+}
+.simplePaddingLessPopup .mat-dialog-content,
+.paddingLessPopup .mat-dialog-content,
+.paddingLess .mat-dialog-content,
+.mediumDialog .mat-dialog-content,
+.stepperDialog .mat-dialog-content,
+.largeDialog .mat-dialog-content,
+.noHeightDialog .mat-dialog-content,
+.smallDialog .mat-dialog-content{
+/*
+    padding: 2px;
+    margin: 16px;
+    margin-right: 0px;
+    padding-right: 16px;
+    margin-bottom: 8px;
+*/
+    padding: 12px 0;
+    margin: 0;
+    height:100%;
+}
+
+
+.LMH-toast-container{
+    top:0;
+    left:0;
+    right:0;
+}
+
+.LMH-toast{
+    position: relative;
+    overflow: hidden;
+    margin: 0 0 6px;
+    padding: 12px 12px 12px 50px;
+    width: 100%;
+    border-radius: var(--border-radius-primary);
+    background-position: 15px center;
+    background-repeat: no-repeat;
+    background-size: 24px;
+    box-shadow: var(--regular-shadow);
+    color: var(--white);
+    font-family: var(--font-family), Roboto, sans-serif!important;
+}
+
+.toast-success{
+    color: var(--success)!important;
+    background-color: var(--background-primary)!important;
+    background-image: none!important;
+}
+
+.toast-error{
+    background-color: var(--background-danger-alert)!important;
+    background-image: none!important;
+    color:var(--danger)!important;
+}
+
+.toast-warning{
+    background-color: var(--background-warning-alert)!important;
+    color:var(--warning)!important;
+    background-image: none!important;
+}
+
+.toast-error:before {
+    font-family: "Material Icons";
+    content: "\e001";
+    position: absolute;
+    left:22px;
+}
+
+.toast-success:before {
+    font-family: "Material Icons";
+    content: "\e876";
+    position: absolute;
+    left:22px;
+}
+
+.toast-warning:before {
+    font-family: "Material Icons";
+    content: "\e645";
+    position: absolute;
+    left:22px;
+}
+
+.textLimit{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.simple-input{
+    margin: 6px;
+    background-color: var(--background-tertiary);
+    border-radius: 2px;
+    padding: 5px;
+    border: 2px solid #ececec;
+    text-align: end;
+}
+
+.warn-indicator{
+    position: absolute;
+    left:0;
+    right:0;
+    height:2px;
+    bottom:0;
+    background-color: #ffca1c;
+}

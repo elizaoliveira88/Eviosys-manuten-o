@@ -1,0 +1,65 @@
+<h1 mat-dialog-title>{{ storage.selectedTruck.applicationTruck.identification }}</h1>
+<div mat-dialog-content fxLayout="column">
+    <p>{{ 'PROJECTS.APPLICATION_DETAILS.TRUCK_INFO_DIALOG.CONTENT' | translate }}</p>
+    <div fxLayout="row" fxLayoutAlign="start center" class="m-4">
+        <div fxLayout="column">
+            <img src="{{('assets/img/truckPics/'+storage.selectedTruck.truckInfo.truckPicId +'.png')}}" onerror="this.src='assets/img/truckPics/default_stapler.png'" style="width: 100px;" [ngStyle]="storage.selectedTruck.truckInfo.possibleApplications == 'A8' && {'padding-bottom': '15px'}"  />
+        </div>
+        <div fxFlex class="h-full ml-4" fxLayout="column" fxLayoutAlign="space-around start">
+            <div class="w-full">
+                <div fxLayout="row" fxLayoutAlign="start center">
+                    <mat-form-field floatLabel="never">
+                        <mat-label>Custom name</mat-label>
+                        <input matInput [(ngModel)]="storage.selectedTruck.applicationTruck.modifiedName">
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center">
+                    <span>Model</span>
+                    <h3 class="!ml-2">{{storage.selectedTruck.truckInfo.model}}</h3>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center">
+                    <span>Series</span>
+                    <h3 class="!ml-2">{{storage.selectedTruck.truckInfo.truckClass}}</h3>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <ng-container *ngIf="storage.selectedTrailers.length>0">
+        <div fxFlex fxLayout="row" fxLayoutAlign="center end">
+            <div *ngFor="let trailer of storage.selectedTrailers" class="trailer-container" fxLayout="column" fxLayoutAlign="start center">
+                <div fxLayout="column" fxLayoutAlign="end center" style="max-height:100px;min-height:100px;">
+                    <img class="trailer-img" src="{{ ('assets/img/Trailer/'+trailer.trailerPicId+'.png') }}"/>
+                </div>
+
+                <span class="mt-2" style="font-size: 10px; text-align: center">{{trailer.identification}}</span>
+            </div>
+        </div>
+    </ng-container>
+
+    <div fxLayout="column">
+        <span>Comment</span>
+        <textarea matInput class="h-full" [(ngModel)]="storage.selectedTruck.applicationTruck.comment"></textarea>
+    </div>
+    <div *ngIf="storage.selectedTruck.applicationTruck.expertCriteria.modified" style="color:rgb(255, 142, 56); padding-left: 5px;padding-top: 5px;">
+        {{ 'PROJECTS.APPLICATION_DETAILS.TRUCK_INFO_DIALOG.EXPERT_CHANGED' | translate}}
+    </div>
+    <div fxLayout="row" *ngIf="storage.selectedTruck.applicationTruck.calculationResult.errorMessages && storage.selectedTruck.applicationTruck.calculationResult.errorMessages.length>0" style="color:rgba(186,17,38,1); padding-left: 5px;padding-top: 5px;">
+        <div fxLayout="column" fxLayoutAlign="center center" style="margin-right:8px;">
+            <mat-icon style="color:var(--danger); font-size:28px;">warning</mat-icon>
+        </div>
+        <div fxLayout="column">
+            <div>
+                {{ 'PROJECTS.APPLICATION_DETAILS.TRUCK_INFO_DIALOG.TRUCK_ERROR' | translate}}
+            </div>
+            <div *ngFor="let message of storage.selectedTruck.applicationTruck.calculationResult.errorMessages" style="padding-left: 15px;">
+                - <span>{{ 'INPUTVALUES.'+message | translate}}</span>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between center">
+    <button mat-button (click)="cancel()">{{ 'GLOBAL.CANCEL' | translate}}</button>
+    <button mat-button (click)="save()" cdkFocusInitial>{{ 'GLOBAL.SAVE' | translate}}</button>
+</div>

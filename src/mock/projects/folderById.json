@@ -1,0 +1,50 @@
+{
+    "id": 1,
+    "name": "Amazon",
+    "parentFolderId": null,
+    "creationDate": null,
+    "folders": [
+        {
+            "id": 4,
+            "name": "Amazon Europe"
+        },
+        {
+            "id": 5,
+            "name": "Amazon US"
+        }
+    ],
+    "nav": [],
+    "projects": [
+        {
+            "id": 3,
+            "name": "Amazon Global Project",
+            "creationDate": 1649860978495,
+            "lastOpenedDate": 1649860978495,
+            "customerData": {
+                "id": 2431,
+                "customerName": "Kerim",
+                "site": "Essen",
+                "contactPerson": null,
+                "address": "Street",
+                "tel": "41434",
+                "fax": "52423423",
+                "mobile": null,
+                "email": null,
+                "distanceToCustomer": 125.0
+            },
+            "vendorData": {
+                "id": 2212,
+                "name": "IT-Objects",
+                "address": "Ruschenstr. 18",
+                "tel": "2",
+                "email": null,
+                "firstName": "ITO",
+                "lastName": "Test",
+                "mobile": null,
+                "fax": ""
+            },
+            "createdBy": "itoTest1234",
+            "externalId": "XYZ"
+        }
+    ]
+}

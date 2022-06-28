@@ -1,0 +1,103 @@
+.app-truck-name-container{
+    min-width: 160px;
+    max-width: 160px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.truck-container{
+
+}
+
+.opt-truck{
+    position: relative;
+    height:48px;
+    margin: 0 2px;
+    cursor:pointer;
+}
+
+.truck-pic{
+    min-height: 48px;
+    max-height: 48px;
+    min-width: 48px;
+    max-width: 48px;
+}
+
+.appCheckCycle{
+    width: 30px;
+    height: 30px;
+    color: var(--success);
+    border-radius: 18px;
+    font-size:30px;
+}
+
+.ident-container{
+    border-radius:var(--border-radius-primary);
+    text-align:center;
+    background-color: var(--brand-500); color: white;
+}
+
+.ident-text{
+    font-size: 12px;margin-left: 2px;overflow:hidden;text-overflow: ellipsis;white-space: nowrap;margin-top:2px;
+    color:var(--white);
+    padding:4px;
+}
+
+.optimizations-table-column-key{
+    min-width:240px;
+    max-width:240px;
+}
+
+.optimizations-table-column-identification{
+    min-width:240px;
+    max-width:240px;
+}
+
+.optimizations-table-column-before{
+    min-width:140px;
+    max-width:140px;
+}
+
+.optimizations-table-column-after{
+    min-width:140px;
+    max-width:140px;
+}
+
+.optimizations-table-column-savings{
+    min-width:140px;
+    max-width:140px;
+}
+
+.optimizations-table-column-totalCount{
+    min-width:140px;
+    max-width:140px;
+}
+
+.optimizations-table-column-workload{
+    min-width:140px;
+    max-width:140px;
+}
+
+.optimizations-table-column-totalCountDriver{
+    min-width:140px;
+    max-width:140px;
+}
+
+.optimizations-table-column-totalCost{
+    min-width:140px;
+    max-width:140px;
+}
+
+.optimizations-table-column-BTN_COLLAPSE{
+    justify-content: end;
+}
+
+.shifts-expanded{
+    height:80px;
+    width:100%;
+    background-color: var(--background-tertiary);
+    padding: 8px;
+    border-radius: 2px;
+    margin-bottom: 8px;
+}

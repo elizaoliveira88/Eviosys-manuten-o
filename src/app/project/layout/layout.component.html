@@ -1,0 +1,721 @@
+<div class="appFrame-full full-width full-height overflow-hidden" fxLayout="column" fxLayoutAlign="start stretch">
+    <div fxLayout="column">
+        <h1>{{'PROJECTS.LAYOUT.TITLE' | translate}}</h1>
+        <h2>{{'PROJECTS.LAYOUT.SUB' | translate}}</h2>
+    </div>
+
+    <div class="relative" fxFlex fxLayout="row" fxLayoutAlign="start start">
+        <div fxLayout="column" class="h-full">
+            <div fxLayout="column" class="options-container">
+                <div class="mb-2" fxLayout="row" fxLayoutAlign="space-around center">
+                    <button mat-button class="btn-icon" (click)="undo()"><mat-icon>undo</mat-icon></button>
+                    <button mat-button class="btn-icon" (click)="saveLayout()"><mat-icon>save</mat-icon></button>
+                    <button mat-button class="btn-icon" [matMenuTriggerFor]="menu"><mat-icon>more_vertical</mat-icon></button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="renewLayout()"><mat-icon>clear</mat-icon>New Layout</button>
+                        <button mat-menu-item><mat-icon>vertical_align_bottom</mat-icon>Export Layout</button>
+                        <button mat-menu-item><mat-icon>live_help</mat-icon>User Guidance</button>
+                        <button mat-menu-item (click)="showHeatMap()">
+                            <mat-icon *ngIf="storage.showHeatMap">check_box</mat-icon>
+                            <mat-icon *ngIf="!storage.showHeatMap">check_box_outline_blank</mat-icon>
+                            Heat Map</button>
+                        <button mat-menu-item (click)="centerMap()"><mat-icon>center_focus_strong</mat-icon>Center Map</button>
+                    </mat-menu>
+                </div>
+                <mat-divider class="w-full"></mat-divider>
+                <div class="mt-2" fxLayout="row" fxLayoutAlign="space-around center">
+                    <button *ngIf="storage.selectedCat!=='move'" (click)="selectCategory('move')" mat-button class="btn-icon"><mat-icon>pan_tool</mat-icon></button>
+                    <button *ngIf="storage.selectedCat==='move'" (click)="deselectCategory('move')" mat-raised-button class="btn-icon"><mat-icon>pan_tool</mat-icon></button>
+
+                    <button *ngIf="storage.selectedCat!=='select'" (click)="selectCategory('select')" mat-button class="btn-icon"><mat-icon>touch_app</mat-icon></button>
+                    <button *ngIf="storage.selectedCat==='select'" (click)="deselectCategory('select')" mat-raised-button class="btn-icon"><mat-icon>touch_app</mat-icon></button>
+
+                    <button *ngIf="storage.selectedCat!=='create'" (click)="selectCategory('create')" mat-button class="btn-icon"><mat-icon>add_box</mat-icon></button>
+                    <button *ngIf="storage.selectedCat==='create'" (click)="deselectCategory('create')" mat-raised-button class="btn-icon"><mat-icon>add_box</mat-icon></button>
+                </div>
+            </div>
+            <div class="w-full h-full mt-4" fxLayout="row" fxLayoutAlign="space-between start">
+                <div fxLayout="column" class="btns-container">
+                    <h3>Actions</h3>
+                    <button *ngIf="storage.selectedAction!=='background'" (click)="selectAction('background')" mat-button class="!my-1" style="background-color: var(--background-secondary)!important;">
+                        <mat-icon>image</mat-icon>1. {{ 'PROJECTS.LAYOUT.BACKGROUND' | translate }}
+                    </button>
+                    <button *ngIf="storage.selectedAction==='background'" (click)="deselectAction('background')" mat-raised-button class="!my-1">
+                        <mat-icon>image</mat-icon>1. {{ 'PROJECTS.LAYOUT.BACKGROUND' | translate }}
+                    </button>
+
+                    <button *ngIf="storage.selectedAction!=='refLine'" (click)="selectAction('refLine')" mat-button class="!my-1" style="background-color: var(--background-secondary)!important;">
+                        <mat-icon>short_text</mat-icon>2. {{ 'PROJECTS.LAYOUT.REFLINE' | translate }}
+                    </button>
+                    <button *ngIf="storage.selectedAction==='refLine'" (click)="deselectAction('refLine')" mat-raised-button class="!my-1">
+                        <mat-icon>short_text</mat-icon>2. {{ 'PROJECTS.LAYOUT.REFLINE' | translate }}
+                    </button>
+
+                    <button *ngIf="storage.selectedAction!=='source'" (click)="selectAction('source')" mat-button class="!my-1" style="background-color: var(--background-secondary)!important;">
+                        <mat-icon>file_upload</mat-icon>3a. {{ 'PROJECTS.LAYOUT.DRAWSOURCE' | translate }}
+                    </button>
+                    <button *ngIf="storage.selectedAction==='source'" (click)="deselectAction('source')" mat-raised-button class="!my-1">
+                        <mat-icon>file_upload</mat-icon>3a. {{ 'PROJECTS.LAYOUT.DRAWSOURCE' | translate }}
+                    </button>
+
+                    <button *ngIf="storage.selectedAction!=='destination'" (click)="selectAction('destination')" mat-button class="!my-1" style="background-color: var(--background-secondary)!important;">
+                        <mat-icon>file_download</mat-icon>3b. {{ 'PROJECTS.LAYOUT.DRAWDESTINATION' | translate }}
+                    </button>
+                    <button *ngIf="storage.selectedAction==='destination'" (click)="deselectAction('destination')" mat-raised-button class="!my-1">
+                        <mat-icon>file_download</mat-icon>3b. {{ 'PROJECTS.LAYOUT.DRAWDESTINATION' | translate }}
+                    </button>
+
+                    <button *ngIf="storage.selectedAction!=='sourceDestination'" (click)="selectAction('sourceDestination')" mat-button class="!my-1" style="background-color: var(--background-secondary)!important;">
+                        <mat-icon>vertical_align_center</mat-icon>3c. {{ 'PROJECTS.LAYOUT.DRAWSOURCEDESTINATION' | translate }}
+                    </button>
+                    <button *ngIf="storage.selectedAction==='sourceDestination'" (click)="deselectAction('sourceDestination')" mat-raised-button class="!my-1">
+                        <mat-icon>vertical_align_center</mat-icon>3c. {{ 'PROJECTS.LAYOUT.DRAWSOURCEDESTINATION' | translate }}
+                    </button>
+
+                    <button *ngIf="storage.selectedAction!=='stopPoint'" (click)="selectAction('stopPoint')" mat-button class="!my-1" style="background-color: var(--background-secondary)!important;">
+                        <mat-icon>flag</mat-icon>4. {{ 'PROJECTS.LAYOUT.DRAWSTOPPOINT' | translate }}
+                    </button>
+                    <button *ngIf="storage.selectedAction==='stopPoint'" (click)="deselectAction('stopPoint')" mat-raised-button class="!my-1">
+                        <mat-icon>flag</mat-icon>4. {{ 'PROJECTS.LAYOUT.DRAWSTOPPOINT' | translate }}
+                    </button>
+
+                    <button *ngIf="storage.selectedAction!=='line'" (click)="selectAction('line')" mat-button class="!my-1" style="background-color: var(--background-secondary)!important;">
+                        <mat-icon>linear_scale</mat-icon>5. {{ 'PROJECTS.LAYOUT.DRAWLINE' | translate }}
+                    </button>
+                    <button *ngIf="storage.selectedAction==='line'" (click)="deselectAction('line')" mat-raised-button class="!my-1">
+                        <mat-icon>linear_scale</mat-icon>5. {{ 'PROJECTS.LAYOUT.DRAWLINE' | translate }}
+                    </button>
+
+                    <button *ngIf="storage.selectedAction!=='curve'" (click)="selectAction('curve')" mat-button class="!my-1" style="background-color: var(--background-secondary)!important;">
+                        <mat-icon>rounded_corner</mat-icon>6. {{ 'PROJECTS.LAYOUT.DRAWCURVE' | translate }}
+                    </button>
+                    <button *ngIf="storage.selectedAction==='curve'" (click)="deselectAction('curve')" mat-raised-button class="!my-1">
+                        <mat-icon>rounded_corner</mat-icon>6. {{ 'PROJECTS.LAYOUT.DRAWCURVE' | translate }}
+                    </button>
+
+                    <button *ngIf="storage.selectedAction!=='gate'" (click)="selectAction('gate')" mat-button class="!my-1" style="background-color: var(--background-secondary)!important;">
+                        <mat-icon>space_bar</mat-icon>7. {{ 'PROJECTS.LAYOUT.DRAWGATE' | translate }}
+                    </button>
+                    <button *ngIf="storage.selectedAction==='gate'" (click)="deselectAction('gate')" mat-raised-button class="!my-1">
+                        <mat-icon>space_bar</mat-icon>7. {{ 'PROJECTS.LAYOUT.DRAWGATE' | translate }}
+                    </button>
+
+                    <button *ngIf="storage.selectedAction!=='wall'" (click)="selectAction('wall')" mat-button class="!my-1" style="background-color: var(--background-secondary)!important;">
+                        <mat-icon>border_style</mat-icon>8. {{ 'PROJECTS.LAYOUT.DRAWWALL' | translate }}
+                    </button>
+                    <button *ngIf="storage.selectedAction==='wall'" (click)="deselectAction('wall')" mat-raised-button class="!my-1">
+                        <mat-icon>border_style</mat-icon>8. {{ 'PROJECTS.LAYOUT.DRAWWALL' | translate }}
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div fxFlex class="content-container ml-4">
+            <div id="baseContainer" class="ramani"></div>
+
+            <div fxLayout="row" style="position: absolute; bottom:20px; left:10px;background-color: transparent;">
+                <button mat-button (click)="zoom('+');" class="zoomBtn" aria-label="zoomIn">
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                        <i class="material-icons" style="font-size: 22px;line-height:22px;">add</i>
+                    </div>
+                </button>
+                <button mat-button (click)="zoom('-');" class="zoomBtn" aria-label="zoomOut" style="margin-left:5px;">
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                        <i class="material-icons" style="font-size: 22px;line-height:22px;">remove</i>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+
+
+        <div fxLayout="row" class="selectedItemMenuContainer" id="selectedItemMenu" [ngClass]="{'menu_show': storage.showItemMenu, 'menu_hide': !storage.showItemMenu }">
+
+            <div *ngIf="storage.selectedElements.length===0 || storage.selectedElements===undefined || storage.selectedElements===null" fxLayout="column" fxLayoutAlign="center center" class="selectedItemMenu">
+                <div style="height:34px;"></div>
+                <mat-icon style="color:var(--gray-900);margin:0 0 5px 0; font-size:28px;">info_outline</mat-icon>
+                <span style="color:var(--gray-900);font-size:14px;">{{"PROJECTS.LAYOUT.ITEMDETAILS_NOINFO" | translate}}</span>
+            </div>
+
+
+            <!--
+            Multi-Select Menu START
+            -->
+            <div *ngIf="storage.selectedElements!==null && storage.selectedElements!==undefined && storage.selectedElements.length>1" fxLayout="column" fxLayoutAlign="start center" class="selectedItemMenu">
+                <div fxLayout="row" fxLayoutAlign="center center">
+                    <span style="font-size:14px;text-align:center;color:var(--gray-900);width:140px;margin:10px 0 1px 0;">{{"PROJECTS.LAYOUT.ITEMDETAILS_H2" | translate}}</span>
+                </div>
+                <mat-divider style="width:100%; background-color: var(--gray-900); margin:4px;"></mat-divider>
+                <div fxLayout="column" fxLayoutAlign="start start" style="width:100%; height:100%;padding:12px; overflow-y:auto;">
+                    <span style="color:var(--gray-900);">{{ "PROJECTS.LAYOUT.ITEMDETAILS_D16" | translate}}:</span>
+                    <div fxLayout="column" style="background-color: var(--white); border-radius:2px; padding:6px; width:100%; cursor:pointer;margin: 5px 0" *ngFor="let el of storage.selectedElements" (click)="selectElement(el)">
+                        <div fxLayout="row" fxLayoutAlign="start center" style="width:100%;">
+                            <mat-icon *ngIf="el.type==='S:W'" style="margin:0 4px">border_style</mat-icon>
+                            <mat-icon *ngIf="el.type==='S:G'" style="margin:0 4px">space_bar</mat-icon>
+                            <mat-icon *ngIf="el.type==='S:I'" style="margin:0 4px">image</mat-icon>
+                            <mat-icon *ngIf="el.type==='S:P'" style="margin:0 4px">linear_scale</mat-icon>
+                            <mat-icon *ngIf="el.type==='S:C'" style="margin:0 4px">rounded_corner</mat-icon>
+                            <mat-icon *ngIf="el.type==='S:S'" style="margin:0 4px">file_upload</mat-icon>
+                            <mat-icon *ngIf="el.type==='S:D'" style="margin:0 4px">file_download</mat-icon>
+                            <mat-icon *ngIf="el.type==='S:SD'" style="margin:0 4px">vertical_align_center</mat-icon>
+
+                            <span style="margin-left:10px; line-height:24px; font-weight:bold;">{{el.customName}}</span>
+                        </div>
+                        <div *ngIf="el.hasOwnProperty('display') && el.display.hasOwnProperty('length')" fxLayout="row" fxLayoutAlign="start center" style="width:100%;margin:4px;">
+                            <span>{{ "PROJECTS.LAYOUT.ITEMDETAILS_D13" | translate}}: {{el.display.length}}m</span>
+                        </div>
+                    </div>
+                    <div fxFlex></div>
+                    <button mat-stroked-button style="overflow:hidden!important; line-height:16px!important; white-space: pre-wrap!important;" *ngIf="storage.showCreateMission" (click)="addMissionFromElements()" ><mat-icon>extension</mat-icon>{{"PROJECTS.LAYOUT.ITEMDETAILS_CREATEMISSION" | translate}}</button>
+                    <button mat-stroked-button class="!mt-2" style="overflow:hidden!important; line-height:16px!important; white-space: pre-wrap!important;" (click)="copyMultipleElements()"><mat-icon>content_copy</mat-icon>{{ "PROJECTS.LAYOUT.COPYELEMENTS" | translate}}</button>
+
+                </div>
+            </div>
+            <!--
+           Multi-Select Menu END
+           -->
+
+            <!--
+           Item Menu START
+           -->
+
+            <div *ngIf="storage.selectedElements!==null && storage.selectedElements!==undefined && storage.selectedElements.length===1 && storage.selectedElements[0] && !storage.selectedElements[0].hasOwnProperty('elements')" fxLayout="column" fxLayoutAlign="start center" class="selectedItemMenu">
+                <div fxLayout="row" fxLayoutAlign="start center" style="width:100%; min-height:42px;margin-top:4px;padding: 0 6px;">
+                    <input fxFlex class="mini-input-selectedItemMenu" onClick="this.select();" (change)="changeAttributes('customName')" [(ngModel)]="storage.selectedElements[0].customName" style="font-size:14px;text-align:center;color:var(--gray-900);width:140px;margin:0;" placeholder="{{'PROJECTS.LAYOUT.CUSTOMNAME_PLACEHOLDER' | translate}}">
+                    <mat-icon style="color:var(--gray-900);font-size:18px;line-height:18px; max-height:18px; max-width:18px; cursor:pointer;" (click)="removeSelectedItem()" matTooltip="{{'PROJECTS.LAYOUT.T3' | translate}}">delete</mat-icon>
+                </div>
+                <mat-divider style="width:100%; background-color: #dadbdd; margin:4px;"></mat-divider>
+                <div fxLayout="column" fxLayoutAlign="start center" style="width:100%; height:100%;padding:0 12px 12px 12px; overflow-y:auto;">
+                    <div fxLayout="row" fxLayoutAlign="end center" style="width:100%;">
+                        <mat-icon *ngIf="storage.selectedElements[0].type==='S:W'" style="color:var(--gray-900); margin-right:4px">border_style</mat-icon>
+                        <mat-icon *ngIf="storage.selectedElements[0].type==='S:G'" style="color:var(--gray-900); margin-right:4px">space_bar</mat-icon>
+                        <mat-icon *ngIf="storage.selectedElements[0].type==='S:I'" style="color:var(--gray-900); margin-right:4px">image</mat-icon>
+                        <mat-icon *ngIf="storage.selectedElements[0].type==='S:P'" style="color:var(--gray-900); margin-right:4px">linear_scale</mat-icon>
+                        <mat-icon *ngIf="storage.selectedElements[0].type==='S:C'" style="color:var(--gray-900); margin-right:4px">rounded_corner</mat-icon>
+                        <mat-icon *ngIf="storage.selectedElements[0].type==='S:S'" style="color:var(--gray-900); margin-right:4px">file_upload</mat-icon>
+                        <mat-icon *ngIf="storage.selectedElements[0].type==='S:D'" style="color:var(--gray-900); margin-right:4px">file_download</mat-icon>
+                        <mat-icon *ngIf="storage.selectedElements[0].type==='S:SD'" style="color:var(--gray-900); margin-right:4px">vertical_align_center</mat-icon>
+                        <mat-icon *ngIf="storage.selectedElements[0].type==='S:RL'" style="color:var(--gray-900); margin-right:4px">short_text</mat-icon>
+                        <mat-icon *ngIf="storage.selectedElements[0].type==='S:TSP'" style="color:var(--gray-900); margin-right:4px">flag</mat-icon>
+
+                        <span style="color:var(--gray-900);">{{'PROJECTS.LAYOUT.'+ storage.selectedElements[0].type | translate}}</span>
+                    </div>
+
+                    <div fxLayout="column" style="width:100%; margin-top:10px; background-color: var(--white); border-radius: 2px;">
+                        <div fxLayout="row" fxLayoutAlign="space-between center" style="width:100%">
+                            <span style="font-size:14px; font-weight:bold; padding:6px 0 6px 6px;">{{"PROJECTS.LAYOUT.ITEMDETAILS_H1" | translate}}</span>
+                        </div>
+
+                        <div fxLayout="row" style="width:100%;padding-bottom:10px;">
+                            <div fxLayout="column" fxLayoutAlign="center center" fxFlex="50">
+                                <span style="font-size:14px;margin-bottom:5px;">{{"PROJECTS.LAYOUT.ITEMDETAILS_D1" | translate}}</span>
+                                <div fxLayout="row">
+                                    <span style="margin-right:10px;">x: </span>
+                                    <input class="mini-input-selectedItemMenu" (change)="changeAttributes('positionStart')" [(ngModel)]="storage.selectedElements[0].positionStart.x">
+                                </div>
+                                <div fxLayout="row">
+                                    <span style="margin-right:10px;">y: </span>
+                                    <input class="mini-input-selectedItemMenu" (change)="changeAttributes('positionStart')" [(ngModel)]="storage.selectedElements[0].positionStart.y">
+                                </div>
+                            </div>
+                            <div fxLayout="column" fxLayoutAlign="center center" fxFlex="50">
+                                <span style="font-size:14px;margin-bottom:5px;">{{"PROJECTS.LAYOUT.ITEMDETAILS_D2" | translate}}</span>
+                                <div fxLayout="row">
+                                    <span style="margin-right:10px;">x: </span>
+                                    <input class="mini-input-selectedItemMenu" (change)="changeAttributes('positionEnd')" [(ngModel)]="storage.selectedElements[0].positionEnd.x">
+                                </div>
+                                <div fxLayout="row">
+                                    <span style="margin-right:10px;">y: </span>
+                                    <input class="mini-input-selectedItemMenu" (change)="changeAttributes('positionEnd')" [(ngModel)]="storage.selectedElements[0].positionEnd.y">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="sourceDestinationAttr" *ngIf="storage.selectedElements[0].type==='S:S' || storage.selectedElements[0].type==='S:D' || storage.selectedElements[0].type==='S:SD'" style="width:100%;" fxLayout="column">
+
+                        <!-- -------------SOURCE START------------- -->
+                        <div *ngIf="storage.selectedElements[0].hasOwnProperty('userKeys') && storage.selectedElements[0].userKeys.hasOwnProperty('sourceType')" fxLayout="column" style="width:100%;">
+                            <mat-form-field floatLabel="always" class="!w-full" style="color:var(--gray-900);">
+                                <mat-label style="color:var(--gray-900);">{{"PROJECTS.LAYOUT.ITEMDETAILS_D23" | translate}}</mat-label>
+                                <mat-select class="selectItemMenu" [(ngModel)]="storage.selectedElements[0].userKeys.sourceType" (ngModelChange)="saveSourceDestination(sourceDestinationAttr.source[storage.selectedElements[0].userKeys.sourceType])">
+                                    <mat-option *ngFor="let obj of sourceDestinationAttr.source  | keyvalue" [value]="obj.key">
+                                        {{'PROJECTS.LAYOUT.' + obj.key | translate}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <div *ngFor="let obj of storage.selectedElements[0].userKeys  | keyvalue">
+
+                                <ng-container *ngIf="sourceDestinationAttr.source[storage.selectedElements[0].userKeys.sourceType][obj.key]">
+                                    <div *ngIf="(sourceDestinationAttr.source[storage.selectedElements[0].userKeys.sourceType][obj.key].type==='number' || sourceDestinationAttr.source[storage.selectedElements[0].userKeys.sourceType][obj.key].type==='calculated' ) && showInput(obj.key,'source')" fxLayout="row" fxLayoutAlign="space-between center" style="width:100%;">
+                                        <mat-form-field class="w-full" floatLabel="always">
+                                            <mat-label>{{ 'PROJECTS.LAYOUT.' + sourceDestinationAttr.source[storage.selectedElements[0].userKeys.sourceType][obj.key].description | translate}}</mat-label>
+                                            <input matInput (change)="updateUserKeys(obj.key,storage.selectedElements[0].userKeys[obj.key])" [disabled]="sourceDestinationAttr.source[storage.selectedElements[0].userKeys.sourceType][obj.key].type==='calculated'" onClick="this.select();" [(ngModel)]="storage.selectedElements[0].userKeys[obj.key]">
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div *ngIf="sourceDestinationAttr.source[storage.selectedElements[0].userKeys.sourceType][obj.key].type==='dropdown' && showInput(obj.key,'source')" fxLayout="row" fxLayoutAlign="space-between center" style="width:100%;">
+                                        <mat-form-field floatLabel="always" style="width:100%;color:var(--gray-900);">
+                                            <mat-label style="color:var(--gray-900);">{{ 'PROJECTS.LAYOUT.' + sourceDestinationAttr.source[storage.selectedElements[0].userKeys.sourceType][obj.key].description | translate}}</mat-label>
+                                            <mat-select (change)="updateUserKeys(obj.key,storage.selectedElements[0].userKeys[obj.key])" class="selectItemMenu" [(ngModel)]="storage.selectedElements[0].userKeys[obj.key]">
+                                                <mat-option *ngFor="let key of sourceDestinationAttr.source[storage.selectedElements[0].userKeys.sourceType][obj.key].options" [value]="key">
+                                                    {{ 'PROJECTS.LAYOUT.' + key | translate}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div *ngIf="sourceDestinationAttr.source[storage.selectedElements[0].userKeys.sourceType][obj.key].type==='radio' && showInput(obj.key,'source')" fxLayout="row" fxLayoutAlign="space-between center" style="width:100%; margin-top:10px;">
+                                        <span class="editorInfoMenuSpan" style="margin-right:6px;">{{ 'PROJECTS.LAYOUT.' + sourceDestinationAttr.source[storage.selectedElements[0].userKeys.sourceType][obj.key].description | translate}}</span>
+                                        <mat-radio-group fxLayout="row" (change)="updateUserKeys(obj.key,storage.selectedElements[0].userKeys[obj.key])" [(ngModel)]="storage.selectedElements[0].userKeys[obj.key]">
+                                            <mat-radio-button value="true" style="color:var(--gray-900); margin:6px;">{{"PROJECTS.LAYOUT.YES" | translate}}</mat-radio-button>
+                                            <mat-radio-button value="false" style="color:var(--gray-900); margin:6px;"> {{"PROJECTS.LAYOUT.NO" | translate}} </mat-radio-button>
+                                        </mat-radio-group>
+                                    </div>
+                                </ng-container>
+
+
+                            </div>
+
+                        </div>
+
+                        <!-- -------------SOURCE END------------- -->
+
+
+                        <!-- -------------DESTINATION START------------- -->
+
+                        <div *ngIf="storage.selectedElements[0].hasOwnProperty('userKeys') && storage.selectedElements[0].userKeys.hasOwnProperty('destinationType')" fxLayout="column" style="width:100%;">
+                            <mat-form-field floatLabel="always" class="!w-full" style="color:var(--gray-900);">
+                                <mat-label style="color:var(--gray-900);">{{"PROJECTS.LAYOUT.ITEMDETAILS_D23" | translate}}</mat-label>
+                                <mat-select class="selectItemMenu" [(ngModel)]="storage.selectedElements[0].userKeys.destinationType" (ngModelChange)="saveSourceDestination(sourceDestinationAttr.destination[storage.selectedElements[0].userKeys.destinationType])">
+                                    <mat-option *ngFor="let obj of sourceDestinationAttr.destination | keyvalue" [value]="obj.key">
+                                        {{ 'PROJECTS.LAYOUT.' + obj.key | translate}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <div *ngFor="let obj of storage.selectedElements[0].userKeys | keyvalue">
+
+                                <ng-container *ngIf="sourceDestinationAttr.destination[storage.selectedElements[0].userKeys.destinationType][obj.key]">
+                                    <div *ngIf="(sourceDestinationAttr.destination[storage.selectedElements[0].userKeys.destinationType][obj.key].type==='number' || sourceDestinationAttr.destination[storage.selectedElements[0].userKeys.destinationType][obj.key].type==='calculated')  && showInput(obj.key,'destination')" fxLayout="row" fxLayoutAlign="space-between center" style="width:100%;">
+                                        <mat-form-field class="w-full" floatLabel="always">
+                                            <mat-label>{{ 'PROJECTS.LAYOUT.' + sourceDestinationAttr.destination[storage.selectedElements[0].userKeys.destinationType][obj.key].description | translate}}</mat-label>
+                                            <input matInput [disabled]="sourceDestinationAttr.destination[storage.selectedElements[0].userKeys.destinationType][obj.key].type==='calculated'" (change)="updateUserKeys(obj.key,storage.selectedElements[0].userKeys[obj.key])" onClick="this.select();" [(ngModel)]="storage.selectedElements[0].userKeys[obj.key]">
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div *ngIf="sourceDestinationAttr.destination[storage.selectedElements[0].userKeys.destinationType][obj.key].type==='dropdown' && showInput(obj.key,'destination')" fxLayout="row" fxLayoutAlign="space-between center" style="width:100%;">
+                                        <mat-form-field floatLabel="always" style="width:100%;color:var(--gray-900);">
+                                            <mat-label style="color:var(--gray-900);">{{'PROJECTS.LAYOUT.' + sourceDestinationAttr.destination[storage.selectedElements[0].userKeys.destinationType][obj.key].description | translate}}</mat-label>
+                                            <mat-select (change)="updateUserKeys(obj.key,storage.selectedElements[0].userKeys[obj.key])" class="selectItemMenu" [(ngModel)]="storage.selectedElements[0].userKeys[obj.key]">
+                                                <mat-option *ngFor="let key of sourceDestinationAttr.destination[storage.selectedElements[0].userKeys.destinationType][obj.key].options" [value]="key">
+                                                    {{ 'PROJECTS.LAYOUT.' + key | translate}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div *ngIf="sourceDestinationAttr.destination[storage.selectedElements[0].userKeys.destinationType][obj.key].type==='radio' && showInput(obj.key,'destination')" fxLayout="row" fxLayoutAlign="space-between center" style="width:100%; margin-top:10px;">
+                                        <span class="editorInfoMenuSpan" style="margin-right:6px;">{{'PROJECTS.LAYOUT.' + sourceDestinationAttr.destination[storage.selectedElements[0].userKeys.destinationType][obj.key].description | translate}}</span>
+                                        <mat-radio-group fxLayout="row" (change)="updateUserKeys(obj.key,storage.selectedElements[0].userKeys[obj.key])" [(ngModel)]="storage.selectedElements[0].userKeys[obj.key]">
+                                            <mat-radio-button value="true" style="color:var(--gray-900); margin:6px;">{{"PROJECTS.LAYOUT.YES" | translate}}</mat-radio-button>
+                                            <mat-radio-button value="false" style="color:var(--gray-900); margin:6px;"> {{"PROJECTS.LAYOUT.NO" | translate}} </mat-radio-button>
+                                        </mat-radio-group>
+                                    </div>
+                                </ng-container>
+
+                            </div>
+                        </div>
+
+                        <!-- -------------DESTINATION END------------- -->
+
+
+                        <!-- -------------SD START------------- -->
+
+                        <div *ngIf="storage.selectedElements[0].hasOwnProperty('userKeys') && storage.selectedElements[0].userKeys.hasOwnProperty('sdType')" fxLayout="column" style="width:100%;">
+                            <mat-form-field floatLabel="always" class="!w-full" style="color:var(--gray-900);">
+                                <mat-label style="color:var(--gray-900);">{{"PROJECTS.LAYOUT.ITEMDETAILS_D23" | translate}}</mat-label>
+                                <mat-select class="selectItemMenu" [(ngModel)]="storage.selectedElements[0].userKeys.sdType" (ngModelChange)="saveSourceDestination(sourceDestinationAttr.sd[storage.selectedElements[0].userKeys.sdType])">
+                                    <mat-option *ngFor="let obj of sourceDestinationAttr.sd | keyvalue" [value]="obj.key">
+                                        {{ 'PROJECTS.LAYOUT.' + obj.key | translate}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <div *ngFor="let obj of storage.selectedElements[0].userKeys | keyvalue">
+
+                                <ng-container *ngIf="sourceDestinationAttr.sd[storage.selectedElements[0].userKeys.sdType].hasOwnProperty(obj.key)">
+                                    <div *ngIf="(sourceDestinationAttr.sd[storage.selectedElements[0].userKeys.sdType][obj.key].type==='number' || sourceDestinationAttr.sd[storage.selectedElements[0].userKeys.sdType][obj.key].type==='calculated') && showInput(obj.key,'sd')" fxLayout="row" fxLayoutAlign="space-between center" style="width:100%;">
+                                        <mat-form-field *ngIf="obj.key!=='distanceToHandoverLocation'" class="w-full" floatLabel="always">
+                                            <mat-label>{{ 'PROJECTS.LAYOUT.' + sourceDestinationAttr.sd[storage.selectedElements[0].userKeys.sdType][obj.key].description | translate}}</mat-label>
+                                            <input matInput [disabled]="sourceDestinationAttr.sd[storage.selectedElements[0].userKeys.sdType][obj.key].type==='calculated'" (change)="updateUserKeys(obj.key,storage.selectedElements[0].userKeys[obj.key])" onClick="this.select();" [(ngModel)]="storage.selectedElements[0].userKeys[obj.key]">
+                                        </mat-form-field>
+
+                                        <mat-form-field *ngIf="obj.key==='distanceToHandoverLocation' && storage.selectedElements[0].userKeys.handoverType==='HANDOVERTYPE_TOPBOTTOM'" class="w-full" floatLabel="always">
+                                            <mat-label>{{ 'PROJECTS.LAYOUT.' + sourceDestinationAttr.sd[storage.selectedElements[0].userKeys.sdType][obj.key].description | translate}}</mat-label>
+                                            <input matInput [disabled]="true" (change)="updateUserKeys(obj.key,storage.selectedElements[0].userKeys[obj.key])" onClick="this.select();" [(ngModel)]="storage.selectedElements[0].userKeys[obj.key]">
+                                        </mat-form-field>
+
+                                        <mat-form-field *ngIf="obj.key==='distanceToHandoverLocation' && storage.selectedElements[0].userKeys.handoverType!=='HANDOVERTYPE_TOPBOTTOM'" class="w-full" floatLabel="always">
+                                            <mat-label>{{ 'PROJECTS.LAYOUT.' + sourceDestinationAttr.sd[storage.selectedElements[0].userKeys.sdType][obj.key].description | translate}}</mat-label>
+                                            <input matInput (change)="updateUserKeys(obj.key,storage.selectedElements[0].userKeys[obj.key])" onClick="this.select();" [(ngModel)]="storage.selectedElements[0].userKeys[obj.key]">
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div *ngIf="sourceDestinationAttr.sd[storage.selectedElements[0].userKeys.sdType][obj.key].type==='dropdown' && showInput(obj.key,'sd')" fxLayout="row" fxLayoutAlign="space-between center" style="width:100%;">
+                                        <mat-form-field floatLabel="always" style="width:100%;color:var(--gray-900);">
+                                            <mat-label style="color:var(--gray-900);">{{'PROJECTS.LAYOUT.' + sourceDestinationAttr.sd[storage.selectedElements[0].userKeys.sdType][obj.key].description | translate}}</mat-label>
+                                            <mat-select  (change)="updateUserKeys(obj.key,storage.selectedElements[0].userKeys[obj.key])" class="selectItemMenu" [(ngModel)]="storage.selectedElements[0].userKeys[obj.key]">
+                                                <mat-option *ngFor="let key of sourceDestinationAttr.sd[storage.selectedElements[0].userKeys.sdType][obj.key].options" [value]="key">
+                                                    {{ 'PROJECTS.LAYOUT.' + key | translate}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div *ngIf="sourceDestinationAttr.sd[storage.selectedElements[0].userKeys.sdType][obj.key].type==='radio' && showInput(obj.key,'sd')" fxLayout="row" fxLayoutAlign="space-between center" style="width:100%;margin-top:10px;">
+                                        <span class="editorInfoMenuSpan" style="margin-right:6px;">{{'PROJECTS.LAYOUT.' + sourceDestinationAttr.sd[storage.selectedElements[0].userKeys.sdType][obj.key].description | translate}}</span>
+                                        <mat-radio-group fxLayout="row" (change)="updateUserKeys(obj.key,storage.selectedElements[0].userKeys[obj.key])" [(ngModel)]="storage.selectedElements[0].userKeys[obj.key]">
+                                            <mat-radio-button style="color:var(--gray-900); margin:6px;" value="true">{{"PROJECTS.LAYOUT.YES" | translate}}</mat-radio-button>
+                                            <mat-radio-button style="color:var(--gray-900); margin:6px;" value="false"> {{"PROJECTS.LAYOUT.NO" | translate}} </mat-radio-button>
+                                        </mat-radio-group>
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- -------------SD END------------- -->
+
+                    <div fxLayout="column" *ngIf="displayParams('couplingTime')" style="width:100%;margin-top:25px;">
+                        <div fxLayout="row" fxLayoutAlign="space-between center" style="width:100%;">
+                            <mat-form-field class="w-full" floatLabel="always">
+                                <mat-label>{{"PROJECTS.LAYOUT.SOURCEDESTINATION_COUPLINGTIME" | translate}}</mat-label>
+                                <input matInput  onClick="this.select();" (change)="changeAttributes('couplingTime')" [(ngModel)]="storage.selectedElements[0].userKeys.couplingTime">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="start center" *ngIf="displayParams('opacity')" style="width:100%;margin-top:10px;">
+                        <div style="margin-right:15px;"><span class="editorInfoMenuSpan">Opacity</span></div>
+                        <mat-slider fxFlex class="customSlider" (change)="changeAttributes('opacity')" [(ngModel)]="storage.selectedElements[0].opacity" min="0" max="1" step="0.1" aria-label="opacity">
+                        </mat-slider>
+                    </div>
+                    <div fxLayout="column" *ngIf="displayParams('distance')" style="width:100%;margin-top:25px;">
+                        <div fxLayout="row" fxLayoutAlign="space-between center" style="width:100%;">
+                            <mat-form-field class="w-full" floatLabel="always">
+                                <mat-label>{{"PROJECTS.LAYOUT.ITEMDETAILS_D18" | translate}}</mat-label>
+                                <input matInput onClick="this.select();" (change)="changeAttributes('distance')" [(ngModel)]="storage.selectedElements[0].distance">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div fxLayout="row" *ngIf="displayParams('stopTimeInSeconds')" style="width:100%;">
+                        <div fxLayout="row" fxLayoutAlign="space-between center" style="width:100%;">
+                            <mat-form-field class="w-full" floatLabel="always">
+                                <mat-label>{{"PROJECTS.LAYOUT.ITEMDETAILS_D6" | translate}}</mat-label>
+                                <input matInput onClick="this.select();" (change)="changeAttributes('stopTimeInSeconds')" [(ngModel)]="storage.selectedElements[0].stopTimeInSeconds">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div fxLayout="row" *ngIf="displayParams('laneSpacing')" style="width:100%;">
+                        <div fxLayout="row" fxLayoutAlign="space-between center" style="width:100%;">
+                            <mat-form-field class="w-full" floatLabel="always">
+                                <mat-label>{{"PROJECTS.LAYOUT.ITEMDETAILS_D25" | translate}}</mat-label>
+                                <input matInput onClick="this.select();" (change)="changeAttributes('laneSpacing')" [(ngModel)]="storage.selectedElements[0].laneSpacing">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div *ngIf="displayParams('singleDirection')" fxLayout="row" style="width:100%;">
+                        <span class="editorInfoMenuSpan" style="line-height:24px;">{{"PROJECTS.LAYOUT.ITEMDETAILS_D27" | translate}}</span>
+                        <div fxFlex></div>
+                        <mat-slide-toggle (change)="changeAttributes('singleDirection')" [(ngModel)]="storage.selectedElements[0].singleDirection" aria-label="singleDirection" style="margin:0;color:var(--gray-900);">
+                        </mat-slide-toggle>
+                    </div>
+
+                    <div *ngIf="displayParams('singleDirection') && storage.selectedElements[0].singleDirection" fxLayout="row" style="width:100%;">
+                        <div fxFlex></div>
+                        <button mat-raised-button class="!w-full btn-small !mb-4" (click)="changeAttributes('directionAB')">
+                            <mat-icon>compare_arrows</mat-icon>
+                            {{"PROJECTS.LAYOUT.ITEMDETAILS_D7" | translate}}
+                        </button>
+                    </div>
+
+                    <div *ngIf="displayParams('doppelspur')" fxLayout="row" style="width:100%;">
+                        <span class="editorInfoMenuSpan" style="line-height:24px;">{{"PROJECTS.LAYOUT.ITEMDETAILS_D26" | translate}}</span>
+                        <div fxFlex></div>
+                        <mat-slide-toggle (change)="changeAttributes('doppelspur')" [(ngModel)]="storage.selectedElements[0].doppelspur" aria-label="doppelspur" style="margin:0;color:var(--gray-900);">
+                        </mat-slide-toggle>
+                    </div>
+
+                    <div fxFlex></div>
+                    <div fxLayout="column" style="width:100%;margin-top:10px;">
+                        <div style="width:100%;" *ngIf="storage.selectedElements[0].type==='S:S' || storage.selectedElements[0].type==='S:D' || (storage.selectedElements[0].type==='S:SD' && storage.selectedElements[0].userKeys.sdType!=='tuggerTrain')">
+                            <span style="color:var(--gray-900);">{{"PROJECTS.LAYOUT.MISSION_AUTO" | translate}}:</span>
+                            <div style="min-height:200px; max-height:200px;  margin:0; ">
+
+                                <div fxLayout="column" fxLayoutAlign="start center" style="height:160px; width:100%;overflow: hidden;">
+                                    <mat-form-field floatLabel="never" style="color:var(--gray-900);width:100%;margin:0 0 10px 0;">
+                                        <mat-label style="color:var(--gray-900);">{{"PROJECTS.LAYOUT.SELECTDEST" | translate}}</mat-label>
+                                        <mat-select class="selectItemMenu" (selectionChange)="getSuggestedMissionsToDestination($event)">
+                                            <mat-option *ngFor="let dest of storage.suggestedDestinations" [value]="dest">
+                                                {{dest.customName}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                    <div fxFlex style="width:100%;overflow-y:auto;" fxLayout="column" fxLayoutAlign="start center" *ngIf="storage.suggestedPathOptions===undefined || storage.suggestedPathOptions.length===0">
+                                        <mat-icon style="margin:0 0 5px 0;color:var(--gray-900);">info_outline</mat-icon>
+                                        <span style="color:var(--gray-900);">{{"PROJECTS.LAYOUT.SELECTDEST_NOINFO" | translate}}</span>
+                                    </div>
+                                    <div fxFlex style="width:100%;overflow-y:auto;" fxLayout="column" *ngIf="storage.suggestedPathOptions!==undefined && storage.suggestedPathOptions.length>0">
+                                        <div fxLayout="row" fxLayoutAlign="start center" (click)="createMissionFromSuggestion(mi)" (mouseover)="highlightSuggestedMission(mi)" (mouseleave)="checkSelectedMissionHighlight()" *ngFor="let mi of storage.suggestedPathOptions; let i = index" style="width:100%;height:36px;margin-bottom:4px;cursor:pointer;" fxLayout="row" [ngStyle]="mi.exists && {'background-color':'rgba(255,255,255,0.5)'}">
+                                            <div style="margin:0 6px; color:var(--gray-900); font-weight:bold;">#{{i}}</div>
+                                            <div fxLayout="column" style="width:100%; padding:0 4px;">
+                                                <span style="color:var(--gray-900);">{{mi.name}}</span>
+                                            </div>
+                                            <div style="width:6px; height:100%;" [ngStyle]="{'background-color':mi.color}"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div style="width:100%;margin:0 0 8px 0; cursor:pointer;color:var(--gray-900);" fxLayout="row" fxLayoutAlign="start center" *ngIf="displayParams('locked')" (click)="changeAttributes('locked')">
+                            <mat-icon *ngIf="storage.selectedElements[0].locked" style="color:var(--gray-900);margin:0;">lock</mat-icon>
+                            <mat-icon *ngIf="!storage.selectedElements[0].locked" style="color:var(--gray-900);margin:0;">lock_open</mat-icon>
+                            <span style="margin-left:8px;">{{"PROJECTS.LAYOUT.ITEMDETAILS_D22" | translate}}</span>
+
+                        </div>
+                        <mat-checkbox *ngIf="displayParams('visible')" (change)="changeAttributes('visible')"  [(ngModel)]="storage.selectedElements[0].visible" aria-label="visible">
+                            <span style="padding-top:4px;line-height:20px;color:var(--gray-900);">{{"PROJECTS.LAYOUT.ITEMDETAILS_D3" | translate}}&nbsp;{{'PROJECTS.LAYOUT.'+ storage.selectedElements[0].type | translate}}</span>
+                        </mat-checkbox>
+                        <mat-checkbox *ngIf="displayParams('displayLength')" (change)="changeAttributes('displayLength')" class="mt-1" [(ngModel)]="storage.selectedElements[0].displayLength" aria-label="displayLength">
+                            <span style="padding-top:4px;line-height:20px;color:var(--gray-900);">{{"PROJECTS.LAYOUT.ITEMDETAILS_D4" | translate}}</span>
+                        </mat-checkbox>
+                        <div style="width:100%;margin: 8px 0 4px 0;" fxLayout="row" fxLayoutAlign="end center">
+                            <span *ngIf="!storage.showElementExpert" style="cursor:pointer;color:var(--gray-900);text-decoration: underline;" (click)="storage.showElementExpert = true">{{"PROJECTS.LAYOUT.SHOWEXPERT" | translate}}</span>
+                            <span *ngIf="storage.showElementExpert" style="cursor:pointer;color:var(--gray-900);text-decoration: underline;" (click)="storage.showElementExpert = false">{{"PROJECTS.LAYOUT.HIDEEXPERT" | translate}}</span>
+                        </div>
+                    </div>
+                    <button mat-stroked-button class="!mt-2 !w-full" *ngIf="(storage.selectedElements[0].type==='S:P' || storage.selectedElements[0].type==='S:C' || storage.selectedElements[0].type==='S:D' || storage.selectedElements[0].type==='S:S' || storage.selectedElements[0].type==='S:SD' || storage.selectedElements[0].type==='S:TSP')" (click)="addToMission()"><mat-icon>extension</mat-icon>Add to mission</button>
+                    <button mat-stroked-button class="!mt-2 !w-full" *ngIf="storage.selectedElements[0].type==='S:SD' && storage.selectedElements[0].userKeys.hasOwnProperty('sdType') && storage.selectedElements[0].userKeys.sdType==='vna'" (click)="addVNAMission()" ><mat-icon>extension</mat-icon>Add VNA mission</button>
+                    <button mat-stroked-button class="!mt-2 !w-full" style="overflow:hidden!important; line-height:16px!important; white-space: pre-wrap!important;" *ngIf="storage.selectedElements[0].type==='S:SD' && storage.selectedElements[0].userKeys.hasOwnProperty('sdType') && storage.selectedElements[0].userKeys.sdType==='tuggerTrain'" (click)="addTuggerTrainMission()"><mat-icon>add</mat-icon>{{"PROJECTS.LAYOUT.ITEMDETAILS_CREATETUGGERMISSION" | translate}}</button>
+
+                    <button mat-stroked-button class="!mt-2 !w-full" (click)="copyElement()"><mat-icon>content_copy</mat-icon>{{ "PROJECTS.LAYOUT.COPYELEMENT" | translate}}</button>
+
+                    <div *ngIf="storage.selectedElements[0].type==='S:P' || storage.selectedElements[0].type==='S:C'" style="width:100%;margin-top:6px;" fxLayout="row" fxLayoutAlign="end center">
+                        <span style="color:var(--gray-900);line-height:24px;">{{"PROJECTS.LAYOUT.ITEMDETAILS_D24" | translate}}: {{storage.selectedElements[0].display.length}}m</span>
+                    </div>
+                </div>
+            </div>
+
+            <!--
+           Item Menu END
+           -->
+
+            <!--
+           Mission Menu START
+           -->
+
+            <div *ngIf="storage.selectedElements!==null && storage.selectedElements!==undefined && storage.selectedElements.length===1 && storage.selectedElements[0] && storage.selectedElements[0].hasOwnProperty('elements')" fxLayout="column" fxLayoutAlign="start center" class="selectedItemMenu">
+                <div fxLayout="row" fxLayoutAlign="center center">
+                    <input class="mini-input-selectedItemMenu" onClick="this.select();" (change)="changeMission('name')" [(ngModel)]="storage.selectedElements[0].name" style="font-size:14px;text-align:center;color:var(--gray-900);width:140px;margin:10px 0 2px 0;" placeholder="{{'PROJECTS.LAYOUT.CUSTOMNAME_PLACEHOLDER' | translate}}">
+                    <mat-icon style="position:absolute;right:5px;color:var(--gray-900);font-size:16px;line-height:18px;margin-top:6px;cursor:pointer;" (click)="deleteMission()" matTooltip="{{'PROJECTS.LAYOUT.T4' | translate}}">delete</mat-icon>
+                </div>
+                <mat-divider style="width:100%; background-color: var(--gray-900); margin:4px;"></mat-divider>
+
+                <div fxLayout="column" fxLayoutAlign="start center" style="height:100%; width:100%; padding:10px 10px 14px 10px;">
+                    <div fxLayout="row" fxLayoutAlign="start center" style="width:100%">
+                        <div style="background-color: var(--white); width:100%; padding:6px;border-radius:6px;" fxLayout="column" fxLayoutAlign="start start" [ngStyle]="storage.selectedElements[0].flow===0 && {'box-shadow':'inset 0 0 0 1px #ba1026'}">
+                            <span class="editorInfoMenuSpan" style="color:black;" *ngIf="storage.selectedElements[0].type!=='tugger'">{{"PROJECTS.LAYOUT.ITEMDETAILS_D14" | translate}}:</span>
+                            <span class="editorInfoMenuSpan" style="color:black;" *ngIf="storage.selectedElements[0].type==='tugger'">{{"PROJECTS.LAYOUT.ITEMDETAILS_D31" | translate}}:</span>
+
+                            <div fxLayout="row" fxLayoutAlign="end center" style="width:100%;">
+                                <input class="designer-input input_small" onClick="this.select();" (blur)="changeMission('flow')" [(ngModel)]="storage.selectedElements[0].flow" style="color:#BA1126; margin-right:6px;background-color:#dcdcdc;max-width:55px;text-align:right;" placeholder="0">
+                                <span *ngIf="storage.processDuration!==undefined && storage.processDuration!==null"> / {{storage.processDuration}}min</span>
+                            </div>
+
+                        </div>
+                        <button mat-icon-button [disabled]="!storage.hasShifts" class="!ml-1 itemMenuSquare" (click)="openShifts()" style="padding:0;margin:0 4px;" matTooltip="{{'PROJECTS.LAYOUT.T9' | translate}}" >
+                            <mat-icon style="font-size:22px;line-height:27px;min-height:27px; max-height:27px; color:var(--gray-900);" [ngStyle]="(!storage.hasShifts) && {'color':'#888888'}">list</mat-icon>
+                        </button>
+                        <div class="colorIndicator itemMenuSquare" (click)="changeMissionColor()" [ngStyle]="{'background-color':storage.selectedElements[0].color}" matTooltip="{{'PROJECTS.LAYOUT.T7' | translate}}"></div>
+                    </div>
+
+                    <div id="errorSection" *ngIf="storage.selectedElements[0].type==='normal'" style="margin-top:4px;width:100%;">
+                        <div *ngIf="storage.selectedElements[0].missionErrors.missingFlow" style="width:100%;" fxLayout="row">
+                            <mat-icon style="color:var(--gray-900); margin: 4px 4px 4px 0;">error_outline</mat-icon>
+                            <span style="color:var(--gray-900);line-height:33px;">{{"PROJECTS.LAYOUT.ITEMDETAILS_D19" | translate}}</span>
+                        </div>
+
+                        <div *ngIf="storage.selectedElements[0].missionErrors.missingPath" style="width:100%;" fxLayout="row">
+                            <mat-icon style="color:var(--gray-900); margin:  4px 4px 4px 0;">error_outline</mat-icon>
+                            <span style="color:var(--gray-900);line-height:33px;">{{"PROJECTS.LAYOUT.ITEMDETAILS_D20" | translate}}</span>
+                        </div>
+                    </div>
+
+                    <div fxLayout="column" fxLayoutAlign="start start" *ngIf="storage.selectedElements[0].bothDirections!==undefined && storage.selectedElements[0].isLoaded!==undefined && storage.selectedElements[0].type==='normal'" style="margin-top:6px;width:100%;">
+                        <mat-checkbox [disabled]="!checkBothDirections(null,null,storage.selectedElements[0])" (change)="changeMission('bothDirections'); setIsLoadedNull()" [(ngModel)]="storage.selectedElements[0].bothDirections" aria-label="bothDir" style="margin: 0 0 10px 0;color:var(--gray-900);">
+                            <span class="editorInfoMenuSpan" style="line-height:20px;">{{ 'PROJECTS.LAYOUT.ADDELEMENTSTOMISSIONDIALOG_D5' | translate }}</span>
+                        </mat-checkbox>
+                        <mat-slide-toggle [disabled]="storage.selectedElements[0].bothDirections" (change)="changeMission('isLoaded')" [(ngModel)]="storage.selectedElements[0].isLoaded" aria-label="isLoaded" style="color:var(--gray-900);">
+                            <span *ngIf="storage.selectedElements[0].isLoaded">{{ 'PROJECTS.LAYOUT.ADDELEMENTSTOMISSIONDIALOG_D7' | translate }}</span>
+                            <span *ngIf="!storage.selectedElements[0].isLoaded">{{ 'PROJECTS.LAYOUT.ADDELEMENTSTOMISSIONDIALOG_D8' | translate }}</span>
+                        </mat-slide-toggle>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutAlign="space-between center" style="width:100%;margin-top:10px;">
+                        <mat-form-field class="w-full" floatLabel="always">
+                            <mat-label>{{'PROJECTS.LAYOUT.PRODITO_STEP3_H23' | translate}}</mat-label>
+                            <input matInput onClick="this.select();" (change)="changeMission('additionalTime')" [(ngModel)]="storage.selectedElements[0].additionalTime">
+                        </mat-form-field>
+                    </div>
+
+
+                    <div *ngIf="storage.selectedElements[0].source!==null && storage.selectedElements[0].type!=='vna'" (mouseover)="highlightElement(storage.selectedElements[0].source)" (mouseleave)="resetHighlightElement(storage.selectedElements[0].source)" (click)="selectElement(storage.selectedElements[0].source)" style="background-color: var(--white); width:100%; padding:6px;margin-top:10px;cursor:pointer;" fxLayout="row" fxLayoutAlign="space-between center">
+                        <div fxLayout="row" fxLayoutAlign="start center">
+                            <mat-icon class="mr-2">file_upload</mat-icon>
+                            <span class="editorInfoMenuSpan" style="color:black;">{{storage.selectedElements[0].source.customName}}</span>
+                        </div>
+                        <mat-icon style="margin:0;outline:none;cursor:pointer;" (click)="removeSourceFromMission()" matTooltip="{{'PROJECTS.LAYOUT.T6' | translate}}">delete</mat-icon>
+                    </div>
+                    <div *ngIf="storage.selectedElements[0].source===null && storage.selectedElements[0].type!=='vna'" style="opacity:0.4;background-color: var(--white); width:100%; padding:6px;margin-top:10px;" fxLayout="column">
+                        <span class="editorInfoMenuSpan" style="color:black;"><mat-icon>file_upload</mat-icon>{{"PROJECTS.LAYOUT.ITEMDETAILS_D8" | translate}}</span>
+                        <span style="color:#ba1026;">{{"PROJECTS.LAYOUT.ITEMDETAILS_D11" | translate}}</span>
+                    </div>
+                    <div *ngIf="storage.selectedElements[0].type==='vna'" (mouseover)="highlightElement(storage.selectedElements[0].source)" (mouseleave)="resetHighlightElement(storage.selectedElements[0].source)" (click)="selectElement(storage.selectedElements[0].source)" style="background-color: var(--white); width:100%; padding:6px;margin-top:10px;cursor:pointer;" fxLayout="row" fxLayoutAlign="space-between center">
+                        <span class="editorInfoMenuSpan" style="color:black;"><mat-icon>vertical_align_center</mat-icon>{{storage.selectedElements[0].source.customName}}</span>
+                    </div>
+
+                    <div fxFlex fxLayout="column" fxLayoutAlign="start center" style="width:100%;padding:10px 0;">
+                        <div fxFlex="50" fxLayout="column" *ngIf="storage.selectedElements[0].type==='tugger'" style="overflow:auto; width:100%;margin:0;">
+                            <span class="editorInfoMenuSpan">{{"PROJECTS.LAYOUT.ADDTUGGERMISSION_D6" | translate}}:</span>
+                            <div fxFlex *ngIf="storage.selectedElements[0].stopPoints!==undefined && storage.selectedElements[0].stopPoints.length>0" style="margin-top:6px; overflow-y:auto;">
+
+                                <div class="itemDetailsCustomList" fxLayout="column" fxLayoutAlign="start start" *ngFor="let el of storage.selectedElements[0].stopPoints" (mouseover)="highlightElement(el.el)" (mouseleave)="resetHighlightElement(el.el)" style="margin-top:5px;height:unset;">
+
+                                    <div fxLayout="row" fxLayoutAlign="start center" style="width:100%">
+                                        <mat-checkbox class="editorMenuCheckbox" (change)="changeMission('stopPoints');" [(ngModel)]="el.selected" *ngIf="el.el.type==='S:TSP'" aria-label="Checkbox">
+                                        </mat-checkbox>
+                                        <div (click)="selectElement(el.el)" class="md-list-item-text" fxLayout="column" style="width:100%;color:var(--gray-900); margin-left:10px;">
+                                            <span class="editorInfoMenuSpan" style="font-weight:bold;line-height:20px;">{{el.el.customName}}</span>
+                                        </div>
+                                        <div fxFlex></div>
+                                        <mat-icon style="color:var(--gray-900);margin:0;outline:none;" (click)="removeMissionElement(el.el,true);$event.stopPropagation()" matTooltip="{{'PROJECTS.LAYOUT.T6' | translate}}">delete</mat-icon>
+                                    </div>
+
+                                    <div fxLayout="row" fxLayoutAlign="space-between center" style="width:100%;margin-top:2px;">
+                                        <span class="editorInfoMenuSpan" style="line-height:20px;font-size:12px;">{{ 'PROJECTS.LAYOUT.SOURCEDESTINATION_COUPLINGTIME' | translate }}</span>
+                                        <input class="designer-input input_small" onClick="this.select();" (change)="changeMission('stopPoints')" [(ngModel)]="el.couplingTime" style="margin-right:6px;background-color:#dcdcdc;max-width:45px;text-align:right;" placeholder="0">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div *ngIf="storage.selectedElements[0].stopPoints===undefined || storage.selectedElements[0].stopPoints.length===0" fxLayout="column" fxLayoutAlign="center center" style="margin-top:20px;">
+                                <mat-icon style="color:var(--gray-900);">info_outline</mat-icon>
+                                <span style="color:var(--gray-900);">{{"PROJECTS.LAYOUT.ITEMDETAILS_D30" | translate}}</span>
+                            </div>
+                            <mat-divider style="width:100%;background-color: var(--gray-900);margin-top:15px;"></mat-divider>
+                        </div>
+
+
+                        <div fxFlex fxLayout="column" *ngIf="storage.selectedElements[0].type!=='vna'" style="width:100%;margin: 0;">
+                            <div fxLayout="row" fxLayoutAlign="space-between center" style="width:100%;">
+                                <span class="editorInfoMenuSpan">{{"PROJECTS.LAYOUT.ITEMDETAILS_D10" | translate}}:</span>
+                                <mat-icon (click)="checkPathBtn()" style="color:var(--gray-900); margin: 4px;cursor:pointer;" matTooltip="{{'PROJECTS.LAYOUT.CHECKPATH_TOOLTIP' | translate}}">done_all</mat-icon>
+                            </div>
+
+                            <div fxFlex *ngIf="storage.selectedElements[0].elements!==undefined && storage.selectedElements[0].elements.length>0" style="overflow-y:auto;">
+                                <ng-container *ngFor="let el of storage.selectedElements[0].elements">
+                                    <div class="itemDetailsCustomList" fxLayout="row" fxLayoutAlign="start center" *ngIf="el.type!=='S:TSP' && el.type!=='S:SD' && el.type!=='S:S'" (mouseover)="highlightElement(el)" (mouseleave)="resetHighlightElement(el)" (click)="selectElement(el)">
+                                        <mat-icon *ngIf="el.type==='S:W'" style="color:var(--gray-900); margin: 0 4px 0 0;">border_style</mat-icon>
+                                        <mat-icon *ngIf="el.type==='S:G'" style="color:var(--gray-900); margin: 0 4px 0 0;">space_bar</mat-icon>
+                                        <mat-icon *ngIf="el.type==='S:I'" style="color:var(--gray-900); margin: 0 4px 0 0;">image</mat-icon>
+                                        <mat-icon *ngIf="el.type==='S:P'" style="color:var(--gray-900); margin: 0 4px 0 0;">linear_scale</mat-icon>
+                                        <mat-icon *ngIf="el.type==='S:C'" style="color:var(--gray-900); margin: 0 4px 0 0;">rounded_corner</mat-icon>
+
+                                        <div class="md-list-item-text" fxLayout="column" style="color:var(--gray-900); margin-left:10px;">
+                                            <span class="editorInfoMenuSpan" style="font-weight:bold;line-height:20px;">{{el.customName}}</span>
+                                            <span *ngIf="el.hasOwnProperty('display') && el.display.hasOwnProperty('length')" style="font-size:12px;line-height:20px;">{{"PROJECTS.LAYOUT.ITEMDETAILS_D13" | translate}}:&nbsp;{{el.display.length}}m</span>
+                                        </div>
+                                        <div fxFlex></div>
+                                        <mat-icon style="color:var(--gray-900);margin:0;outline:none;" (click)="removeMissionElement(el);$event.stopPropagation()" matTooltip="{{'PROJECTS.LAYOUT.T6' | translate}}">delete</mat-icon>
+                                    </div>
+                                </ng-container>
+
+                            </div>
+                            <div *ngIf="storage.selectedElements[0].elements===undefined || storage.selectedElements[0].elements.length===0" fxLayout="column" fxLayoutAlign="center center" style="margin-top:20px;">
+                                <mat-icon style="color:var(--gray-900);">info_outline</mat-icon>
+                                <span style="color:var(--gray-900);">{{"PROJECTS.LAYOUT.ITEMDETAILS_D15" | translate}}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutAlign="space-between center" *ngIf="storage.selectedElements[0].destination!==null && storage.selectedElements[0].type==='normal'" (mouseover)="highlightElement(storage.selectedElements[0].destination)" (mouseleave)="resetHighlightElement(storage.selectedElements[0].destination)" (click)="selectElement(storage.selectedElements[0].destination)" style="background-color: var(--white); width:100%; padding:6px;margin-top:10px;cursor:pointer;">
+                        <div fxLayout="row" fxLayoutAlign="start center">
+                            <mat-icon class="mr-2">file_download</mat-icon>
+                            <span class="editorInfoMenuSpan" style="color:black;">{{storage.selectedElements[0].destination.customName}}</span>
+                        </div>
+                        <mat-icon style="margin:0;outline:none;cursor:pointer;" (click)="removeDestinationFromMission()" matTooltip="{{'PROJECTS.LAYOUT.T6' | translate}}">delete</mat-icon>
+                    </div>
+                    <div *ngIf="storage.selectedElements[0].destination===null && storage.selectedElements[0].type==='normal'" style="background-color: var(--white); width:100%; padding:6px;margin-top:10px;opacity:0.4;" fxLayout="column">
+                        <span class="editorInfoMenuSpan" style="color:black;"><mat-icon>file_download</mat-icon>{{"PROJECTS.LAYOUT.ITEMDETAILS_D9" | translate}}</span>
+                        <span style="color:#ba1026;">{{"PROJECTS.LAYOUT.ITEMDETAILS_D12" | translate}}</span>
+                    </div>
+
+                    <div *ngIf="storage.selectedElements[0].type==='normal'" style="width:100%;margin-top:6px;" fxLayout="row" fxLayoutAlign="end center">
+                        <span style="color:var(--gray-900);font-size:14px;line-height:24px;">{{"PROJECTS.LAYOUT.ITEMDETAILS_D21" | translate}}: {{calcMissionsTotalLength(storage.selectedElements[0].elements, storage.selectedElements[0].source, storage.selectedElements[0].destination)}}m</span>
+                    </div>
+                </div>
+            </div>
+
+            <!--
+          Mission Menu END
+          -->
+
+        </div>
+
+
+
+        <div class="right-menu" fxLayout="column">
+            <mat-tab-group animationDuration="0ms" style="height:100%;">
+                <mat-tab label="Elements">
+                    <div class="elementList" fxLayout="row" fxLayoutAlign="start center" (mouseover)="highlightElement(el)" (mouseleave)="resetHighlightElement(el)" (click)="selectElement(el)" *ngFor="let el of storage.allElements" style="width:100%;padding:0;min-height:45px;max-height:45px;cursor:pointer; position: relative;">
+
+                        <div class="missionSelectedIndicatorLEFT" [ngStyle]="elementInMission(el.id,storage.selectedElements[0])==='element' && {'opacity':'1'}"></div>
+                        <div class="missionSelectedIndicatorLEFT" style="background-color:var(--brand-500);" [ngStyle]="elementInMission(el.id,storage.selectedElements[0])==='source' && {'opacity':'1'}"></div>
+                        <div class="missionSelectedIndicatorLEFT"  style="background-color:#636363;" [ngStyle]="elementInMission(el.id,storage.selectedElements[0])==='destination' && {'opacity':'1'}"></div>
+
+
+                        <div fxFlex fxLayout="row" fxLayoutAlign="start center" style="width:100%; color:var(--gray-900);overflow: hidden; text-overflow: ellipsis; var(--gray-900)-space: nowrap;height:45px; padding: 0 0 0 10px;line-height:45px;" [ngStyle]="storage.checkElementInMultiSelect(el.id) && {'color':'var(--brand-500)'} || {'color':'var(--gray-900)'}">
+                            <mat-icon *ngIf="el.type==='S:W'" style="color:var(--gray-900); margin-right:4px">border_style</mat-icon>
+                            <mat-icon *ngIf="el.type==='S:G'" style="color:var(--gray-900); margin-right:4px">space_bar</mat-icon>
+                            <mat-icon *ngIf="el.type==='S:I'" style="color:var(--gray-900); margin-right:4px">image</mat-icon>
+                            <mat-icon *ngIf="el.type==='S:P'" style="color:var(--gray-900); margin-right:4px">linear_scale</mat-icon>
+                            <mat-icon *ngIf="el.type==='S:C'" style="color:var(--gray-900); margin-right:4px">rounded_corner</mat-icon>
+                            <mat-icon *ngIf="el.type==='S:S'" style="color:var(--gray-900); margin-right:4px">file_upload</mat-icon>
+                            <mat-icon *ngIf="el.type==='S:D'" style="color:var(--gray-900); margin-right:4px">file_download</mat-icon>
+                            <mat-icon *ngIf="el.type==='S:SD'" style="color:var(--gray-900); margin-right:4px">vertical_align_center</mat-icon>
+                            {{el.customName}}
+                        </div>
+
+                    </div>
+                </mat-tab>
+                <mat-tab label="Missions">
+                    <div (mouseover)="highlightMission(mission)" (mouseleave)="checkSelectedMissionHighlight()" class="missionList" (click)="selectMission(mission)" *ngFor="let mission of storage.allMissions" style="padding:0;min-height:45px;max-height:45px;cursor:pointer; position: relative;">
+                        <div class="missionSelectedIndicatorLEFT"  [ngStyle]="storage.selectedElements.length>0 && storage.selectedElements[0] && elementInMission(storage.selectedElements[0].id,mission)==='element' && {'opacity':'1'}"></div>
+
+                        <div fxLayout="row" fxLayoutAlign="start center" style="color:var(--gray-900);overflow: hidden; text-overflow: ellipsis; var(--gray-900)-space: nowrap;height:45px; padding: 0 0 0 10px;line-height:45px;" [ngStyle]="(storage.selectedElements.length>0 && storage.selectedElements[0] && mission.id===storage.selectedElements[0].id) && {'color':'var(--brand-500)'} || (storage.selectedElements.length===0 || (storage.selectedElements[0] && mission.id!==storage.selectedElements[0].id)) && {'color':'var(--gray-900)'}">
+                            <mat-icon style="color:#ba1026;" *ngIf="mission.type==='normal' && (mission.missionErrors.missingPath || mission.missionErrors.missingFlow)">error_outline</mat-icon>
+                            {{mission.name}}
+                        </div>
+                        <div class="missionSelectedIndicator" [ngStyle]="{'background-color': mission.color}"></div>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>
+</div>

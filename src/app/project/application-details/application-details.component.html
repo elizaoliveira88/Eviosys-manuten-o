@@ -1,0 +1,419 @@
+<ng-template #DurationTemplate let-row let-inputValuesForm="inputValuesForm" let-isShift="isShift">
+    <div [formGroup]="inputValuesForm" style="margin-top:17px;" class="w-full" fxLayout="row" fxLayoutAlign="space-between center">
+        <div style="margin-top:-16px;" fxLayout="row" fxLayoutAlign="space-between center">
+            <mat-form-field floatLabel="always" class="input-small">
+                <mat-label>{{'INPUTVALUES.' + row.label | translate }}</mat-label>
+                <input formControlName="durationHours" onfocus="this.select()" [placeholder]="'hh'" matInput>
+            </mat-form-field>
+            <div class="duration-between">:</div>
+            <mat-form-field floatLabel="never" class="input-small">
+                <input formControlName="durationMinutes" onfocus="this.select()" [placeholder]="'mm'" matInput>
+            </mat-form-field>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #RadioTemplate let-row let-inputValuesForm="inputValuesForm" let-isShift="isShift">
+    <div [formGroup]="inputValuesForm" class="w-full" style="min-height:65px;" fxLayout="column" fxLayoutAlign="start start">
+        <div class="custom-input-header">{{ 'INPUTVALUES.' + row.label | translate}}</div>
+        <div fxLayout="row" class="mt-2">
+            <mat-radio-group (change)="checkAllDisplayRules()" fxFlex aria-label="Select an option" [formControlName]="row.model">
+                <mat-radio-button fxFlex="{{100/(row.options.length)}}" *ngFor="let opt of row.options" [value]="opt.value">{{ 'INPUTVALUES.' + opt.label | translate}}</mat-radio-button>
+            </mat-radio-group>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #NumberTemplate let-row let-inputValuesForm="inputValuesForm" let-isShift="isShift">
+    <div [formGroup]="inputValuesForm" class="w-full" fxLayout="row" fxLayoutAlign="end center" >
+        <mat-form-field floatLabel="always" [ngStyle]="{'min-width':(row.size * 180)+'px', 'max-width':(row.size * 180)+'px'}">
+            <mat-label>{{ 'INPUTVALUES.' + row.label | translate }}</mat-label>
+            <input [formControlName]="row.model" onfocus="this.select()" [placeholder]="((row.default) ? row.default : 0).toString()" (change)="inputChanged(row, isShift)" type="number" matInput>
+            <div class="warn-indicator" *ngIf="
+            (row.minWarn && (inputValuesForm.controls[row.model].value <= row.minWarn && inputValuesForm.controls[row.model].value>=row.min)) ||
+            (row.maxWarn && (inputValuesForm.controls[row.model].value >= row.maxWarn && inputValuesForm.controls[row.model].value<=row.max))"></div>
+        </mat-form-field>
+    </div>
+</ng-template>
+
+<ng-template #ToggleTemplate let-row let-inputValuesForm="inputValuesForm" let-isShift="isShift">
+    <ng-container *ngIf="row.size===0.5">
+        <div [formGroup]="inputValuesForm" fxLayout="column" class="w-full" style="margin-top: 18px;" fxLayoutAlign="center center">
+            <mat-slide-toggle [checked]="(inputValuesForm.controls[row.model].value===row.options[1].value)" (change)="setValue(row, $event, row.options)">
+            </mat-slide-toggle>
+            <span> {{ 'INPUTVALUES.' + ((inputValuesForm.controls[row.model].value === row.options[0].value) ? row.options[0].label : row.options[1].label) | translate}}</span>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="row.size===1">
+        <div fxLayout="column" fxLayoutAlign="start center">
+            <span style="font-size:13px;line-height:13px;margin-top:-6px;">{{ 'INPUTVALUES.' + row.label | translate }}</span>
+            <div fxFlex [formGroup]="inputValuesForm" fxLayout="column" fxLayoutAlign="center center">
+                <mat-slide-toggle [checked]="(inputValuesForm.controls[row.model].value===row.options[1].value)" (change)="setValue(row, $event, row.options)">
+                </mat-slide-toggle>
+                <span> {{ 'INPUTVALUES.' + ((inputValuesForm.controls[row.model].value === row.options[0].value) ? row.options[0].label : row.options[1].label) | translate}}</span>
+            </div>
+        </div>
+
+    </ng-container>
+
+</ng-template>
+
+<ng-template #BtnTemplate let-row let-isShift="isShift" let-inputValuesForm="inputValuesForm">
+    <div *ngIf="!row.default" [formGroup]="inputValuesForm" fxLayout="column" class="w-full" style="margin-top: 18px;" fxLayoutAlign="center center">
+        <button mat-icon-button (click)="openFunction(row.clickEvent, row.relation)">
+            <mat-icon>open_in_new</mat-icon>
+        </button>
+    </div>
+    <div *ngIf="row.default" [formGroup]="inputValuesForm" fxLayout="column" class="w-full" style="margin-top: 18px;" fxLayoutAlign="center center">
+        <button class="w-full" mat-stroked-button (click)="openFunction(row.clickEvent)">
+            {{'INPUTVALUES.' + row.label | translate}}
+        </button>
+    </div>
+</ng-template>
+
+<ng-template #LabelTemplate let-row let-inputValuesForm="inputValuesForm">
+    <div fxLayout="column" class="w-full" style="margin-top: 18px;" fxLayoutAlign="center center">
+       <span>{{'INPUTVALUES.' + row.label | translate}}</span>
+    </div>
+</ng-template>
+
+<ng-template #allInputTypesTemplate let-row let-thisForm="inputValuesForm" let-isShift="isShift">
+    <div *ngIf="row.type==='duration'" class="w-full">
+        <ng-container *ngTemplateOutlet="DurationTemplate;context:{$implicit: row, inputValuesForm:thisForm, isShift: isShift}"></ng-container>
+    </div>
+
+    <div *ngIf="row.type==='radio'" class="w-full">
+        <ng-container *ngTemplateOutlet="RadioTemplate;context:{$implicit: row, inputValuesForm:thisForm, isShift: isShift}"></ng-container>
+    </div>
+
+    <div *ngIf="row.type==='number'" class="w-full">
+        <ng-container *ngTemplateOutlet="NumberTemplate;context:{$implicit: row, inputValuesForm:thisForm, isShift: isShift}"></ng-container>
+    </div>
+
+    <div *ngIf="row.type==='toggle'" class="w-full">
+        <ng-container *ngTemplateOutlet="ToggleTemplate;context:{$implicit: row, inputValuesForm:thisForm, isShift: isShift}"></ng-container>
+    </div>
+
+    <div *ngIf="row.type==='btn'" class="w-full">
+        <ng-container *ngTemplateOutlet="BtnTemplate;context:{$implicit: row, inputValuesForm:thisForm, isShift: isShift}"></ng-container>
+    </div>
+
+    <div *ngIf="row.type==='label'" class="w-full">
+        <ng-container *ngTemplateOutlet="LabelTemplate;context:{$implicit: row}"></ng-container>
+    </div>
+
+    <div class="w-full" *ngIf="row.hasOwnProperty('grouping')" fxLayout="row" fxLayoutAlign="end center" >
+        <div *ngFor="let el of row.grouping" [ngStyle]="{'min-width':(el.size * 180)+'px', 'max-width':(el.size * 180)+'px'}">
+            <div *ngIf="el.type==='duration'" class="w-full">
+                <ng-container *ngTemplateOutlet="DurationTemplate;context:{$implicit: el, inputValuesForm:thisForm, isShift: isShift}"></ng-container>
+            </div>
+
+            <div *ngIf="el.type==='radio'" class="w-full">
+                <ng-container *ngTemplateOutlet="RadioTemplate;context:{$implicit: el, inputValuesForm:thisForm, isShift: isShift}"></ng-container>
+            </div>
+
+            <div *ngIf="el.type==='number'" class="w-full">
+                <ng-container *ngTemplateOutlet="NumberTemplate;context:{$implicit: el, inputValuesForm:thisForm, isShift: isShift}"></ng-container>
+            </div>
+
+            <div *ngIf="el.type==='toggle'" class="w-full">
+                <ng-container *ngTemplateOutlet="ToggleTemplate;context:{$implicit: el, inputValuesForm:thisForm, isShift: isShift}"></ng-container>
+            </div>
+
+            <div *ngIf="el.type==='btn'" class="w-full">
+                <ng-container *ngTemplateOutlet="BtnTemplate;context:{$implicit: el, inputValuesForm:thisForm, isShift: isShift}"></ng-container>
+            </div>
+
+        </div>
+    </div>
+</ng-template>
+
+<mat-menu #appOptions="matMenu">
+    <button mat-menu-item (click)="changeApplicationName()">
+        <mat-icon>edit</mat-icon>{{'PROJECTS.APPLICATION_DETAILS.EDIT_NAME' | translate}}
+    </button>
+    <button mat-menu-item (click)="archiveApplication()">
+        <mat-icon>archive</mat-icon>{{'PROJECTS.APPLICATION_DETAILS.ARCHIVE' | translate}}
+    </button>
+    <button mat-menu-item (click)="copyApplication()">
+        <mat-icon>content_copy</mat-icon>{{'PROJECTS.APPLICATION_DETAILS.COPY' | translate}}
+    </button>
+    <button mat-menu-item (click)="deleteApplication()">
+        <mat-icon>delete</mat-icon>{{'PROJECTS.APPLICATION_DETAILS.DELETE' | translate}}
+    </button>
+    <button mat-menu-item (click)="openComments()">
+        <mat-icon>comment</mat-icon>{{'PROJECTS.APPLICATION_DETAILS.COMMENTS' | translate}}
+    </button>
+    <button mat-menu-item (click)="openExpertCriteria()">
+        <mat-icon>build</mat-icon>{{'PROJECTS.APPLICATION_DETAILS.TOGGLE_EXPERT' | translate}}
+    </button>
+    <button mat-menu-item (click)="showUserGuidance()">
+        <mat-icon>live_help</mat-icon>{{'PROJECTS.APPLICATION_DETAILS.SHOW_USERGUIDANCE' | translate}}
+    </button>
+</mat-menu>
+
+
+<button mat-stroked-button (click)="saveAndCalculate()" [disabled]="!activateCalcBtn()" class="calculate-btn" [matTooltip]="'PROJECTS.APPLICATION_DETAILS.CALC' | translate">
+    <mat-icon style="font-size: 30px!important;
+    height: 30px;
+    width: 30px;
+    margin-top: -4px;">play_arrow</mat-icon>{{'PROJECTS.APPLICATION_DETAILS.CALCULATE' | translate}}
+</button>
+
+
+
+
+
+
+<div class="appFrame" fxLayout="column" fxLayoutAlign="start start">
+    <div class="relative" fxLayout="column">
+        <div *ngIf="storage.selectedApplication" fxLayout="row" fxLayoutAlign="start center">
+            <button mat-icon-button routerLink="..">
+                <mat-icon>keyboard_arrow_left</mat-icon>
+            </button>
+            <mat-form-field floatLabel="never" class="mr-2" style="margin-top:-16px;min-width:400px">
+                <mat-label>Quick change</mat-label>
+                <mat-select (selectionChange)="selectOtherApplication($event)" [value]="storage.selectedApplication.id">
+                    <mat-option *ngFor="let app of storage.allApplications"  [value]="app.id" fxLayout="row" fxLayoutAlign="start center">
+                        <div class="all-applications-image-container" fxLayout="row" fxLayoutAlign="start center">
+                            <img class="all-applications-image" [src]="'../../../assets/img/Task_Pics/logisticFunctionType_'+normalizeApplicationType(app.applicationType)+'.jpg'">
+                        </div>
+                        <span><span>{{app.name}}</span><span class="text-sub"> ({{'FUNCTIONTYPE_'+normalizeApplicationType(app.applicationType) | translate}})</span></span>
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <button mat-stroked-button class="btn-small btn-icon" style="min-height:44.5px;" [matMenuTriggerFor]="appOptions">
+                <mat-icon>more_vertical</mat-icon>
+            </button>
+
+        </div>
+        <mat-spinner [diameter]="36" *ngIf="!storage.selectedApplication"></mat-spinner>
+
+        <h2>{{'PROJECTS.APPLICATION_DETAILS.SUB' | translate}}</h2>
+    </div>
+
+    <div *ngIf="storage.inputsPrepared" class="w-full" style="margin-left:-6px;">
+        <div *ngFor="let box of storage.inputValuesModel" class="relative mb-6" [ngStyle]="box.float && {'float':'left', 'margin-right':'152px'}" fxLayout="row" fxLayoutAlign="start stretch">
+            <div class="outer" *ngIf="!box.hideLabel">
+                <h2 class="inner rotate">{{ 'INPUTVALUES.'+box.name | translate }}</h2>
+            </div>
+            <div class="outer-empty" *ngIf="box.hideLabel">
+            </div>
+            <div style="width:unset;" class="ml-4" fxLayout="column" fxLayoutAlign="start start">
+
+                <div *ngIf="box.name === 'APPLICATION_CALCINFO12'" class="mb-4" fxLayout="row" fxLayoutAlign="start center">
+                    <mat-chip-list aria-label="Fish selection">
+                        <div class="custom-chip" *ngFor="let shift of storage.shiftInputs; let i = index" [ngStyle]="(storage.selectedShift && storage.selectedShift.id===shift.id) && {'background-color':'var(--brand-500)', 'color':'var(--white)'}" (click)="selectShift(shift, i)">
+                            {{shift.name}}
+                            <div class="shift-invalid-indicator" *ngIf="shiftInputValuesForms[i].invalid">
+                                <mat-icon>priority_high</mat-icon>
+                            </div>
+                        </div>
+                    </mat-chip-list>
+                </div>
+
+                <div fxLayout="row" fxLayoutAlign="start start">
+                    <div *ngFor="let column of box.values" class="w-full ml-4 first:ml-0" fxLayout="column" fxLayoutAlign="start end">
+                        <div *ngFor="let row of column" fxLayout="row" fxLayoutAlign="end center" [ngStyle]="{'min-width':(row.size * 180)+'px', 'max-width':(row.size * 180)+'px'}" class="my-1" style="min-height:65px;">
+
+
+                            <ng-container *ngIf="box.name==='APPLICATION_CALCINFO12'">
+                                <ng-container *ngTemplateOutlet="allInputTypesTemplate;context:{$implicit: row, isShift: true, inputValuesForm:shiftInputValuesForms[storage.selectedShift.index]}"></ng-container>
+                            </ng-container>
+
+                            <ng-container *ngIf="box.name!=='APPLICATION_CALCINFO12'">
+                                <ng-container *ngTemplateOutlet="allInputTypesTemplate;context:{$implicit: row, isShift: false, inputValuesForm:inputValuesForm}"></ng-container>
+                            </ng-container>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="strategy-container" *ngIf="normalizeApplicationType(storage.selectedApplication.applicationType)==='A7'" fxLayout="column" fxLayoutAlign="start start">
+            <div class="outer-line">
+                <h2 class="inner-line">Picking strategy</h2>
+            </div>
+            <div class="w-full pt-1 pb-1" fxLayout="row" fxLayoutAlign="space-between center">
+                <span>{{ 'INPUTVALUES.APPLICATION_TRUCKDIRECTION' | translate }}:</span>
+                <span>{{pickStrategyForm.controls['name'].value}}</span>
+            </div>
+            <div class="w-full pb-1" fxLayout="row" fxLayoutAlign="space-between center">
+                <span>{{ 'INPUTVALUES.APPLICATION_VERDIS' | translate }}:</span>
+                <span> {{ 'INPUTVALUES.APPLICATION_D1' | translate }}: {{pickStrategyForm.controls['verticalBottom'].value}} {{ 'INPUTVALUES.APPLICATION_D2' | translate }}: {{pickStrategyForm.controls['verticalMiddle'].value}} {{ 'INPUTVALUES.APPLICATION_D3' | translate }}: {{pickStrategyForm.controls['verticalTop'].value}}</span>
+            </div>
+            <div class="w-full pb-1" fxLayout="row" fxLayoutAlign="space-between center">
+                <span>{{ 'INPUTVALUES.APPLICATION_HORDIS' | translate }}:</span>
+                <span> {{ 'INPUTVALUES.APPLICATION_D4' | translate }}: {{pickStrategyForm.controls['horizontalLeft'].value}} {{ 'INPUTVALUES.APPLICATION_D5' | translate }}: {{pickStrategyForm.controls['horizontalMiddle'].value}} {{ 'INPUTVALUES.APPLICATION_D6' | translate }}: {{pickStrategyForm.controls['horizontalRight'].value}}</span>
+            </div>
+            <button mat-stroked-button class="w-full">
+                {{ 'INPUTVALUES.APPLICATION_CHANGESTRATEGY' | translate }}
+            </button>
+        </div>
+    </div>
+
+    <div id="table" class="mt-8" style="width:unset;" fxLayout="column">
+        <table *ngIf="storage.displayData" mat-table [dataSource]="storage.displayData" class="mat-elevation-z0" multiTemplateDataRows>
+
+            <!--- Note that these columns can be defined in any order.
+                The actual rendered columns are set as a property on the row definition" -->
+
+            <!-- Position Column -->
+            <ng-container [matColumnDef]="column" *ngFor="let column of storage.displayColumns; let i = index">
+                <th mat-header-cell *matHeaderCellDef>
+                    <div *ngIf="storage.displayData[0][column]==='added'" class="custom-header" fxLayout="row" fxLayoutAlign="end center">
+                        <button *ngIf="storage.displayData[0][column]!=='identification'" mat-stroked-button class="btn-icon btn-small" style="margin-right:6px!important; margin-left:6px!important" (click)="removeTruck(i)"><mat-icon>close</mat-icon></button>
+                        <div fxFlex style="margin-right:16px;" *ngIf="storage.applicationTrucksById.hasOwnProperty(storage.displayData[2][column]) && storage.applicationTrucksById[storage.displayData[2][column]] && !storage.applicationTrucksById[storage.displayData[2][column]].modifiedName" >{{ storage.applicationTrucksById[storage.displayData[2][column]].identification }}</div>
+                        <div fxFlex style="margin-right:16px;" *ngIf="storage.applicationTrucksById.hasOwnProperty(storage.displayData[2][column]) && storage.applicationTrucksById[storage.displayData[2][column]] && storage.applicationTrucksById[storage.displayData[2][column]].modifiedName" >{{ storage.applicationTrucksById[storage.displayData[2][column]].modifiedName }}</div>
+                        <mat-icon *ngIf="storage.displayData[0][column]!=='identification'" class="ml-2 cursor-pointer" (click)="openTruckInfo(storage.displayData[2][column])" style="margin-right:0!important;" [ngStyle]="getInfoColor(storage.applicationTrucksById[storage.displayData[2][column]])">info_outline</mat-icon>
+                    </div>
+                    <div *ngIf="storage.displayData[0][column]==='add'" fxLayout="row" fxLayoutAlign="center center">
+                            <button mat-stroked-button class="btn-small" (click)="addTruck()">
+                                <mat-icon>add</mat-icon>
+                                Add
+                            </button>
+                    </div>
+                </th>
+
+
+                <td mat-cell style="position: relative" *matCellDef="let element; let i = index" [ngStyle]="element['0'].indexOf('HEADER')>-1 && {'background-color':'white', 'padding-left':'0', 'border-left':'none', 'border-right':'none'}">
+
+                    <div id="indicator" class="cell-indicator" *ngIf="storage.indicator.hasOwnProperty(element['0']) && storage.indicator[element['0']][column]"></div>
+                    <!-- FIRST COLUMN CELLS -->
+                    <div *ngIf="column === '0' && element['0'].indexOf('HEADER')===-1" fxLayout="row" fxLayoutAlign="space-between start" style="margin: 13px 0 13px 0;">
+                        <span style="margin-right:16px;">{{ 'PROJECTS.APPLICATION_DETAILS.TABLE.' + element['0'].toUpperCase() | translate }}</span>
+                        <mat-icon *ngIf="isExpandable(column, element)" class="mr-6 expand-icon" [ngStyle]="element.expanded && {'transform':'scale(-1)'}">expand_more</mat-icon>
+                    </div>
+
+                    <!-- REGULAR COLUMN CELLS -->
+                    <div *ngIf="element['0'].indexOf('calculationResult')===-1 &&
+                    element['0'].indexOf('expertCriteria')===-1 &&
+                    element['0'].indexOf('financeInfo')===-1 &&
+                    column!=='0' && element['0'].indexOf('HEADER')===-1 &&
+                    storage.applicationTrucksById.hasOwnProperty(element[column])">
+                        <span>{{storage.applicationTrucksById[element[column]][element['0']]}}</span>
+                    </div>
+
+                    <!-- CALCULATION RESULT CELLS -->
+                    <div *ngIf="element['0'].indexOf('calculationResult')>-1 && column!=='0' && element['0'].indexOf('HEADER')===-1">
+                        <div [ngSwitch]="element['0']" *ngIf="storage.applicationTrucksById.hasOwnProperty(element[column]) && storage.applicationTrucksById[element[column]].calculationResult.hasOwnProperty(element[0].split('calculationResult.').pop())" >
+                            <span *ngSwitchDefault>{{storage.applicationTrucksById[element[column]].calculationResult[element['0'].split('calculationResult.').pop()] | number:'1.0-2'}}</span>
+                            <ng-container [ngSwitch]="true">
+                                <span class="ml-1" *ngSwitchCase="element['0']==='calculationResult.totalCost' || element['0']==='calculationResult.purchaser'">{{storage.selectedApplication.settings.currency}}</span>
+                                <span class="ml-1" *ngSwitchCase="element['0']==='calculationResult.utilization'">%</span>
+                                <span class="ml-1" *ngSwitchCase="element['0']==='calculationResult.consumption' || element['0']==='calculationResult.actualConsumption'">kWh</span>
+                            </ng-container>
+                        </div>
+                        <span *ngIf="element['0']==='calculationResult.hourCounterYear' && storage.applicationTrucksById.hasOwnProperty(element[column])">{{(storage.applicationTrucksById[element[column]].calculationResult['hourCounter'] * storage.selectedApplication.settings.workingDays) | number:'1.0-2'}}</span>
+                    </div>
+
+                    <!-- EXPERT CRITERIA CELLS -->
+                    <div *ngIf="element['0'].indexOf('expertCriteria')>-1 && column!=='0' && element['0'].indexOf('HEADER')===-1">
+                        <div [ngSwitch]="element['0']" *ngIf="storage.applicationTrucksById.hasOwnProperty(element[column]) && storage.applicationTrucksById[element[column]].expertCriteria.hasOwnProperty(element[0].split('expertCriteria.').pop())" >
+                            <input *ngSwitchDefault class="simple-input" [(ngModel)]="storage.applicationTrucksById[element[column]].expertCriteria[element['0'].split('expertCriteria.').pop()]" style="width:180px;" type="number" />
+                            <span *ngSwitchCase="'expertCriteria.recordingDepositTimeSec'" style="margin-right:16px;">
+                                {{storage.applicationTrucksById[element[column]]['expertCriteria'].recordingTimeSec + storage.applicationTrucksById[element[column]]['expertCriteria'].depositTimeSec}}s
+                            </span>
+                            <div *ngSwitchCase="'expertCriteria.efficiencyFactor'" fxLayout="row" fxLayoutAlign="space-between center" style="width:180px">
+                                <mat-slider
+                                    [max]="60"
+                                    [min]="0"
+                                    [step]="1"
+                                    aria-labelledby="performanceFactor" [(ngModel)]="storage.applicationTrucksById[element[column]].expertCriteria[element['0'].split('expertCriteria.').pop()]">
+                                </mat-slider>
+                                <span>{{storage.applicationTrucksById[element[column]].expertCriteria[element['0'].split('expertCriteria.').pop()]}}%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FINANCE INFO CELLS -->
+                    <div *ngIf="element['0'].indexOf('financeInfo')>-1 && column!=='0' && element['0'].indexOf('HEADER')===-1">
+                        <ng-container *ngIf="checkBuyingRent(element['0'], element[column])">
+                            <ng-container *ngIf="isEditable(element['0'])">
+                                <div [ngSwitch]="element['0']" fxLayout="row" fxLayoutAlign="end center" *ngIf="storage.applicationTrucksById.hasOwnProperty(element[column]) && storage.applicationTrucksById[element[column]].financeInfo.hasOwnProperty(element[0].split('financeInfo.').pop())" >
+                                    <input *ngSwitchDefault class="simple-input" [(ngModel)]="storage.applicationTrucksById[element[column]].financeInfo[element['0'].split('financeInfo.').pop()]" style="width:180px;" type="number" />
+                                    <mat-slide-toggle class="w-full mx-4" *ngSwitchCase="'financeInfo.buyingRent'" [(ngModel)]="storage.applicationTrucksById[element[column]].financeInfo[element['0'].split('financeInfo.').pop()]">
+                                        <span *ngIf="storage.applicationTrucksById[element[column]].financeInfo[element['0'].split('financeInfo.').pop()]">Purchase</span>
+                                        <span *ngIf="!storage.applicationTrucksById[element[column]].financeInfo[element['0'].split('financeInfo.').pop()]">Rental</span>
+                                    </mat-slide-toggle>
+                                    <ng-container [ngSwitch]="true">
+                                        <span class="ml-1" *ngSwitchCase="element['0']==='financeInfo.salesPrice' || element['0']==='financeInfo.maintenanceCosts' || element['0']==='financeInfo.grossPay' || element['0']==='financeInfo.aggregateCostYear' || element['0']==='financeInfo.oneOffCosts' || element['0']==='financeInfo.overallCarCosts' || element['0']==='financeInfo.overallMaintenanceCosts' || element['0']==='financeInfo.overallConsumptionsCosts' || element['0']==='financeInfo.overallPersonalCosts'">{{storage.selectedApplication.settings.currency}}</span>
+                                        <span class="ml-1" *ngSwitchCase="element['0']==='financeInfo.rate' || element['0']==='financeInfo.residualValue'">%</span>
+                                    </ng-container>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="!isEditable(element['0'])">
+                                <div [ngSwitch]="element['0']" fxLayout="row" fxLayoutAlign="end center" *ngIf="storage.applicationTrucksById.hasOwnProperty(element[column]) && storage.applicationTrucksById[element[column]].financeInfo.hasOwnProperty(element[0].split('financeInfo.').pop())" >
+                                    <ng-container  *ngSwitchCase="'financeInfo.buyingRent'">
+                                        <mat-slide-toggle class="w-full mx-4" [disabled]="true" [(ngModel)]="storage.applicationTrucksById[element[column]].financeInfo[element['0'].split('financeInfo.').pop()]">
+                                            <span *ngIf="storage.applicationTrucksById[element[column]].financeInfo[element['0'].split('financeInfo.').pop()]">Purchase</span>
+                                            <span *ngIf="!storage.applicationTrucksById[element[column]].financeInfo[element['0'].split('financeInfo.').pop()]">Rental</span>
+                                        </mat-slide-toggle>
+                                    </ng-container>
+                                    <ng-container *ngSwitchDefault>
+                                        <span>{{storage.applicationTrucksById[element[column]].financeInfo[element['0'].split('financeInfo.').pop()] | number:'1.0-2'}}</span>
+                                    </ng-container>
+                                    <ng-container [ngSwitch]="true">
+                                        <span class="ml-1" *ngSwitchCase="element['0']==='financeInfo.salesPrice' || element['0']==='financeInfo.maintenanceCosts' || element['0']==='financeInfo.grossPay' || element['0']==='financeInfo.aggregateCostYear' || element['0']==='financeInfo.oneOffCosts' || element['0']==='financeInfo.overallCarCosts' || element['0']==='financeInfo.overallMaintenanceCosts' || element['0']==='financeInfo.overallConsumptionsCosts' || element['0']==='financeInfo.overallPersonalCosts'">{{storage.selectedApplication.settings.currency}}</span>
+                                        <span class="ml-1" *ngSwitchCase="element['0']==='financeInfo.rate' || element['0']==='financeInfo.residualValue'">%</span>
+                                    </ng-container>
+                                </div>
+                            </ng-container>
+                        </ng-container>
+                        <ng-container *ngIf="!checkBuyingRent(element['0'], element[column])">
+                            <span style="color:lightgrey;">---------------------------------------</span>
+                        </ng-container>
+
+                    </div>
+
+                    <!-- SUB HEADERS -->
+                    <div *ngIf="element['0'].indexOf('HEADER')>-1 && column==='0'">
+                        <span style="color:var(--brand-500); font-weight:bold;">{{('PROJECTS.APPLICATION_DETAILS.' + element['0']) | translate}}</span>
+                        <button *ngIf="element['0']==='HEADER_COST_PER_TRUCK'" (click)="toggleEditMode('financeInfo')" mat-icon-button class="btn-icon btn-small" style="margin-left:6px!important;">
+                            <mat-icon *ngIf="!storage.editModes.financeInfo">lock</mat-icon>
+                            <mat-icon *ngIf="storage.editModes.financeInfo">lock_open</mat-icon>
+                        </button>
+                        <button *ngIf="element['0']==='HEADER_ONE_OFF'" (click)="toggleEditMode('oneOffCosts')" mat-icon-button class="btn-icon btn-small" style="margin-left:6px!important;">
+                            <mat-icon *ngIf="!storage.editModes.oneOffCosts">lock</mat-icon>
+                            <mat-icon *ngIf="storage.editModes.oneOffCosts">lock_open</mat-icon>
+                        </button>
+                    </div>
+
+                    <!-- EXPANDED AREA -->
+                    <div class="shifts-expanded" fxLayout="column" fxLayoutAlign="start start" *ngIf="element.expanded && element.hasOwnProperty(column)" [ngStyle]="column==='0' && {'background-color':'transparent'}">
+                        <ng-container *ngIf="column!=='0'">
+                            <div class="w-full cursor-pointer" *ngFor="let shift of storage.shiftInputs; let i = index" (click)="openSegmentValues(storage.applicationTrucksById[element[column]].calculationShiftResults[i],storage.shiftInputs[i],element['0']); $event.stopPropagation()" fxLayout="row" fxLayoutAlign="space-between center">
+                                <span>{{shift.name}}</span>
+                                <ng-container *ngIf="element['0'].indexOf('calculationResult')>-1">
+                                    <span>{{storage.applicationTrucksById[element[column]].calculationShiftResults[i][element['0'].split('calculationResult.').pop()] | number:'1.0-2'}}</span>
+                                </ng-container>
+                                <ng-container *ngIf="element['0'].indexOf('financeInfo')>-1">
+                                    <span>{{storage.applicationTrucksById[element[column]].financeShiftInfos[i][element['0'].split('financeInfo.').pop()] | number:'1.0-2'}}</span>
+                                </ng-container>
+                            </div>
+                        </ng-container>
+                    </div>
+
+                </td>
+
+
+            </ng-container>
+
+
+            <tr mat-header-row *matHeaderRowDef="storage.tableHeaders; sticky: true">
+            <tr mat-row *matRowDef="let row; columns: storage.displayColumns; let i = dataIndex;" [class.hidden]="hideRow(row)"
+                [class.even]="isEven(storage.displayData[i][0])"
+                [class.odd]="!isEven(storage.displayData[i][0])"
+                [class.expanded-row]="row.hasOwnProperty('expanded') && row.expanded == true"
+                [class.selected-row]="row.hasOwnProperty('selected') && row.selected == true"
+                (click)="onClick($event, row, 'ROW', i)"></tr>
+
+        </table>
+
+    </div>
+    <div class="W100 MT40" fxFlex="100" fxLayout="row" fxLayoutAlign="start start">
+        <app-trucks-chart fxFlex="50" [events]="chartsSubject"></app-trucks-chart>
+        <app-roi-chart fxFlex="50" [events]="chartsSubject" [imgShouldUpdate]="imgShouldUpdate"></app-roi-chart>
+    </div>
+</div>

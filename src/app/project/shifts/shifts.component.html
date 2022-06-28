@@ -1,0 +1,142 @@
+<div class="appFrame" fxLayout="column" fxLayoutAlign="start start">
+    <div fxLayout="column">
+        <h1>{{'PROJECTS.SHIFTS.TITLE' | translate}}</h1>
+        <h2>{{'PROJECTS.SHIFTS.SUB' | translate}}</h2>
+    </div>
+    <div class="w-full mt-4" fxLayout="column" fxLayoutAlign="start">
+
+        <div *ngIf='blockView' class='overlay-shifts-edit' fxLayoutAlign="center center">
+            <div class="overlay-shifts-edit-container" fxLayout="column" fxLayoutAlign="center center">
+                <mat-icon class='MB10'>lock</mat-icon>
+                <mat-label>{{ 'PROJECTS.SHIFTS.SHIFT_NO_EDIT' | translate }}</mat-label>
+                <div fxLayoutAlign="center center">
+                    <mat-icon class='ML8'>info_outline</mat-icon>
+                    <mat-label>{{ 'PROJECTS.SHIFTS.SHIFT_DELETE_APPLICATIONS' | translate }}</mat-label>
+                </div>
+            </div>
+        </div>
+
+        <mat-slide-toggle [(ngModel)]="shiftMode" disabled="{{this.siftsQtyInBackend > 0}}">
+            <span>{{ 'PROJECTS.SHIFTS.USE_SHIFTS' | translate }}</span></mat-slide-toggle>
+        <div fxFlex class="w-full mt-16" fxLayout="column" fxLayoutAlign="start" [formGroup]="shiftFormGroup">
+
+            <div *ngIf="!shiftMode" fxLayout="row" fxLayoutAlign="start center">
+                <div fxLayout="column" fxLayoutAlign="start stretch">
+                    <div class="margin-bottom-reduce-floating-label">
+                        {{ 'PROJECTS.SHIFTS.OBSERVATION_TIME' | translate }}
+                    </div>
+                    <div fxLayout="row">
+                        <mat-form-field floatLabel="always" class="mat-form-field-reduce-half">
+                            <mat-label></mat-label>
+                            <input placeholder="hh" matInput type="number" formControlName="observationTimeH">
+                        </mat-form-field>
+                        <div class="ML8 MR8 margin-bottom-center-mat" fxLayoutAlign="center center">
+                            {{ 'PROJECTS.SHIFTS.OBSERVATION_TIME_DIVIDER' | translate }}
+                        </div>
+                        <mat-form-field floatLabel="always" class="mat-form-field-reduce-half">
+                            <mat-label></mat-label>
+                            <input placeholder="mm" matInput type="number" formControlName="observationTimeM">
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="shiftMode" fxLayout="row" fxLayoutAlign="start center">
+                <div fxLayout="column" fxLayoutAlign="start center" class="MR40">
+                    <div *ngFor="let shift of shifts; let i = index; let last = last;" class="shift-container">
+                        <div fxLayout="row" fxFlex fxLayoutAlign="start center">
+                            <span class="MR8 MT18">{{i}}</span>
+                            <span class="MR8 MT18">{{shift.name}}</span>
+                            <mat-form-field class="MR8" floatLabel="always">
+                                <mat-label>{{ 'PROJECTS.SHIFTS.SHIFT_START' | translate }}</mat-label>
+                                <input matInput disabled="{{!last}}" type="time" value="{{shift.fromTime}}"
+                                       (change)="changeShiftTime(i, $event, 'start')">
+                            </mat-form-field>
+                            <mat-form-field class="MR8" floatLabel="always">
+                                <mat-label>{{ 'PROJECTS.SHIFTS.SHIFT_END' | translate }}</mat-label>
+                                <input matInput disabled="{{!last}}" type="time" value="{{shift.toTime}}"
+                                       (change)="changeShiftTime(i, $event, 'end')">
+                            </mat-form-field>
+                            <button mat-button disabled="{{!last}}" (click)="removeShift(i)" class="MT18i">
+                                <mat-icon>remove_circle_outline</mat-icon>
+                            </button>
+                            <button mat-button class="MT18i" (click)="openSegments(shift)">
+                                <mat-icon>launch</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                    <div *ngIf="shifts.length <= 0" class="shift-container" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-icon>info_outline</mat-icon>
+                        <mat-label>{{ 'PROJECTS.SHIFTS.SHIFT_NO_SHIFTS' | translate }}</mat-label>
+                    </div>
+                    <button (click)="addShift()" disabled="{{this.totalShiftHrs >= 24}}" mat-stroked-button class="MT20">
+                        <mat-icon>add</mat-icon>
+                        {{ 'PROJECTS.SHIFTS.ADD_SHIFT' | translate }}
+                    </button>
+                </div>
+                <div fxLayout="column" fxLayoutAlign="start stretch">
+                    <mat-form-field floatLabel="always">
+                        <mat-label>{{ 'PROJECTS.SHIFTS.BREAK_TIME' | translate }}</mat-label>
+                        <mat-select formControlName="breakTime" required>
+                            <mat-option *ngFor="let time of breakTime" [value]="time.value">
+                                {{time.value}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <div class="margin-bottom-reduce-floating-label">
+                        {{ 'PROJECTS.SHIFTS.OBSERVATION_TIME' | translate }}
+                    </div>
+                    <div fxLayout="row">
+                        <mat-form-field floatLabel="always" class="mat-form-field-reduce-half">
+                            <mat-label></mat-label>
+                            <input placeholder="hh" matInput type="number" formControlName="observationTimeH" (change)="checkObservationTime()">
+                        </mat-form-field>
+                        <div class="ML8 MR8 margin-bottom-center-mat" fxLayoutAlign="center center">
+                            {{ 'PROJECTS.SHIFTS.OBSERVATION_TIME_DIVIDER' | translate }}
+                        </div>
+                        <mat-form-field floatLabel="always" class="mat-form-field-reduce-half">
+                            <mat-label></mat-label>
+                            <input placeholder="mm" matInput type="number" formControlName="observationTimeM" (change)="checkObservationTime()">
+                        </mat-form-field>
+                    </div>
+                    <mat-icon class="MT8" matTooltip="{{ 'PROJECTS.SHIFTS.SHIFT_OBSERVATION_TOOLTIP' | translate }}"
+                              *ngIf="!observationTimeAlert">info_outline
+                    </mat-icon>
+                    <mat-icon class="CLRed MT8"
+                              matTooltip="{{ 'PROJECTS.SHIFTS.SHIFT_OBSERVATION_TOOLTIP_ALERT' | translate }}"
+                              *ngIf="observationTimeAlert">info_outline
+                    </mat-icon>
+                </div>
+            </div>
+            <div *ngIf="totalShiftHrs < 24 && shiftMode" fxLayout="row" class="MT20" fxLayoutAlign="start center">
+                <div class="MR20" fxLayoutAlign="start center">
+                    <mat-icon>info_outline</mat-icon>
+                </div>
+                <div fxLayout="column wrap" fxLayoutAlign="start" fxFlex="50">
+                    <span>{{ 'PROJECTS.SHIFTS.SHIFT_SPECIFY_MIN' | translate }}</span>
+                    <span>{{ 'PROJECTS.SHIFTS.SHIFT_NO_OVERLAP' | translate }}</span>
+                    <span>{{ 'PROJECTS.SHIFTS.SHIFT_DURATION' | translate }}</span>
+                    <span>{{ 'PROJECTS.SHIFTS.SHIFT_TRUCKS' | translate }}</span>
+                </div>
+            </div>
+            <div *ngIf="totalShiftHrs >= 24" fxLayout="row" class="MT20" fxLayoutAlign="start center">
+                <div class="MR20" fxLayoutAlign="start center">
+                    <mat-icon class="CLRed">info_outline</mat-icon>
+                </div>
+                <div fxLayout="column" fxLayoutAlign="start">
+                    <span class="CLindeR">{{ 'PROJECTS.SHIFTS.SHIFT_24' | translate }}</span>
+                    <span class="CLindeR">{{ 'PROJECTS.SHIFTS.SHIFT_24_OPTION' | translate }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="MT16" fxLayout="column" fxLayoutAlign="end end">
+            <button disabled="{{observationTimeAlert || (totalShiftHrs > 24)}}" mat-stroked-button
+                    (click)="saveShifts()">
+                {{ 'GLOBAL.SAVE' | translate }}
+            </button>
+        </div>
+
+    </div>
+</div>
+

@@ -1,0 +1,8 @@
+<div class="mobileNavigationContainer" fxLayout="column">
+    <mat-toolbar color="primary" class="mainToolbar">
+        <button mat-icon-button (click)="toggleSidenav()"><mat-icon aria-label="Side nav toggle icon">menu</mat-icon></button>
+        <div fxLayout="row" fxFlex style="justify-content: center">
+            <span title="{{ titleMobile | translate }}" class="textLimit">{{ titleMobile | translate}}</span>
+        </div>
+    </mat-toolbar>
+</div>

@@ -1,0 +1,44 @@
+{
+    "id": 184,
+    "settings": {
+        "currency": null,
+        "pricePowerKwh": 0.0,
+        "priceDiesel": 0.0,
+        "priceGas": 0.0,
+        "overallCostFactor": 0.0,
+        "workingDays": 220,
+        "maxSpeed": 0.0,
+        "maxLoad": 0.0,
+        "language": null
+    },
+    "projectListIds": [],
+    "incomingSharedProjects": null,
+    "userName": "ivo",
+    "firstName": null,
+    "lastName": null,
+    "companyName": null,
+    "address": null,
+    "tel": null,
+    "fax": null,
+    "email": null,
+    "mobile": null,
+    "userGuidance": true,
+    "acceptedNewPrices": false,
+    "logo": null,
+    "groups": [
+        {
+            "id": 20,
+            "name": "BasicUser",
+            "features": [
+                {
+                    "id": 3,
+                    "name": "FEATURE_FLEETPLAN"
+                },
+                {
+                    "id": 4,
+                    "name": "FEATURE_FLEETPLAN_EXPORT"
+                }
+            ]
+        }
+    ]
+}

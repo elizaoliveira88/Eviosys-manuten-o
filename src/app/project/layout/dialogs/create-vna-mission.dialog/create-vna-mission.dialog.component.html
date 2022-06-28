@@ -1,0 +1,45 @@
+<h1 mat-dialog-title>{{ 'PROJECTS.LAYOUT.ADDVNAMISSION_H1' | translate }}</h1>
+<div mat-dialog-content fxLayout="column">
+
+    <div fxLayout="column" fxLayoutAlign="start center" style="min-height:145px;">
+
+        <div fxLayout="row">
+            <span style="line-height:45px; margin-right:15px;">{{ 'PROJECTS.LAYOUT.ADDELEMENTSTOMISSIONDIALOG_D1' | translate }}</span>
+            <div fxLayout="column">
+
+                <mat-form-field>
+                    <mat-label>{{ 'PROJECTS.LAYOUT.ADDELEMENTSTOMISSIONDIALOG_D2' | translate }}</mat-label>
+                    <input matInput [(ngModel)]="newName">
+                </mat-form-field>
+                <span style="width:150px;color:#BA1126;margin-top:-20px;" *ngIf="inputsRequired">(*) Input required</span>
+            </div>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="space-between center" style="width:100%;">
+            <div>
+                <span style="line-height:45px;">{{ 'PROJECTS.LAYOUT.ADDVNAMISSION_D1' | translate }}</span>
+                <input class="designer-input" placeholder="{{'PROJECTS.LAYOUT.ADDELEMENTSTOMISSIONDIALOG_D4' | translate}}" type="number" [(ngModel)]="flowInputs.into" style="background-color:#eeeff3;margin-left:5px;">
+            </div>
+            <div style="margin-left:15px;">
+                <span style="line-height:45px;">{{ 'PROJECTS.LAYOUT.ADDVNAMISSION_D2' | translate }}</span>
+                <input class="designer-input" placeholder="{{'PROJECTS.LAYOUT.ADDELEMENTSTOMISSIONDIALOG_D4' | translate}}" type="number" [(ngModel)]="flowInputs.out" style="background-color:#eeeff3;margin-left:5px;">
+            </div>
+
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="space-between center" style="width:100%;">
+            <div>
+                <span>{{'PROJECTS.LAYOUT.ADDVNAMISSION_D3' | translate}}:</span>
+                <span style="margin-left:15px; font-size:20px;">{{flowInputs.total}}</span>
+            </div>
+            <div class="colorIndicator" (click)="changeColor()" [ngStyle]="{'background-color':color}" style="margin-top:0;"></div>
+        </div>
+
+
+    </div>
+
+</div>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between center">
+    <button mat-button (click)="cancel()">{{ 'GLOBAL.CANCEL' | translate}}</button>
+    <button mat-button (click)="save()" cdkFocusInitial>{{ 'GLOBAL.SAVE' | translate}}</button>
+</div>

@@ -1,0 +1,163 @@
+<h1 mat-dialog-title>{{ 'PROJECTS.APPLICATION_DETAILS.ADD_TRUCK.TITLE' | translate }}</h1>
+<div mat-dialog-content fxLayout="column">
+    <div *ngIf="filter.showTrainConfiguration == false">
+        <div style="padding:15px;">
+            <span style="color: grey">{{ 'PROJECTS.APPLICATION_DETAILS.ADD_TRUCK.FILTER' | translate }}: </span>
+            <div fxLayout="column" style="margin-top:16px;">
+                <mat-checkbox [(ngModel)]="filter.includeSelectedCars" style="margin-bottom:5px;" aria-label="include Selected Cars" (ngModelChange)="switchValueChange()">
+                    <p>{{ 'PROJECTS.APPLICATION_DETAILS.ADD_TRUCK.SHOWCHOSENCHECKBOX' | translate }}</p>
+                </mat-checkbox>
+                <mat-checkbox style="margin-bottom:5px;" [(ngModel)]="filter.hideNonCompatibleTrucks" aria-label="hide Non Compatible Trucks" (ngModelChange)="switchValueChange()">
+                    <p>{{ 'PROJECTS.APPLICATION_DETAILS.ADD_TRUCK.SHOWPOSSIBLETYPESCHECKBOX' | translate }}</p>
+                </mat-checkbox>
+                <mat-checkbox *ngIf="applicationType !== '8' && applicationType !== 8 && applicationType !== 'A8'" [(ngModel)]="filter.selectMultiple" (ngModelChange)="resetSelectedTruck()" aria-label="select multiple">
+                    <p>{{ 'PROJECTS.APPLICATION_DETAILS.ADD_TRUCK.SELECTMULTIPLE' | translate }}</p>
+                </mat-checkbox>
+                <div style="padding:10px 0 0 0" *ngIf="applicationType == '8' || applicationType == 8 || applicationType == 'A8'">
+                    <span style="color: grey">{{ 'PROJECTS.APPLICATION_DETAILS.ADD_TRUCK.CONFIGTRAIN' | translate }}: </span>
+                    <div>
+                        <mat-slide-toggle (change)="chooseTrain()" [(ngModel)]="filter.showTrainConfiguration" aria-label="showTrainConfiguration">
+                            {{ (filter.showTrainConfiguration ? 'PROJECTS.APPLICATION_DETAILS.ADD_TRUCK.HIDECONFIG':'PROJECTS.APPLICATION_DETAILS.ADD_TRUCK.SHOWCONFIG') | translate }}
+                        </mat-slide-toggle>
+                    </div>
+                </div>
+                <div *ngIf="filter.selectMultiple && (applicationType !== '8' && applicationType !== 8 && applicationType !== 'A8')" class="mt-4" style="width:100%;max-width:325px;">
+                    <mat-chip-list fxLayout="row">
+                        <mat-chip *ngFor="let selCar of storage.allSelectedTrucks" (removed)="removeSelectedTruck(selCar.id)">
+                            <span>{{selCar.identification}}</span>
+                            <button matChipRemove>
+                                <mat-icon>cancel</mat-icon>
+                            </button>
+                        </mat-chip>
+                    </mat-chip-list>
+                </div>
+
+                <mat-form-field class="mt-6" [floatLabel]="'always'">
+                    <mat-label>{{ 'PROJECTS.APPLICATION_DETAILS.ADD_TRUCK.PLACEHOLDER' | translate }}</mat-label>
+                    <mat-select (selectionChange)="changeCarSelection()" [(ngModel)]="storage.selectedCar" (closed)="clearSearchTerm()">
+                        <div fxLayout="row" class="no-label-padding">
+                            <mat-form-field floatLabel="never" class="select-search" fxFlex>
+                                <mat-label>Search for a truck...</mat-label>
+                                <input class="search-inset" matInput [(ngModel)]="searchTruck" />
+                            </mat-form-field>
+                        </div>
+                        <ng-container *ngFor="let truck of storage.trucks | filter:{key: 'identification', value: {identification: searchTruck}}">
+                            <mat-option *ngIf="isVisible(truck)" [disabled]="checkTruckDisable(truck.id)"  [value]="truck">{{truck.identification}}</mat-option>
+                        </ng-container>
+
+
+                    </mat-select>
+                </mat-form-field>
+
+            </div>
+            <div fxLayout="row" fxLayoutAlign="space-between center" class="mt-6" style="width:100%;">
+                <mat-checkbox [(ngModel)]="addToProject" (ngModelChange)="changAddToProject(addToProject)" [disabled]="isInProject" style="margin-bottom:0;" aria-label="add to project trucks">
+                    <p>{{ 'PROJECTS.APPLICATION_DETAILS.ADD_TRUCK.ADDTOPROJECT' | translate }}</p>
+                </mat-checkbox>
+                <div>
+                    <mat-icon style="margin-top:0;margin-left:10px;cursor: default;" matTooltip="{{ 'PROJECTS.APPLICATION_DETAILS.ADD_TRUCK.INFOADDTOPROJECT' | translate }}">info_outline</mat-icon>
+                </div>
+            </div>
+
+            <div class="mt-4 w-full px-16" fxLayout="column" style="height:80px;">
+                <div fxLayout="row" class="w-full" fxLayoutAlign="space-between center">
+                    <div class="font-bold">
+                        {{ 'PROJECTS.APPLICATION_DETAILS.ADD_TRUCK.ID' | translate }}:
+                    </div>
+                    <div *ngIf="storage.selectedCar">
+                        {{storage.selectedCar.identification}}
+                    </div>
+                    <div *ngIf="!storage.selectedCar">-</div>
+                </div>
+                <div fxLayout="row" class="w-full" fxLayoutAlign="space-between center">
+                    <div class="font-bold">
+                        {{ 'PROJECTS.APPLICATION_DETAILS.ADD_TRUCK.MODEL' | translate }}:
+                    </div>
+                    <div *ngIf="storage.selectedCar">
+                        {{storage.selectedCar.model}}
+                    </div>
+                    <div *ngIf="!storage.selectedCar">-</div>
+                </div>
+                <div fxLayout="row" class="w-full" fxLayoutAlign="space-between center">
+                    <div class="font-bold">
+                        {{ 'PROJECTS.APPLICATION_DETAILS.ADD_TRUCK.SERIES' | translate }}:
+                    </div>
+                    <div *ngIf="storage.selectedCar">
+                        {{storage.selectedCar.truckClass}}
+                    </div>
+                    <div *ngIf="!storage.selectedCar">-</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="padding:15px; padding-bottom: 0" *ngIf="filter.showTrainConfiguration && (applicationType == '8' || applicationType == 8 || applicationType == 'A8')">
+        <span style="color: grey">{{ 'PROJECTS.APPLICATION_DETAILS.ADD_TRUCK.CONFIGTRAIN' | translate }}: </span>
+        <div fxLayout="column">
+            <mat-slide-toggle (ngModelChange)="chooseTrain()" [(ngModel)]="filter.showTrainConfiguration" aria-label="showTrainConfiguration">
+                {{ (filter.showTrainConfiguration ? 'PROJECTS.APPLICATION_DETAILS.ADD_TRUCK.HIDECONFIG':'PROJECTS.APPLICATION_DETAILS.ADD_TRUCK.SHOWCONFIG') | translate }}
+            </mat-slide-toggle>
+            <mat-checkbox class="mt-4 mb-4" [(ngModel)]="filter.includeSelectedCars" aria-label="include Selected Cars" (ngModelChange)="switchValueChange()">
+                <p>{{ 'PROJECTS.APPLICATION_DETAILS.ADD_TRUCK.SHOWCHOSENCHECKBOX' | translate }}</p>
+            </mat-checkbox>
+        </div>
+    </div>
+    <div style="padding: 15px;padding-top: 0;" fxLayout="column" *ngIf="filter.showTrainConfiguration == true">
+        <div>
+            <mat-form-field>
+                <mat-label>{{ 'PROJECTS.APPLICATION_DETAILS.ADD_TRUCK.SELECTTRAINTYP' | translate }}</mat-label>
+                <mat-select [(ngModel)]="storage.selectTrainTyp" (ngModelChange)="chooseTrailerTyp(storage.selectTrainTyp)">
+                    <mat-option *ngFor="let system of transportSystem" [value]="system.id">
+                        {{system.label}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" class="mt-4">
+            <mat-icon>info_outline</mat-icon>
+            <span class="ml-2">{{ 'PROJECTS.APPLICATION_DETAILS.ADD_TRUCK.INFO_TRAILERS' | translate }}</span>
+        </div>
+        <div fxLayout="row" class="mt-2 min-h-[220px]">
+            <div fxLayout="column">
+                <mat-form-field floatLabel="never">
+                    <mat-label>{{ 'PROJECTS.APPLICATION_DETAILS.ADD_TRUCK.SELECTTRAIN' | translate }}</mat-label>
+                    <mat-select  [(ngModel)]="storage.selectedCar" (ngModelChange)="changeCarSelection()">
+                        <ng-container *ngFor="let truck of storage.trucks">
+                            <mat-option [value]="truck" *ngIf="isVisible(truck)">
+                                {{truck.identification}}
+                            </mat-option>
+                        </ng-container>
+                    </mat-select>
+                </mat-form-field>
+                <div fxLayout="column" fxLayoutAlign="end center" *ngIf="storage.selectedCar && storage.selectedCar.truckPicId!==undefined && storage.selectedCar.truckPicId!=='' && storage.selectedCar.truckPicId!==null" style="height:100%;">
+                    <img src="{{ ('assets/img/truckPics/'+storage.selectedCar.truckPicId+'.png') }}" onerror="this.src='assets/img/Trailer/defaultTrailer.png'" [ngStyle]="(storage.selectedCar.truckPicId != '' && storage.selectedCar.truckPicId != undefined ) && {'width':'150px'}" />
+                </div>
+                <div fxLayout="column" fxLayoutAlign="end center" *ngIf="!storage.selectedCar || storage.selectedCar.truckPicId===undefined || storage.selectedCar.truckPicId==='' || storage.selectedCar.truckPicId===null" style="height: 120px;">
+                    <img src="assets/img/Trailer/defaultTrailer.png" onerror="this.src='assets/img/Trailer/defaultTrailer.png'" [ngStyle]="((storage.selectedCar && storage.selectedCar.truckPicId != '' && storage.selectedCar.truckPicId != undefined) ) && {'width':'150px'}" />
+                </div>
+            </div>
+            <div fxLayout="column" *ngFor="let trailer of storage.selectedTrailer">
+                <mat-form-field floatLabel="never">
+                    <mat-label>{{ 'PROJECTS.APPLICATION_DETAILS.ADD_TRUCK.SELECTTRAILER' | translate }}</mat-label>
+                    <mat-select [(ngModel)]="trailer.model" (ngModelChange)="changeCarSelection('trailer')">
+                        <ng-container *ngFor="let trailer of storage.trailerList">
+                            <mat-option [value]="trailer" *ngIf="isTrailerVisible(trailer)">
+                                {{trailer.identification}}
+                            </mat-option>
+                        </ng-container>
+                    </mat-select>
+                </mat-form-field>
+
+                <div fxLayout="column" fxLayoutAlign="end center" *ngIf="trailer.model && trailer.model.trailerPicId!==undefined && trailer.model.trailerPicId!=='' && trailer.model.trailerPicId!==null" style="height: 120px;">
+                    <img src="{{ ('assets/img/Trailer/'+trailer.model.trailerPicId+'.png') }}" onerror="this.src='assets/img/Trailer/defaultTrailer.png'" style="max-height:120px;max-width:135px;" />
+                </div>
+                <div fxLayout="column" fxLayoutAlign="end center" *ngIf="!trailer.model || trailer.model.trailerPicId===undefined || trailer.model.trailerPicId==='' || trailer.model.trailerPicId===null" style="height: 120px">
+                    <img src="assets/img/Trailer/defaultTrailer.png" onerror="this.src='assets/img/Trailer/defaultTrailer.png'" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between center">
+    <button mat-button (click)="cancel()">{{ 'GLOBAL.CANCEL' | translate}}</button>
+    <button mat-button [disabled]="(!filter.selectMultiple && !storage.selectedCar) || (filter.selectMultiple && storage.allSelectedTrucks.length===0)" (click)="save()" cdkFocusInitial>{{ 'GLOBAL.ADD' | translate}}</button>
+</div>

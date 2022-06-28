@@ -1,0 +1,23 @@
+[
+    {
+        "id": 0,
+        "name": "My first Optimization",
+        "creationDate": "2022-04-05T10:07:43.000+00:00",
+        "createdBy": "itoTest1234",
+        "lastModified": "2022-04-02T10:07:43.000+00:00"
+    },
+    {
+        "id": 1,
+        "name": "Second Optimization",
+        "creationDate": "2022-03-22T10:07:43.000+00:00",
+        "createdBy": "itoTest1234",
+        "lastModified": "2022-01-02T10:07:43.000+00:00"
+    },
+    {
+        "id": 2,
+        "name": "Another Test",
+        "creationDate": "2022-01-07T10:07:43.000+00:00",
+        "createdBy": "itoTest1234",
+        "lastModified": "2022-01-06T10:07:43.000+00:00"
+    }
+]

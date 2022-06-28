@@ -1,0 +1,136 @@
+# ====================================================================================
+# VARIABLES
+# ====================================================================================
+
+variables:
+    APP_VERSION: "1.0.0" # Will be overwritten during job
+    IMG_NAME: "safety-guard-app"
+    BUILD_PATH: /builds/$CI_PROJECT_PATH
+
+# ====================================================================================
+# STAGES
+# ====================================================================================
+
+stages:
+    - containerize
+    - testing
+    - reporting
+    - deployment
+
+# ====================================================================================
+# DEFAULT SCRIPTS
+# ====================================================================================
+
+default:
+    before_script:
+        - !reference [.default, before_script]
+
+.default:
+    before_script:
+        # Pipeline id
+        - echo $CI_PIPELINE_IID
+        # Commit message
+        - echo $CI_COMMIT_MESSAGE
+        # Registry image
+        - echo $CI_REGISTRY_IMAGE
+        # App version
+        - export APP_VERSION=$(cat package.json | jq -r .version)-$CI_PIPELINE_IID
+        - echo $APP_VERSION
+
+# ====================================================================================
+# WORKFLOWS
+# ====================================================================================
+
+# Since jobs create tags themselves, ignore new jobs being triggered in this case
+workflow:
+    rules:
+        - if: $CI_COMMIT_TAG
+          when: never
+        - when: always
+
+# ====================================================================================
+# BUILD DOCKER AND PUSH TO GITLAB REGISTRY
+# ====================================================================================
+
+Build docker:
+    stage: containerize
+    image: itobjects/docker-with-awscli
+    script:
+        # build image
+        - docker build -f deployment/docker/Dockerfile -t "$IMG_NAME" --build-arg APP_VERSION=${APP_VERSION} .
+        # login to local registry and push docker image
+        - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+        - docker tag $IMG_NAME "$CI_REGISTRY_IMAGE/$IMG_NAME:$APP_VERSION"
+        - docker push "$CI_REGISTRY_IMAGE/$IMG_NAME:$APP_VERSION"
+    allow_failure: false
+    tags:
+        - docker
+        - local
+    rules:
+        - if: '$CI_COMMIT_BRANCH != "develop"'
+          when: manual
+        - when: always
+
+# ====================================================================================
+# DEPLOYMENT
+# ====================================================================================
+
+.deployment:
+    stage: deployment
+    image: alpine:latest
+        #only:
+        #  refs:
+        #    - develop
+        #    - master
+    tags:
+        - docker
+        - local
+    environment:
+        # groupname/appname
+        name: $ENV/$IMG_NAME
+    before_script:
+        - apk update
+        - apk add sshpass
+        - apk add openssh-client
+        - apk add jq
+        - mkdir -p ~/.ssh && touch ~/.ssh/known_hosts
+        - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
+        - !reference [.default, before_script]
+    when: manual
+    allow_failure: false
+
+Deploy develop:
+    extends: .deployment
+    when: on_success
+    variables:
+        # make local and global variables available to downstream job
+        ENV: dev
+        FILE: docker-compose.webapp.yml
+    script:
+        # update docker-compose.webapp.yml
+        - sed "s~IMAGE_WEBAPP~$CI_REGISTRY_IMAGE/$IMG_NAME:$APP_VERSION~" ./deployment/stages/$ENV/$FILE > ./docker-compose.webapp.yml
+        - cat ./docker-compose.webapp.yml
+        # Upload docker-compose
+        - sshpass -p $DEVSERVER_SSH_PASSWORD ssh $DEVSERVER_SSH_USER@$DEVSERVER_IP -tt "touch /home/$DEVSERVER_SSH_USER/docker-compose.webapp.yml"
+        - sshpass -p $DEVSERVER_SSH_PASSWORD ssh $DEVSERVER_SSH_USER@$DEVSERVER_IP -tt "echo $DEVSERVER_SSH_PASSWORD | sudo -S cp -p /home/$DEVSERVER_SSH_USER/docker-compose.webapp.yml /home/$DEVSERVER_SSH_USER/backup/docker-compose.webapp.yml.${CI_PIPELINE_IID}"
+        - sshpass -p $DEVSERVER_SSH_PASSWORD scp docker-compose.webapp.yml $DEVSERVER_SSH_USER@$DEVSERVER_IP:/home/$DEVSERVER_SSH_USER/docker-compose.webapp.yml
+        # Restart the server
+        - sshpass -p $DEVSERVER_SSH_PASSWORD ssh $DEVSERVER_SSH_USER@$DEVSERVER_IP -tt "echo $DEVSERVER_SSH_PASSWORD | sudo -S /usr/local/bin/docker-compose -f ./docker-compose.yml -f ./docker-compose.nginx.yml -f ./docker-compose.webapp.yml -f ./docker-compose.api.yml up -d"
+
+# ====================================================================================
+# TESTING
+# ====================================================================================
+
+Report licenses:
+    image: node:14-alpine
+    stage: reporting
+    script:
+        - npm ci
+        - npm i license-checker
+        - npx license-checker --production --json --out ./licenses.json
+    artifacts:
+        paths:
+            - licenses.json
+        expire_in: 1 day
+    when: manual
+    allow_failure: true

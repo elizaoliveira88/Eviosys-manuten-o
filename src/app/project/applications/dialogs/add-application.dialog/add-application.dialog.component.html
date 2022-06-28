@@ -1,0 +1,33 @@
+<h1 mat-dialog-title>{{ 'PROJECTS.APPLICATIONS.ADD_DIALOG.TITLE' | translate }}</h1>
+<div mat-dialog-content fxLayout="column">
+    <div fxLayout="row" fxLayoutAlign="space-between start">
+        <div fxLayout="column" fxLayoutAlign="start start" class="w-full min-h-[112px] mt-2 overflow-hidden">
+            <mat-form-field autofocus floatLabel="always">
+                <mat-label>{{ 'PROJECTS.APPLICATIONS.ADD_DIALOG.NAME' | translate }}</mat-label>
+                <input matInput matInputAutofocus [(ngModel)]="storage.name">
+            </mat-form-field>
+            <div class="mt-2" fxLayout="row" fxLayoutAlign="end center">
+                <mat-slide-toggle class="mr-2"  (change)="flowPlanChanged()" [(ngModel)]="storage.flowPlan"></mat-slide-toggle>
+                <span *ngIf="storage.flowPlan"><span class="font-bold">{{ 'PROJECTS.APPLICATIONS.ADD_DIALOG.WITH' | translate }}</span> {{ 'PROJECTS.APPLICATIONS.ADD_DIALOG.FLOWPLAN' | translate }}</span>
+                <span *ngIf="!storage.flowPlan"><span class="font-bold">{{ 'PROJECTS.APPLICATIONS.ADD_DIALOG.WITHOUT' | translate }}</span> {{ 'PROJECTS.APPLICATIONS.ADD_DIALOG.FLOWPLAN' | translate }}</span>
+            </div>
+        </div>
+        <div class="h-full" *ngIf="storage.selected">
+            <video height="230" [src]="storage.selected.video | safe:'resourceUrl'" autoplay="autoplay" muted loop style="border-radius:6px;"></video>
+        </div>
+    </div>
+
+    <div class="w-full mt-4 grid grid-cols-4 gap-4">
+        <div class="appType-container" *ngFor="let type of storage.applicationTypes" (click)="selectType(type)" [ngStyle]="type.disabled && {'opacity':'0.3', 'cursor':'unset'}">
+            <img class="image" [src]="type.logo"/>
+            <div class="text" fxLayout="row" fxLayoutAlign="center center" [ngStyle]="storage.selected && storage.selected.id===type.id && {'background-color':'var(--success', 'color':'var(--white)'}">
+                {{type.name | translate}}
+            </div>
+            <div class="hover-div"></div>
+        </div>
+    </div>
+</div>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between center">
+    <button mat-button (click)="cancel()">{{ 'GLOBAL.CANCEL' | translate}}</button>
+    <button mat-button (click)="save()" [disabled]="!storage.name || !storage.selected" cdkFocusInitial>{{ 'GLOBAL.SAVE' | translate}}</button>
+</div>

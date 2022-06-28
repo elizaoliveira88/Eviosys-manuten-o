@@ -1,0 +1,9 @@
+{
+    "/api/*": {
+        "target": "https://dev-fleetplan.it-objects.de/fleetplan",
+        "secure": true,
+        "changeOrigin": true,
+        "logLevel": "debug",
+        "withCredentials": true
+    }
+}

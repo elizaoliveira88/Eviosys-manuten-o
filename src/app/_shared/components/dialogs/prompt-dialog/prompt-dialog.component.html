@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>{{ labels.title | translate }}</h1>
+<div mat-dialog-content [formGroup]="form" fxLayout="column">
+    <p>{{ labels.content | translate }}</p>
+    <mat-form-field class="mt-4">
+        <mat-label>{{ labels.name | translate }}</mat-label>
+        <input matInput formControlName="value">
+    </mat-form-field>
+</div>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between center">
+    <button mat-button (click)="cancel()">{{ 'GLOBAL.CANCEL' | translate}}</button>
+    <button mat-stroked-button [disabled]="form.invalid" (click)="save()" cdkFocusInitial>{{ labels.save | translate}}</button>
+</div>

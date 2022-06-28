@@ -1,0 +1,368 @@
+<div class="appFrame" fxLayout="column" fxLayoutAlign="start start">
+    <div class="relative" fxLayout="column">
+        <div *ngIf="storage.selectedOptimization" fxLayout="row" fxLayoutAlign="start center">
+            <button mat-icon-button routerLink="..">
+                <mat-icon>keyboard_arrow_left</mat-icon>
+            </button>
+            <h1 class="!ml-2 !mr-6">{{storage.selectedOptimization.name}}</h1>
+            <button mat-stroked-button class="btn-small btn-icon" [matMenuTriggerFor]="appOptions">
+                <mat-icon>more_vertical</mat-icon>
+            </button>
+            <mat-menu #appOptions="matMenu">
+                <button mat-menu-item (click)="changeOptimizationName()">
+                    <mat-icon>edit</mat-icon>{{'PROJECTS.OPTIMIZATION_DETAILS.EDIT_NAME' | translate}}
+                </button>
+                <button mat-menu-item (click)="deleteOptimization()">
+                    <mat-icon>delete</mat-icon>{{'PROJECTS.OPTIMIZATION_DETAILS.DELETE' | translate}}
+                </button>
+                <button mat-menu-item (click)="showUserGuidance()">
+                    <mat-icon>live_help</mat-icon>{{'PROJECTS.OPTIMIZATION_DETAILS.SHOW_USERGUIDANCE' | translate}}
+                </button>
+            </mat-menu>
+        </div>
+        <mat-spinner [diameter]="36" *ngIf="!storage.selectedOptimization"></mat-spinner>
+
+        <h2>{{'PROJECTS.OPTIMIZATION_DETAILS.SUB' | translate}}</h2>
+    </div>
+
+    <div class="w-full h-[50px]" fxLayout="row" fxLayoutAlign="start center">
+        <button mat-button class="btn-small" (click)="openAddGroup()"><mat-icon>link</mat-icon>{{'PROJECTS.OPTIMIZATION_DETAILS.CREATE_GROUPS' | translate}}</button>
+        <button mat-button class="btn-small" (click)="openGroupNetwork()"><mat-icon>group_work</mat-icon>{{'PROJECTS.OPTIMIZATION_DETAILS.SHOW_GROUPS' | translate}}</button>
+    </div>
+
+    <div class="pt-10 pl-10 w-full">
+        <div class="w-full" fxLayout="row" fxLayoutAlign="space-between center">
+            <div fxLayout="row" fxLayoutAlign="start center">
+                <h3>{{'PROJECTS.OPTIMIZATION_DETAILS.PLEASE_SELECT' | translate}}</h3>
+            </div>
+        </div>
+        <mat-divider class="w-full !mt-4"></mat-divider>
+
+        <div class="list-container mt-4 w-full" fxLayout="column">
+            <ng-container *ngIf="storage.selectedOptimization">
+                <div class="w-full h-[48px]" *ngFor="let optApp of storage.selectedOptimization.optimizationApplications" fxLayout="row" fxLayoutAlign="start center">
+                    <mat-checkbox [(ngModel)]="optApp.selected"></mat-checkbox>
+                    <div class="app-truck-name-container ml-4 mr-4" fxLayout="column" fxLayoutAlign="center start">
+                        <div fxLayout="row" fxLayoutAlign="start center">
+                            <h3>{{optApp.application.name}}</h3>
+                            <svg *ngIf="optApp.application.flowPlan" style="width:20px; height:20px;margin-left:5px;fill:#5d5d5d;" id="intralogistics" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><title>LMH_Icons_intralogistics_white</title><path class="cls-1" d="M10,19.56,16,23l6-3.44V12.44L16,9l-6,3.44Zm2-4.91,3,1.64v3.82l-3-1.68Zm8,3.78-3,1.68V16.29l3-1.64ZM18.94,13,16,14.5,13.06,13,16,11.33Z"/><path class="cls-1" d="M16,27A11,11,0,0,1,8,8.52l.26,2.4,2-.22L9.59,5l-5.94.65.22,2,2.45-.27A13,13,0,0,0,20.58,28.15l-.23-2.05A10.93,10.93,0,0,1,16,27Z"/><path class="cls-1" d="M25.74,24.58A13,13,0,0,0,11.48,3.83l.23,2A11,11,0,0,1,24.1,23.41L23.84,21l-2,.22.63,5.7,5.94-.65-.22-2Z"/></svg>
+                        </div>
+                        <span style="font-size:12px;">{{'FUNCTIONTYPE_'+normalizeApplicationType(optApp.application.applicationType) | translate}}</span>
+                    </div>
+                    <div fxFlex class="truck-container h-full" fxLayout="row">
+                        <div *ngFor="let truck of optApp.optimizationTrucks" class="opt-truck" (click)="selectAppTruck(truck, optApp)" [ngStyle]="(!optApp.selected && { 'cursor':'unset'})" fxLayout="row" fxLayoutAlign="start center">
+                            <img src="{{ ('assets/img/truckPics/'+truck.applicationTruck.truck.truckPicId+'.png') }}" class="truck-pic" onerror="this.src='assets/img/truckPics/default_stapler.png'" />
+                            <div [ngStyle]="(optApp.selected && truck.selected) && { 'background-color': 'var(--success)' } || (!optApp.selected && { 'background-color':'lightgrey'})" class="ident-container">
+                                <div  *ngIf="truck.applicationTruck.modifiedName===undefined || truck.applicationTruck.modifiedName===null || truck.applicationTruck.modifiedName==='' " class="ident-text">
+                                    {{truck.applicationTruck.truck.identification}}
+                                </div>
+                                <div *ngIf="truck.applicationTruck.modifiedName!==undefined && truck.applicationTruck.modifiedName!==null && truck.applicationTruck.modifiedName!=='' " class="ident-text">
+                                    <div style="font-size: 12px;margin-left: 2px;overflow:hidden;text-overflow: ellipsis;white-space: nowrap;margin-top:2px;">
+                                        {{truck.applicationTruck.modifiedName}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="w-[30px]" *ngIf="truck.selected == false"></div>
+                            <mat-icon *ngIf="truck.selected == true" [ngStyle]="(!optApp.selected && { 'color':'lightgrey'})" class="appCheckCycle" style="color:rgb(105, 196, 45);">check_circle</mat-icon>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+
+        </div>
+
+
+        <div class="w-full mt-10" fxLayout="row" fxLayoutAlign="space-between center">
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+                <h3>{{'PROJECTS.OPTIMIZATION_DETAILS.OPT_DATA' | translate}}</h3>
+            </div>
+            <button mat-stroked-button class="btn-icon btn-small" (click)="toggleTableView()">
+                <mat-icon [ngStyle]="!storage.displayPerTruck && {'transform':'rotate(90deg)'}" style="line-height: 18px; max-height:18px;">reorder</mat-icon>
+            </button>
+        </div>
+        <mat-divider class="w-full !mt-4"></mat-divider>
+
+        <ng-container *ngIf="!storage.displayPerTruck">
+            <div class="mt-4">
+                <h2>{{'PROJECTS.OPTIMIZATION_DETAILS.BEFOREOPT' | translate}}</h2>
+                <mat-table mat-table [dataSource]="dataSourcePre">
+                    <ng-container *ngFor="let col of displayedColumns; let index = index" [matColumnDef]="col">
+                        <mat-header-cell fxLayout="row" fxLayoutAlign="end center" class="optimizations-table-column-{{col}}" mat-header-cell *matHeaderCellDef>
+                            <span *ngIf="col.indexOf('BTN')===-1 && index!=0">{{col}}</span>
+                        </mat-header-cell>
+                        <mat-cell fxLayout="column" fxLayoutAlign="start end" class="optimizations-table-column-{{col}}" *matCellDef="let element">
+                            <ng-container *ngIf="index==0 && col.indexOf('BTN')===-1">
+                                <div fxLayout="row" fxLayoutAlign="start center" class="w-full h-[48px]">
+                                    <span>{{element[col]}}</span>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="index!=0 && col.indexOf('BTN')===-1">
+                                <div fxLayout="row" fxLayoutAlign="end center" class="w-full h-[48px]">
+                                    <span>{{element[col]}}</span>
+                                    <span *ngIf="col==='totalCost'">{{storage.currency}}</span>
+                                    <span *ngIf="col==='workload'">%</span>
+                                </div>
+                            </ng-container>
+
+                            <ng-container *ngIf="col.indexOf('BTN')>-1">
+                                <div fxlayout="row" fxLayoutAlign="end center" class="w-full h-[48px]">
+                                    <button mat-icon-button (click)="openShifts(element)">
+                                        <mat-icon style="margin:0!important;" [ngStyle]="element.expanded && {'transform':'rotate(180deg)'}">keyboard_arrow_down</mat-icon>
+                                    </button>
+                                </div>
+                            </ng-container>
+
+                            <div class="shifts-expanded" fxLayout="column" fxLayoutAlign="start start" *ngIf="element.expanded" [ngStyle]="(index==0 || col.indexOf('BTN')>-1) && {'background-color':'transparent'}">
+                                <ng-container *ngIf="index!=0 && col.indexOf('BTN')===-1">
+                                    <div class="w-full cursor-pointer"
+                                         *ngFor="let shift of element.shifts; let i = index" fxLayout="row"
+                                         fxLayoutAlign="space-between center">
+                                        <span>{{shift.info.name}}</span>
+                                        <div>
+                                            <span>{{element.shifts[i][col]}}</span>
+                                            <span *ngIf="col==='totalCost'">{{storage.currency}}</span>
+                                            <span *ngIf="col==='workload'">%</span>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </div>
+
+                        </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+                    <mat-row class="element-row" [class.even]="i % 2 !== 0" mat-row
+                             *matRowDef="let row; columns: displayedColumns; let i = index;" style="cursor:pointer;"></mat-row>
+                    <div class="w-full h-[48px]" fxLayout="row" fxLayoutAlign="center center" *matNoDataRow>
+                        <mat-icon>info_outline</mat-icon>
+                        <span class="ml-2">{{ 'PROJECTS.OPTIMIZATION_DETAILS.NOCOMPONENTS' | translate }}</span>
+                    </div>
+                </mat-table>
+            </div>
+
+            <div class="mt-4">
+                <h2>{{'PROJECTS.OPTIMIZATION_DETAILS.AFTEROPT' | translate}}</h2>
+                <mat-table mat-table [dataSource]="dataSourcePost">
+                    <ng-container *ngFor="let col of displayedColumns; let index = index" [matColumnDef]="col">
+                        <mat-header-cell fxLayout="row" fxLayoutAlign="end center" class="optimizations-table-column-{{col}}" mat-header-cell *matHeaderCellDef>
+                            <span *ngIf="col.indexOf('BTN')===-1 && index!=0">{{col}}</span>
+                        </mat-header-cell>
+                        <mat-cell fxLayout="column" fxLayoutAlign="start end" class="optimizations-table-column-{{col}}" *matCellDef="let element">
+                            <ng-container *ngIf="index==0 && col.indexOf('BTN')===-1">
+                                <div fxLayout="row" fxLayoutAlign="start center" class="w-full h-[48px]">
+                                    <span>{{element[col]}}</span>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="index!=0 && col.indexOf('BTN')===-1">
+                                <div fxLayout="row" fxLayoutAlign="end center" class="w-full h-[48px]">
+                                    <span>{{element[col]}}</span>
+                                    <span *ngIf="col==='totalCost'">{{storage.currency}}</span>
+                                    <span *ngIf="col==='workload'">%</span>
+                                </div>
+                            </ng-container>
+
+                            <ng-container *ngIf="col.indexOf('BTN')>-1">
+                                <div fxlayout="row" fxLayoutAlign="end center" class="w-full h-[48px]">
+                                    <button mat-icon-button (click)="openShifts(element)">
+                                        <mat-icon style="margin:0!important;">keyboard_arrow_down</mat-icon>
+                                    </button>
+                                </div>
+                            </ng-container>
+
+                            <div class="shifts-expanded" fxLayout="column" fxLayoutAlign="start start" *ngIf="element.expanded" [ngStyle]="(index==0 || col.indexOf('BTN')>-1) && {'background-color':'transparent'}">
+                                <ng-container *ngIf="index!=0 && col.indexOf('BTN')===-1">
+                                    <div class="w-full cursor-pointer"
+                                         *ngFor="let shift of element.shifts; let i = index" fxLayout="row"
+                                         fxLayoutAlign="space-between center">
+                                        <span>{{shift.info.name}}</span>
+                                        <div>
+                                            <span>{{element.shifts[i][col]}}</span>
+                                            <span *ngIf="col==='totalCost'">{{storage.currency}}</span>
+                                            <span *ngIf="col==='workload'">%</span>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </div>
+
+                        </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+                    <mat-row class="element-row" [class.even]="i % 2 !== 0" mat-row
+                             *matRowDef="let row; columns: displayedColumns; let i = index;" style="cursor:pointer;"></mat-row>
+                    <div class="w-full h-[48px]" fxLayout="row" fxLayoutAlign="center center" *matNoDataRow>
+                        <mat-icon>info_outline</mat-icon>
+                        <span class="ml-2">{{ 'PROJECTS.OPTIMIZATION_DETAILS.NOCOMPONENTS' | translate }}</span>
+                    </div>
+                </mat-table>
+            </div>
+
+            <div class="mt-4">
+                <h2>{{'PROJECTS.OPTIMIZATION_DETAILS.SAVINGS' | translate}}</h2>
+                <mat-table mat-table [dataSource]="dataSourceSavings">
+                    <ng-container *ngFor="let col of displayedColumns; let index = index" [matColumnDef]="col">
+                        <mat-header-cell fxLayout="row" fxLayoutAlign="end center" class="optimizations-table-column-{{col}}" mat-header-cell *matHeaderCellDef>
+                            <span *ngIf="col.indexOf('BTN')===-1 && index!=0">{{col}}</span>
+                        </mat-header-cell>
+                        <mat-cell fxLayout="column" fxLayoutAlign="start end" class="optimizations-table-column-{{col}}" *matCellDef="let element">
+                            <ng-container *ngIf="index==0 && col.indexOf('BTN')===-1">
+                                <div fxLayout="row" fxLayoutAlign="start center" class="w-full h-[48px]">
+                                    <span>{{element[col]}}</span>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="index!=0 && col.indexOf('BTN')===-1">
+                                <div fxLayout="row" fxLayoutAlign="end center" class="w-full h-[48px]">
+                                    <span>{{element[col]}}</span>
+                                    <span *ngIf="col==='totalCost'">{{storage.currency}}</span>
+                                    <span *ngIf="col==='workload'">%</span>
+                                </div>
+                            </ng-container>
+
+                            <ng-container *ngIf="col.indexOf('BTN')>-1">
+                                <div fxlayout="row" fxLayoutAlign="end center" class="w-full h-[48px]">
+                                    <button mat-icon-button (click)="openShifts(element)">
+                                        <mat-icon style="margin:0!important;">keyboard_arrow_down</mat-icon>
+                                    </button>
+                                </div>
+                            </ng-container>
+
+                            <div class="shifts-expanded" fxLayout="column" fxLayoutAlign="start start" *ngIf="element.expanded" [ngStyle]="(index==0 || col.indexOf('BTN')>-1) && {'background-color':'transparent'}">
+                                <ng-container *ngIf="index!=0 && col.indexOf('BTN')===-1">
+                                    <div class="w-full cursor-pointer"
+                                         *ngFor="let shift of element.shifts; let i = index" fxLayout="row"
+                                         fxLayoutAlign="space-between center">
+                                        <span>{{shift.info.name}}</span>
+                                        <div>
+                                            <span>{{element.shifts[i][col]}}</span>
+                                            <span *ngIf="col==='totalCost'">{{storage.currency}}</span>
+                                            <span *ngIf="col==='workload'">%</span>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </div>
+
+                        </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+                    <mat-row class="element-row" [class.even]="i % 2 !== 0" mat-row
+                             *matRowDef="let row; columns: displayedColumns; let i = index;" style="cursor:pointer;"></mat-row>
+                    <div class="w-full h-[48px]" fxLayout="row" fxLayoutAlign="center center" *matNoDataRow>
+                        <mat-icon>info_outline</mat-icon>
+                        <span class="ml-2">{{ 'PROJECTS.OPTIMIZATION_DETAILS.NOCOMPONENTS' | translate }}</span>
+                    </div>
+                </mat-table>
+            </div>
+
+        </ng-container>
+
+        <ng-container *ngIf="storage.displayPerTruck">
+            <ng-container *ngFor="let perTruck of dataSourcePerTruck">
+                <div class="mt-4">
+                    <h2>{{perTruck.truck.identification}}</h2>
+                    <mat-table mat-table class="mt-4" [dataSource]="perTruck.optTable">
+                        <ng-container *ngFor="let col of displayedColumnsPerTruck; let index = index" [matColumnDef]="col">
+                            <mat-header-cell fxLayout="row" fxLayoutAlign="end center" class="optimizations-table-column-{{col}}" mat-header-cell *matHeaderCellDef>
+                                <span *ngIf="col!=='key' && col.indexOf('BTN')===-1">{{col}}</span>
+                            </mat-header-cell>
+                            <mat-cell fxLayout="column" class="optimizations-table-column-{{col}}" *matCellDef="let element">
+                                <ng-container *ngIf="col.indexOf('BTN')===-1 && col!=='key'">
+                                    <div fxLayout="row" fxLayoutAlign="end center" class="w-full h-[48px]">
+                                        <span>{{element[col]}}</span>
+                                        <span *ngIf="element.key==='totalCost' && index!==0">{{storage.currency}}</span>
+                                        <span *ngIf="element.key==='workload' && index!==0">%</span>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="col==='key'">
+                                    <div fxLayout="row" fxLayoutAlign="start center" class="w-full h-[48px]">
+                                        <span>{{element[col]}}</span>
+                                    </div>
+                                </ng-container>
+
+                                <ng-container *ngIf="col.indexOf('BTN')>-1">
+                                    <div fxlayout="row" fxLayoutAlign="end center" class="w-full h-[48px]">
+                                        <button mat-icon-button (click)="openShifts(element)">
+                                            <mat-icon style="margin:0!important;" [ngStyle]="element.expanded && {'transform':'rotate(180deg)'}">keyboard_arrow_down</mat-icon>
+                                        </button>
+                                    </div>
+                                </ng-container>
+
+                                <div class="shifts-expanded" fxLayout="column" fxLayoutAlign="start start" *ngIf="element.expanded" [ngStyle]="(index==0 || col.indexOf('BTN')>-1) && {'background-color':'transparent'}">
+                                    <ng-container *ngIf="index!=0 && col.indexOf('BTN')===-1">
+                                        <div class="w-full cursor-pointer"
+                                             *ngFor="let shift of element.shifts[col]; let i = index" fxLayout="row"
+                                             fxLayoutAlign="space-between center">
+                                            <span>{{element.shifts.info[i].name}}</span>
+                                            <div>
+                                                <span>{{element.shifts[col][i]}}</span>
+                                                <span *ngIf="element.key==='totalCost'">{{storage.currency}}</span>
+                                                <span *ngIf="element.key==='workload'">%</span>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </mat-cell>
+                        </ng-container>
+
+                        <mat-header-row *matHeaderRowDef="displayedColumnsPerTruck"></mat-header-row>
+
+                        <mat-row class="element-row" [class.even]="i % 2 !== 0" mat-row
+                                 *matRowDef="let row; columns: displayedColumnsPerTruck; let i = index;" style="cursor:pointer;"></mat-row>
+                        <div class="w-full h-[48px]" fxLayout="row" fxLayoutAlign="center center" *matNoDataRow>
+                            <mat-icon>info_outline</mat-icon>
+                            <span class="ml-2">{{ 'PROJECTS.OPTIMIZATION_DETAILS.NOCOMPONENTS' | translate }}</span>
+                        </div>
+                    </mat-table>
+                </div>
+
+            </ng-container>
+        </ng-container>
+
+        <div class="mt-4">
+            <h2>{{'PROJECTS.OPTIMIZATION_DETAILS.SUMMARYOFCOSTS' | translate}}</h2>
+            <mat-table mat-table class="mt-4" [dataSource]="dataSourceSummary">
+                <ng-container *ngFor="let col of displayedColumnsSummary; let index = index" [matColumnDef]="col">
+                    <mat-header-cell  fxLayout="row" fxLayoutAlign="end center" class="optimizations-table-column-{{col}}" mat-header-cell *matHeaderCellDef style="padding-right:10px!important;">
+                        <span *ngIf="col!=='key' && col.indexOf('BTN')===-1">{{col}}</span>
+                    </mat-header-cell>
+
+                    <mat-cell fxLayout="row" fxLayoutAlign="end center" class="optimizations-table-column-{{col}}" *matCellDef="let element" style="padding-right:10px!important;">
+                        <ng-container *ngIf="col.indexOf('BTN')===-1">
+                            <span class="font-bold">{{element[col]}}</span>
+                            <span class="font-bold" *ngIf="col!=='key'">{{storage.currency}}</span>
+                        </ng-container>
+
+                        <ng-container *ngIf="col==='key'">
+                            <div fxLayout="row" fxLayoutAlign="start center" class="w-full h-[48px]">
+                                <span>{{element[col]}}</span>
+                            </div>
+                        </ng-container>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumnsSummary"></mat-header-row>
+
+                <mat-row class="element-row" [class.even]="i % 2 !== 0" mat-row
+                         *matRowDef="let row; columns: displayedColumnsSummary; let i = index;" style="cursor:pointer;"></mat-row>
+                <div class="w-full h-[48px]" fxLayout="row" fxLayoutAlign="center center" *matNoDataRow>
+                    <mat-icon>info_outline</mat-icon>
+                    <span class="ml-2">{{ 'PROJECTS.OPTIMIZATION_DETAILS.NOCOMPONENTS' | translate }}</span>
+                </div>
+            </mat-table>
+        </div>
+    </div>
+    <div fxFlex fxLayout="row wrap" class="MT40 W100">
+        <h2 fxFlex="100" class="TAC">{{'PROJECTS.OPTIMIZATION_DETAILS.CHART_TITLE' | translate}}</h2>
+        <canvas baseChart
+                [datasets]="barChartData"
+                [labels]="barChartLabels"
+                [options]="barChartOptions"
+                [plugins]="barChartPlugins"
+                [legend]="barChartLegend"
+                [type]="barChartType">
+        </canvas>
+    </div>
+</div>

@@ -1,0 +1,6 @@
+<div fxLayout="row" fxFlex="100" class="submenu-row" *displayOnDesktop>
+    <button *ngFor="let menu of mainMenuModel.menuMap[subMenuName].sections" mat-button disableRipple class="no-hover-effect subMenu textLimit" routerLink="{{ menu.link }}" title="{{ menu.name | translate }}" routerLinkActive="activeMenu">
+        {{ menu.name | translate }}
+    </button>
+</div>
+<mobile-top-bar *displayOnMobile fxFlex [menu]="menu"></mobile-top-bar>

@@ -1,0 +1,207 @@
+<div class="appFrame" fxLayout="column" fxLayoutAlign="start start">
+    <div fxLayout="column">
+        <h1>{{'HOME.SETTINGS.TITLE' | translate}}</h1>
+        <h2>{{'HOME.SETTINGS.SUB' | translate}}</h2>
+    </div>
+
+    <h2 class="!mt-4 !mb-0">Info</h2>
+    <div class="w-full" style="margin-left:-6px;">
+        <div class="info-container min-w-[420px]" fxLayout="row" fxLayoutAlign="start center">
+            <mat-icon>apps</mat-icon>
+            <div fxLayout="column" fxLayoutAlign="center start" class="ml-4">
+                <span>Version</span>
+                <h3>3.9.7</h3>
+            </div>
+        </div>
+        <div class="info-container min-w-[420px]" fxLayout="row" fxLayoutAlign="start center">
+            <mat-icon>person</mat-icon>
+            <div fxLayout="column" fxLayoutAlign="center start" class="ml-4">
+                <span>Name</span>
+                <h3>itoTest1234</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="w-full" style="margin-left:-6px;">
+        <div class="info-container max-w-[852px] min-w-[852px]" fxLayout="row" fxLayoutAlign="start center">
+            <mat-icon>person</mat-icon>
+            <div fxLayout="column" fxLayoutAlign="center start" class="ml-4">
+                <span>Client</span>
+                <h3>{{storage.useragent}}</h3>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="!mt-4 !mb-0">General</h2>
+    <div class="w-full" style="margin-left:-6px;">
+        <div class="info-container min-w-[420px]" fxLayout="row" fxLayoutAlign="start center">
+            <mat-icon>language</mat-icon>
+            <div fxLayout="column" fxLayoutAlign="center start" class="ml-4">
+                <mat-form-field>
+                    <mat-label>{{'HOME.SETTINGS.LANGUAGE' | translate}}</mat-label>
+                    <mat-select  [(ngModel)]="storage.userData.settings.language" (ngModelChange)="languageChanged()">
+                        <mat-option *ngFor="let lang of storage.allLanguages"  [value]="lang.key">
+                            {{lang.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="info-container min-w-[420px]" fxLayout="row" fxLayoutAlign="start center">
+            <mat-icon>live_help</mat-icon>
+            <mat-slide-toggle [(ngModel)]="storage.userData.userGuidance" (ngModelChange)="userGuidanceChanged()" class="ml-4"><span>Benutzerführung aktiviert</span></mat-slide-toggle>
+        </div>
+    </div>
+
+    <h2 class="!mt-4 !mb-0">Project Default Values</h2>
+    <div class="w-full" style="margin-left:-6px;">
+        <div [formGroup]="parametersForm" *ngIf="storage.userData" class="info-container min-w-[420px]" fxLayout="column" fxLayoutAlign="start start">
+            <div fxLayout="row" fxLayoutAlign="space-between center" class="w-full mb-4">
+                <div fxLayout="row" fxLayoutAlign="start center">
+                    <mat-icon>tune</mat-icon>
+                    <h3 class="!ml-4">Project parameter</h3>
+                </div>
+                <div fxLayout="row"     class="grid grid-cols-2 gap-2">
+                    <button *ngIf="parametersForm.enabled" [disabled]="vendorDataForm.enabled" (click)="cancelEdit(parametersForm)" mat-stroked-button class="btn-icon btn-small"><mat-icon>cancel</mat-icon></button>
+                    <button *ngIf="parametersForm.enabled" [disabled]="vendorDataForm.enabled"(click)="saveEditParams(parametersForm)" mat-raised-button class="btn-icon btn-small"><mat-icon>save</mat-icon></button>
+                    <button *ngIf="parametersForm.disabled" [disabled]="vendorDataForm.enabled"(click)="startEdit(parametersForm)" mat-stroked-button class="btn-icon btn-small"><mat-icon>edit</mat-icon></button>
+                </div>
+            </div>
+            <div class="w-full" fxLayout="column" fxLayoutAlign="start start">
+                <div class="w-full" fxLayout="row" fxLayoutAlign="space-between center">
+                    <mat-form-field>
+                        <mat-label>{{ 'HOME.SETTINGS.PARAMS.CURRENCY' | translate }}</mat-label>
+                        <input matInput [formControlName]="'currency'">
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>{{ 'HOME.SETTINGS.PARAMS.PROCEPOWERKWH' | translate }}</mat-label>
+                        <input matInput [formControlName]="'pricePowerKwh'">
+                    </mat-form-field>
+                </div>
+
+                <div class="w-full" fxLayout="row" fxLayoutAlign="space-between center">
+                    <mat-form-field>
+                        <mat-label>{{ 'HOME.SETTINGS.PARAMS.PRICEDIESEL' | translate }}</mat-label>
+                        <input matInput [formControlName]="'priceDiesel'">
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>{{ 'HOME.SETTINGS.PARAMS.PRICEGAS' | translate }}</mat-label>
+                        <input matInput [formControlName]="'priceGas'">
+                    </mat-form-field>
+                </div>
+
+                <div class="w-full" fxLayout="row" fxLayoutAlign="space-between center">
+                    <mat-form-field>
+                        <mat-label>{{ 'HOME.SETTINGS.PARAMS.OVERALLCOSTFACTOR' | translate }}</mat-label>
+                        <input matInput [formControlName]="'overallCostFactor'">
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>{{ 'HOME.SETTINGS.PARAMS.WORKINGDAYS' | translate }}</mat-label>
+                        <input matInput [formControlName]="'workingDays'">
+                    </mat-form-field>
+                </div>
+
+                <div class="w-full" fxLayout="row" fxLayoutAlign="space-between center">
+                    <mat-form-field>
+                        <mat-label>{{ 'HOME.SETTINGS.PARAMS.MAXSPEED' | translate }}</mat-label>
+                        <input matInput [formControlName]="'maxSpeed'">
+                    </mat-form-field>
+                </div>
+            </div>
+
+        </div>
+
+        <div [formGroup]="vendorDataForm" *ngIf="storage.userData" class="info-container min-w-[420px]" fxLayout="column" fxLayoutAlign="start start">
+            <div fxLayout="row" fxLayoutAlign="space-between center" class="w-full mb-4">
+                <div fxLayout="row" fxLayoutAlign="start center">
+                    <mat-icon>account_box</mat-icon>
+                    <h3 class="!ml-4">Unternehmensdaten</h3>
+                </div>
+                <div fxLayout="row" class="grid grid-cols-2 gap-2">
+                    <button *ngIf="vendorDataForm.enabled" [disabled]="parametersForm.enabled" (click)="cancelEdit(vendorDataForm)" mat-stroked-button class="btn-icon btn-small"><mat-icon>cancel</mat-icon></button>
+                    <button *ngIf="vendorDataForm.enabled" [disabled]="parametersForm.enabled"(click)="saveEditData(vendorDataForm)" mat-raised-button class="btn-icon btn-small"><mat-icon>save</mat-icon></button>
+                    <button *ngIf="vendorDataForm.disabled" [disabled]="parametersForm.enabled"(click)="startEdit(vendorDataForm)" mat-stroked-button class="btn-icon btn-small"><mat-icon>edit</mat-icon></button>
+                </div>
+            </div>
+            <div class="w-full" fxLayout="column" fxLayoutAlign="start start">
+                <div class="w-full" fxLayout="row" fxLayoutAlign="space-between center">
+                    <mat-form-field>
+                        <mat-label>{{ 'HOME.SETTINGS.VENDOR.COMPANY' | translate }}</mat-label>
+                        <input matInput [formControlName]="'companyName'">
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>{{ 'HOME.SETTINGS.VENDOR.EMAIL' | translate }}</mat-label>
+                        <input matInput [formControlName]="'email'">
+                    </mat-form-field>
+                </div>
+
+                <div class="w-full" fxLayout="row" fxLayoutAlign="space-between center">
+                    <mat-form-field>
+                        <mat-label>{{ 'HOME.SETTINGS.VENDOR.FISTNAME' | translate }}</mat-label>
+                        <input matInput [formControlName]="'firstName'">
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>{{ 'HOME.SETTINGS.VENDOR.LASTNAME' | translate }}</mat-label>
+                        <input matInput [formControlName]="'lastName'">
+                    </mat-form-field>
+                </div>
+
+                <div class="w-full" fxLayout="row" fxLayoutAlign="space-between center">
+                    <mat-form-field>
+                        <mat-label>{{ 'HOME.SETTINGS.VENDOR.ADDRESS' | translate }}</mat-label>
+                        <input matInput [formControlName]="'address'">
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>{{ 'HOME.SETTINGS.VENDOR.MOBILE' | translate }}</mat-label>
+                        <input matInput [formControlName]="'mobile'">
+                    </mat-form-field>
+                </div>
+
+                <div class="w-full" fxLayout="row" fxLayoutAlign="space-between center">
+                    <mat-form-field>
+                        <mat-label>{{ 'HOME.SETTINGS.VENDOR.TEL' | translate }}</mat-label>
+                        <input matInput [formControlName]="'tel'">
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>{{ 'HOME.SETTINGS.VENDOR.FAX' | translate }}</mat-label>
+                        <input matInput [formControlName]="'fax'">
+                    </mat-form-field>
+                </div>
+            </div>
+
+        </div>
+
+        <div *ngIf="storage.userData" class="info-container min-w-[260px] relative" style="padding-bottom:20px;" fxLayout="column" fxLayoutAlign="start start">
+            <div fxLayout="row" fxLayoutAlign="space-between center" class="w-full mb-4">
+                <div fxLayout="row" fxLayoutAlign="start center">
+                    <mat-icon>image</mat-icon>
+                    <h3 class="!ml-4">Logo</h3>
+                </div>
+                <div fxLayout="row" class="grid grid-cols-2 gap-2">
+                    <button *ngIf="storage.editLogo.enabled" [disabled]="parametersForm.enabled" (click)="cancelEditLogo()" mat-stroked-button class="btn-icon btn-small"><mat-icon>cancel</mat-icon></button>
+                    <button *ngIf="storage.editLogo.enabled" [disabled]="parametersForm.enabled"(click)="saveEditLogo()" mat-raised-button class="btn-icon btn-small"><mat-icon>save</mat-icon></button>
+                    <button *ngIf="!storage.editLogo.enabled" [disabled]="parametersForm.enabled"(click)="startEditLogo()" mat-stroked-button class="btn-icon btn-small"><mat-icon>edit</mat-icon></button>
+                </div>
+            </div>
+            <div class="w-full m-2" fxLayout="column" fxLayoutAlign="start center">
+                <img src="{{storage.userData.logo}}" [hidden]="storage.userData.logo===null || storage.userData.logo===''" style="max-width:170px; max-height:130px;"/>
+                <no-info *ngIf="!storage.userData.logo"></no-info>
+            </div>
+            <div *ngIf="storage.editLogo.enabled" fxLayout="row" class="w-full grid grid-cols-2 gap-2 mt-2">
+                <button (click)="removeLogo()" [disabled]="!storage.userData.logo" mat-stroked-button class="btn-icon btn-small"><mat-icon>delete</mat-icon></button>
+
+                <button for="input-file-id" class="btn-icon btn-small" mat-stroked-button (click)="fileInput.click()"><mat-icon>sync</mat-icon></button>
+                <input hidden (change)="onFileSelected()" #fileInput type="file" id="file">
+            </div>
+        </div>
+    </div>
+
+</div>

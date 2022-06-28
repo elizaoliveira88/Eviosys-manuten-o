@@ -1,0 +1,19 @@
+.designer-input{
+    text-align: right;
+    border-radius: 2px;
+    border: none;
+    width: 80px;
+    padding: 2px 4px;
+}
+
+.input_small{
+    width: 60px;
+}
+
+.colorIndicator{
+    width:25px;
+    height:25px;
+    border-radius:var(--border-radius-primary);
+    margin: 0;
+    cursor:pointer;
+}

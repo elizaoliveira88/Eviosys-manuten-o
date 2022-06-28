@@ -1,0 +1,23 @@
+[
+    {
+        "name": "zonemarker"
+    },
+    {
+        "name": "rtlsZone"
+    },
+    {
+        "name": "groupMarker"
+    },
+    {
+        "name": "mutingMarker"
+    },
+    {
+        "name": "truckUnit"
+    },
+    {
+        "name": "gateway"
+    },
+    {
+        "name": "beeper"
+    }
+]

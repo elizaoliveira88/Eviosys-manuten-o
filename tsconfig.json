@@ -1,0 +1,40 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": ".",
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "paths": {
+        "@app/*": ["src/app/*"],
+        "@services/*": ["src/app/_shared/services/*"],
+        "@interceptor/*": ["src/app/_shared/interceptor/*"],
+        "@model/*": ["src/app/_shared/model/*"],
+        "@environments/*": ["src/environments/*"],
+        "@shared/*": ["src/app/_shared/*"],
+        "@mock/*": ["src/mock/*"],
+        "@assets/*": ["src/assets/*"]
+    },
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "strict": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es5",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2018",
+      "es2020",
+      "dom"
+    ]
+  },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true
+  }
+}

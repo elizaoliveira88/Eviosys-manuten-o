@@ -1,0 +1,50 @@
+<h1 mat-dialog-title>{{ "DIALOGS.SEGMENTS_INIT.HEADER" | translate }}</h1>
+<div mat-dialog-content fxLayout="column">
+    <div *ngFor="let shift of shiftData; let indexShift = index;" style="margin-bottom:10px;">
+
+        <div (click)="toggleItem(indexShift)" class="shift-header w-full" fxLayout="row" fxLayoutAlign="start center">
+            <span>{{shift.name}}</span>
+            <div fxFlex></div>
+            <mat-icon style="transition:0.3s all ease-in-out;color:white;" [ngStyle]="expandMenu[indexShift] && {'transform':'rotate(180deg)'} || !expandMenu[indexShift] && {'transform':'rotate(0)'} " >expand_less</mat-icon>
+        </div>
+        <div class="content-container w-full" *ngIf="expandMenu[indexShift]">
+            <div *ngIf="error===true" fxLayout="column" fxLayoutAlign="center center" style="width:100%;">
+                <mat-icon style="color:black;">error_outline</mat-icon>
+                <span style="color:black;margin-top:4px;">{{ 'SHIFT_SEGMENTS_D1' | translate }}</span>
+            </div>
+
+            <table *ngIf="error===false" style="width:100%; border-spacing: 0;">
+                <tr>
+                    <th>{{ 'DIALOGS.SEGMENTS_INIT.SHIFT_SEGMENTS_TH1' | translate }}</th>
+                    <th>{{ 'DIALOGS.SEGMENTS_INIT.SHIFT_SEGMENTS_TH2' | translate }}</th>
+                    <th>{{ 'DIALOGS.SEGMENTS_INIT.SHIFT_SEGMENTS_TH4' | translate }}</th>
+                    <th *ngIf="isInput">{{ 'DIALOGS.SEGMENTS_INIT.SHIFT_SEGMENTS_TH3' | translate }}</th>
+                    <!--<th></th>-->
+                </tr>
+                <tr *ngFor="let row of shift.segments; let index = index" [ngStyle]="row.breakTime>0 && {'background-color':'#bbbbbb'}">
+                    <td style="text-align:center;border-bottom:1px solid lightgray; padding:8px;">{{row.fromDate | date:'HH:mm'}}</td>
+                    <td style="text-align:center;border-bottom:1px solid lightgray; padding:8px;">{{row.toDate | date:'HH:mm'}}</td>
+                    <td style="text-align:center;border-bottom:1px solid lightgray; padding:8px;">
+                        <span *ngIf="isInput">{{row.breakTime}}</span>
+                        <input *ngIf="!isInput" [(ngModel)]="row.breakTime" class="designer-input" type="number" (change)="checkBreakTime(indexShift,index)" style="background-color:#eaeaea;" [ngStyle]="(row.breakTime>0) && {'background-color':'#696969', 'color':'white'} || (row.breakTime===0) && {'background-color':'#eaeaea', 'color':'black'}" placeholder="0" />
+                    </td>
+                    <td *ngIf="isInput" style="text-align:center;border-bottom:1px solid lightgray; padding:8px;">
+                        <input class="designer-input" type="number" [(ngModel)]="row.inputValues.flow" style="background-color:#eaeaea;" placeholder="0"  />
+                    </td>
+                    <!-- <td style="text-align:center;border-bottom:1px solid lightgray; padding:0 8px;">
+                         <div *ngIf="!isInput" fxLayout"row">
+                             <mat-icon (click)="moveBreak('down', indexShift)" style="cursor:pointer;color:white;">keyboard_arrow_down</mat-icon>
+                             <mat-icon (click)="moveBreak('up', indexShift)" style="cursor:pointer;color:white;">keyboard_arrow_up</mat-icon>
+                         </div>
+                     </td>-->
+                </tr>
+
+            </table>
+        </div>
+
+    </div>
+</div>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between center">
+    <button mat-button (click)="cancel()">{{ 'GLOBAL.CANCEL' | translate}}</button>
+    <button [disabled]="breakTimeError" mat-stroked-button (click)="save()" cdkFocusInitial>{{ 'GLOBAL.SAVE' | translate}}</button>
+</div>

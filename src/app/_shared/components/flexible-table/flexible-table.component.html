@@ -1,0 +1,150 @@
+    <mat-table *displayOnDesktop [dataSource]="dataSource" multiTemplateDataRows matSort [matSortDirection]="sortObj?.start" [matSortActive]="sortObj?.id" class="mat-table" [ngStyle]="maxHeight && {'max-height':maxHeight+'px'}">
+        <ng-container matColumnDef="{{curCol.key}}" *ngFor="let curCol of displayedColumns; let i = $index" >
+            <mat-header-cell mat-sort-header *matHeaderCellDef [hidden]="curCol.hidden === true"
+                             [class.iconsTable]="curCol.type ==='deleteButton' || curCol.type ==='expandButton' || curCol.type ==='detailsButton' || curCol.type ==='editButton' || curCol.type ==='addButton'">
+                {{ curCol.label | translate }}
+                <mat-checkbox
+                    *ngIf="curCol.type === 'rowSelection'"
+                    (change)="$event ? masterToggle($event) : null"
+                    [checked]="selection.numSelected > 0 && selection.allSelected"
+                    [indeterminate]="selection.numSelected > 0 && !selection.allSelected"
+                    [aria-label]="checkboxLabel()">
+                </mat-checkbox>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element; let i = dataIndex" [ngSwitch]="curCol.type" [hidden]="curCol.hidden === true"
+                      [class.iconsTable]="curCol.type ==='deleteButton' || curCol.type ==='expandButton' || curCol.type ==='detailsButton' || curCol.type ==='editButton' || curCol.type ==='addButton'">
+                <div *ngSwitchCase="'deviceImage'" fxLayout="column">
+                    <device-image [device]="element"></device-image>
+                </div>
+                <span *ngSwitchDefault [class.deleted]="element.hasOwnProperty('deleted') && element.deleted === true"  matTooltip="{{ element[curCol.key] }}">{{ element[curCol.key] | dynamicPipe: curCol.filter : curCol.filterParams }}</span>
+                <span *ngSwitchCase="'editableFiled'"  matTooltip="{{ element[curCol.key] }}">
+                    <input class="input_value" matInput (keyup.enter)="stopEditAttribute(element)" [(ngModel)]="element.target" [disabled]="!element.isEditing" [element-focus]="element.isEditing">
+                    <button *ngIf="!element.isEditing" mat-icon-button (click)="editAttribute(element)"><mat-icon fontIcon="triton-icon-pencil"></mat-icon></button>
+                    <button *ngIf="element.isEditing" mat-icon-button (click)="stopEditAttribute(element)"><mat-icon>check</mat-icon></button>
+                </span>
+                <button mat-icon-button *ngSwitchCase="'downloadButton'" (click)="onClick($event, element, curCol.type, i)">
+                    <mat-icon aria-label="dl" matTooltip="{{ curCol.tooltipTranslationKey | translate}}" fontIcon="LMH-download" ></mat-icon>
+                </button>
+                <button mat-icon-button *ngSwitchCase="'detailsButton'" (click)="onClick($event, element, curCol.type, i)">
+                    <mat-icon aria-label="details" matTooltip="{{ curCol.tooltipTranslationKey | translate}}">info_outline</mat-icon>
+                </button>
+                <button mat-icon-button *ngSwitchCase="'switchButton'" (click)="onClick($event, element, curCol.type, i)">
+                    <mat-icon aria-label="switch" matTooltip="{{ curCol.tooltipTranslationKey | translate}}">swap_horiz</mat-icon>
+                </button>
+                <button mat-icon-button *ngSwitchCase="'deleteButton'" (click)="onClick($event, element, curCol.type, i)" >
+                    <mat-icon *ngIf="element.hasOwnProperty('deleted') && element.deleted === true">restore</mat-icon>
+                    <mat-icon *ngIf="!element.hasOwnProperty('deleted') || element.deleted === false" matTooltip="{{ curCol.tooltipTranslationKey | translate}}" fontIcon="LMH-delete"></mat-icon>
+                </button>
+                <button mat-icon-button *ngSwitchCase="'editButton'" [disabled]="element.hasOwnProperty('_editable') && element._editable === false" (click)="onClick($event, element, curCol.type, i)">
+                    <mat-icon *ngIf="!element.hasOwnProperty('deleted') || element.deleted === false"  matTooltip="{{ curCol.tooltipTranslationKey | translate}}" fontIcon="triton-icon-pencil" ></mat-icon>
+                </button>
+                <button mat-icon-button *ngSwitchCase="'addButton'" [disabled]="element.hasOwnProperty('_editable') && element._editable === false" (click)="onClick($event, element, curCol.type, i)">
+                    <mat-icon *ngIf="!element.hasOwnProperty('deleted') || element.deleted === false" matTooltip="{{ curCol.tooltipTranslationKey | translate}}">add</mat-icon>
+                </button>
+                <button mat-icon-button *ngSwitchCase="'expandButton'" (click)="onClick($event, element, curCol.type, i)">
+                    <mat-icon class="arrowDownIcon gm5" [@iconAnimation]="element.expanded === true ? 'open' : 'closed'" matTooltip="{{ curCol.tooltipTranslationKey | translate}}">keyboard_arrow_down</mat-icon>
+                </button>
+                <mat-slide-toggle class="flexToggle" *ngSwitchCase="'toggle'" matTooltip="{{ curCol.tooltipTranslationKey | translate}}" [checked]="element[curCol.key]" (change)="onClick($event, element, curCol.type, i)"></mat-slide-toggle>
+                <mat-checkbox
+                    *ngSwitchCase="'rowSelection'"
+                    (click)="stopEvent($event)"
+                    (change)="$event ? singleToggle(element, curCol.type, i) : null"
+                    [checked]="element._selected"
+                    [disabled]="element.hasOwnProperty('_editable') && element._editable === false"
+                    [aria-label]="checkboxLabel(element)">
+                </mat-checkbox>
+                <div *ngSwitchCase="'status'" [ngSwitch]="element[curCol.key]" fxLayout="row"  matTooltip="{{ element[curCol.key] | translate }}">
+                    <mat-icon *ngSwitchCase="'ROLLOUTSTATUS.STATUS_2'" style="color:darkorange">update</mat-icon>
+                    <mat-spinner *ngSwitchCase="'ROLLOUTSTATUS.STATUS_1'" [diameter]="16"></mat-spinner>
+                    <mat-icon *ngSwitchCase="'ROLLOUTSTATUS.STATUS_3'" style="color:darkseagreen">check_circle</mat-icon>
+                    <span [class.deleted]="element.hasOwnProperty('deleted') && element.deleted === true" style="margin-left:10px;">{{ element[curCol.key] | dynamicPipe: curCol.filter : curCol.filterParams }}</span>
+                </div>
+            </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="expandedDetailFlexTable" *ngIf="visibility.expandButton">
+            <mat-cell *matCellDef="let element; let i = $index" [attr.colspan]="displayedColumnsKeys.length" class="expanded-bg">
+                <div class="element-detail" fxLayout="column" [@detailExpand]="element.expanded === true ? 'expanded' : 'collapsed'">
+                    <ng-template [ngTemplateOutlet]="template" [ngTemplateOutletContext]="{ element: element }"></ng-template>
+                </div>
+            </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumnsKeys; sticky: true"></mat-header-row>
+        <mat-row
+            *matRowDef="let element; columns: displayedColumnsKeys; let i = dataIndex;"
+            class="element-row gm5"
+            [class.even]="i % 2 !== 0"
+            [class.small]="isSmall"
+            [class.expanded-row]="element.hasOwnProperty('expanded') && element.expanded === true"
+            [class.selected-row]="element.hasOwnProperty('selected') && element.selected === true"
+            (click)="onClick($event, element, 'ROW', i)"
+        ></mat-row>
+        <ng-template [ngIf]="visibility.expandButton">
+            <mat-row *matRowDef="let element; columns: ['expandedDetailFlexTable']" [class.expanded-row]="element.hasOwnProperty('expanded') && element.expanded === true" class="detail-row"></mat-row>
+        </ng-template>
+    </mat-table>
+    <no-data-found class="PD16" [dataSource]="dataSource" [promise]="refreshPromise"></no-data-found>
+    <div flex="100" *displayOnMobile>
+        <div *ngFor="let element of dataSource.filteredData; let i = index" class="tableMobile matTable"
+             (click)="onClick($event, element, 'ROW', i)">
+            <div *ngIf="deviceImage" fxLayout="row" class="truckImage-mobile-container">
+                <device-image [device]="element"></device-image>
+            </div>
+            <div fxFlex fxLayout="column wrap" class="PD10" style=" border-right: 1px solid #EEEFF3;">
+                <div fxLayout="row" fxLayoutAlign="start center" *ngFor="let curCol of displayedColumnsMobile; let j = $index" [hidden]="curCol.hidden === true" [ngSwitch]="curCol.type">
+                    <div fxFlex="30" class="CSL MR8 TOE">{{ curCol.label | translate }}</div>
+                    <span fxFlex="70" *ngSwitchDefault [class.deleted]="element.hasOwnProperty('deleted') && element.deleted === true">
+                        {{ element[curCol.key] | dynamicPipe: element[curCol.key].filter : element[curCol.key].filterParams }}
+                    </span>
+                    <span *ngSwitchCase="'editableFiled'">
+                        <input class="input_value" matInput (keyup.enter)="stopEditAttribute(element)" [(ngModel)]="element.target" [disabled]="!element.isEditing" [element-focus]="element.isEditing">
+                        <button *ngIf="!element.isEditing" mat-icon-button (click)="editAttribute(element)"><mat-icon fontIcon="triton-icon-pencil"></mat-icon></button>
+                        <button *ngIf="element.isEditing" mat-icon-button (click)="stopEditAttribute(element)"><mat-icon>check</mat-icon></button>
+                    </span>
+                    <mat-slide-toggle *ngSwitchCase="'toggle'" class="flexToggle" [checked]="element[curCol.key]" (change)="onClick($event, element, curCol.type, i)"></mat-slide-toggle>
+                </div>
+                <div *ngIf="visibility.expandButton" [class.hidden]="element.expanded !== true"  fxLayout="column" class="Panel MT10" [@detailExpand]="element.expanded === true ? 'expanded' : 'collapsed'">
+                    <div fxLayout="column">
+                        <ng-template [ngTemplateOutlet]="template" [ngTemplateOutletContext]="{ element: element }"></ng-template>
+                    </div>
+                </div>
+            </div>
+            <div fxFlex="none" class="matActionIcons" fxLayout="column" fxLayoutAlign="top end" *ngIf="visibility.downloadButton || visibility.deleteButton || visibility.addButton || visibility.editButton || visibility.expandButton">
+                <div *ngIf="visibility.rowSelection">
+                    <mat-checkbox
+                        class="M12"
+                        (click)="stopEvent($event)"
+                        (change)="$event ? singleToggle(element, 'rowSelection', i) : null"
+                        [checked]="element._selected"
+                        [disabled]="element.hasOwnProperty('_editable') && element._editable === false"
+                        [aria-label]="checkboxLabel(element)">
+                    </mat-checkbox>
+                </div>
+                <div *ngIf="visibility.downloadButton">
+                    <button mat-button (click)="onClick($event, element, 'downloadButton', i)">
+                        <mat-icon aria-label="dl" fontIcon="LMH-download"></mat-icon>
+                    </button>
+                </div>
+                <div *ngIf="visibility.addButton && (!element.hasOwnProperty('deleted') || element.deleted === false)">
+                    <button mat-button [disabled]="element.hasOwnProperty('_editable') && element._editable === false" (click)="onClick($event, element, 'addButton', i)">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
+                <div *ngIf="visibility.editButton && (!element.hasOwnProperty('deleted') || element.deleted === false)">
+                    <button mat-button [disabled]="element.hasOwnProperty('_editable') && element._editable === false" (click)="onClick($event, element, 'editButton', i)">
+                        <mat-icon fontIcon="triton-icon-pencil"></mat-icon>
+                    </button>
+                </div>
+                <div *ngIf="visibility.deleteButton">
+                    <button mat-button (click)="onClick($event, element, 'deleteButton', i)">
+                        <mat-icon *ngIf="element.hasOwnProperty('deleted') && element.deleted === true">restore</mat-icon>
+                        <mat-icon *ngIf="!element.hasOwnProperty('deleted') || element.deleted === false" fontIcon="LMH-delete"></mat-icon>
+                    </button>
+                </div>
+                <div *ngIf="visibility.expandButton">
+                    <button mat-button (click)="onClick($event, element, 'expandButton', i)">
+                        <mat-icon class="arrowDownIcon gm5" [@iconAnimation]="element.expanded === true ? 'open' : 'closed'">keyboard_arrow_down</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,43 @@
+<h1 mat-dialog-title>{{ 'PROJECTS.LAYOUT.ADDELEMENTTOMISSIONDIALOG_H1' | translate }}</h1>
+<div mat-dialog-content fxLayout="column">
+
+    <span>{{ 'PROJECTS.LAYOUT.ADDELEMENTTOMISSIONDIALOG_D1' | translate }} {{selectedElement.customName}}.</span>
+    <div fxLayout="column" fxLayoutAlign="center center" style="min-height:160px;">
+        <mat-form-field>
+            <mat-label>Missions</mat-label>
+            <mat-select [(ngModel)]="selectedMission" (change)="reset()">
+                <mat-option *ngFor="let addOption of addOptions" [value]="addOption">
+                    {{addOption.name}}
+                </mat-option>
+                <ng-container *ngFor="let mission of allM">
+                    <mat-option *ngIf="mission.type!=='tugger' && mission.type!=='vna'" [value]="mission" [ngStyle]="adjacentMissions.indexOf(mission.id)>-1 && {'color':'#ba1026'}">
+                        {{mission.name}}
+                    </mat-option>
+                </ng-container>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="selectedMission && selectedMission.id === 0">
+            <label>{{ 'PROJECTS.LAYOUT.ADDELEMENTTOMISSIONDIALOG_D2' | translate }}</label>
+            <input matInput [(ngModel)]="newName">
+        </mat-form-field>
+        <span style="width:150px;color:#BA1126;margin-top:-20px;" *ngIf="inputsRequired">(*) Input required</span>
+
+        <mat-radio-group fxLayout="row" class="mt-2" *ngIf="sd" [(ngModel)]="storage.sdAttr">
+            <mat-radio-button [value]="'source'" class="md-primary">Source</mat-radio-button>
+            <mat-radio-button [value]="'destination'">Destination</mat-radio-button>
+        </mat-radio-group>
+
+        <span *ngIf="replace && selectedElement.type === 'S:S'" style="width:180px;color:#BA1126;">(*) Mission already has a source. Do you want to replace?</span>
+        <span *ngIf="replace && selectedElement.type === 'S:D'" style="width:180px;color:#BA1126;">(*) Mission already has a destination. Do you want to replace?</span>
+
+    </div>
+
+</div>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+    <button mat-button (click)="cancel()">{{ 'GLOBAL.CANCEL' | translate}}</button>
+    <div fxFlex></div>
+    <button mat-button *ngIf="!replace && !sd" (click)="save()" cdkFocusInitial>{{ 'GLOBAL.SAVE' | translate}}</button>
+    <button mat-button *ngIf="replace && !sd" (click)="saveAndReplace()">{{ 'PROJECTS.LAYOUT.ADDELEMENTTOMISSIONDIALOG_REPLACE' | translate}}</button>
+    <button mat-button *ngIf="!replace && sd" (click)="saveSd()">{{ 'PROJECTS.LAYOUT.ADDELEMENTTOMISSIONDIALOG_SAVESD' | translate}}</button>
+</div>

@@ -1,0 +1,181 @@
+* {
+    font-family: var(--font-family), Roboto, sans-serif!important;
+}
+
+.loginImage {
+    width: 100%;
+    max-height: 100vh;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    color: white !important;
+    background-color: black;
+}
+.loginImage::after {
+    content: "";
+    background: url("../../assets/img/login-background.jpeg") center;
+    background-size: cover;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    opacity: 0.8;
+    position: absolute;
+    z-index: -1;
+}
+.main{
+    width: 100%;
+}
+.centered {
+    flex:1;
+    width: 100%;
+    display: flex;
+    place-content: center center;
+    align-items: center;
+    max-width: 850px;
+}
+
+.loginFormField {
+    width: 100%;
+}
+.loginFormField input{
+    color: black !important;
+    font-weight: 300;
+    line-height: 1;
+    font-size: 14px;
+}
+.sign {
+    padding-top: 40px;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 23px;
+}
+
+.inputs {
+    width: 100%;
+    color: #ed1e36;
+    font-size: 14px;
+    letter-spacing: 1px;
+    padding: 16px 10px;
+    border-radius: 7px;
+    outline: none;
+    box-sizing: border-box;
+    border: 2px solid rgba(0, 0, 0, 0.02);
+    margin-bottom: 50px;
+}
+
+form {
+    width: 65%;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 500px;
+    background-color: rgba(255,255,255,0.8);
+    border-radius: 6px;
+    padding: var(--s-space-m) var(--s-space-l);
+}
+
+.inputs:focus {
+    border: 2px solid rgba(0, 0, 0, 0.18) !important;
+
+}
+
+.submit {
+    cursor: pointer;
+    border-radius: 7px;
+    color: #fff;
+    background: #222A34;
+    border: 0;
+    padding: 10px 40px;
+    margin-left: 32%;
+    font-size: 13px;
+    box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
+}
+
+.forgot {
+    text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
+    color: white;
+    padding-top: 15px;
+    font-weight: bold;
+}
+
+a {
+    text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
+    color: white;
+    text-decoration: none
+}
+.sideNav{
+    background-color: whitesmoke;
+    min-width: 250px;
+}
+.sideNav .lmhIcon{
+    border-color: whitesmoke;
+    margin: 0 auto;
+}
+
+.loginHeader {
+    color: #040c3a;
+    max-width: 500px;
+    font-weight: 400;
+    font-size: 55px;
+    margin: 30px auto -6px;
+    width:65%;
+}
+
+.loginSubHeaderContainer{
+    max-width: 500px;
+    width: 65%;
+    margin: 0 auto var(--l-space-s);
+}
+
+.loginSubHeader {
+    font-weight: 400;
+    font-size: 19px;
+    color: #040c3a;
+}
+
+.loginFormButton {
+    width: 100%;
+    background-color: #222A34;
+    border: 1px solid #9A9A9A;
+    min-height: 47.8px;
+    margin-top: 20px;
+    border-radius: 6px;
+    outline: 0;
+}
+
+.loginPrivacyLink {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 500px;
+    text-align: center;
+    margin-top: 20px;
+    font-weight: 300;
+    cursor: pointer;
+    color:var(--black);
+}
+
+.loginForgotPassword {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 500px;
+    text-align: center;
+    margin-top: -5px;
+    font-weight: 300;
+    cursor: pointer;
+    width:200px;
+}
+
+.signUpLink {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 1;
+    margin-bottom: 2vh;
+}
+.bottomMenuText{
+    text-align: center;
+}
+

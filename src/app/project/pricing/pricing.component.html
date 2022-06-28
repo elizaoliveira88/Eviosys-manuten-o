@@ -1,0 +1,281 @@
+<ng-template #tableTemplate let-dataSource="dataSource" let-allComp="allComp" let-type="type">
+    <mat-table mat-table class="mt-4" [dataSource]="dataSource">
+        <ng-container *ngFor="let col of displayedColumns; let index = index" [matColumnDef]="col">
+            <mat-header-cell class="pricing-table-column-{{col}}" mat-header-cell *matHeaderCellDef>
+                <span *ngIf="col.indexOf('BTN_')===-1 && col!=='collected'">{{col}}</span>
+            </mat-header-cell>
+            <ng-container *ngIf="type === 'TotalTotals'">
+                <mat-cell class="pricing-table-column-{{col}} totals-{{col}} cell-no-border" *matCellDef="let element">
+                    <span class="totals-span-{{col}}" style="font-weight:bold;">{{element[col]}}</span>
+                </mat-cell>
+            </ng-container>
+            <ng-container *ngIf="type === 'TotalMarginRisk'">
+                <mat-cell class="pricing-table-column-{{col}} totals-marginRisk-{{col}} cell-no-border" *matCellDef="let element">
+                    <span style="font-weight:bold;" *ngIf="col === 'endCustomerPrice'">{{element[col]}}</span>
+                    <span style="font-weight:bold;" *ngIf="col === 'endCustomerPriceTotal'">{{element[col]*100 | number:'1.0-2'}}%</span>
+                </mat-cell>
+            </ng-container>
+            <ng-container *ngIf="type !== 'TotalTotals' && type !== 'TotalMarginRisk'">
+                <mat-cell class="pricing-table-column-{{col}}" [ngClass]="{'cell-no-border':type==='Totals'}" *matCellDef="let element">
+                    <ng-container *ngIf="type === 'Totals'">
+                        <span style="font-weight:bold;">{{element[col]}}</span>
+                    </ng-container>
+                    <ng-container *ngIf="type !== 'Totals'">
+                        <ng-container [ngSwitch]="col">
+                            <div *ngSwitchCase="'collected'">
+                                <mat-icon *ngIf="element[col]" [matTooltip]="'PROJECTS.PRICING.COLLECTED' | translate">check_circle_outline</mat-icon>
+                            </div>
+                            <div *ngSwitchCase="'category'">
+                                <ng-container *ngIf="type!== 'Truck' && type!=='Other' && type!=='Service'">
+                                    <mat-select [(ngModel)]="element[col]" class="select-large" (selectionChange)="categoryChanged(element, type)">
+                                        <mat-option *ngFor="let val of allComp | unique: 'category'" [value]="val.category">
+                                            {{val.category}}
+                                        </mat-option>
+                                    </mat-select>
+                                </ng-container>
+                                <ng-container *ngIf="type=== 'Truck'">
+                                    <div class="w-full" fxLayout="row" fxLayoutAlign="start center">
+                                        <mat-select [(ngModel)]="element[col]" class="select-small" (selectionChange)="categoryChanged(element, type)">
+                                            <mat-option *ngFor="let val of storage.trucks" [value]="val.identification">
+                                                {{val.identification}}
+                                            </mat-option>
+                                        </mat-select>
+                                        <button mat-icon-button (click)="openTruckConfigurator(element)">
+                                            <mat-icon>build</mat-icon>
+                                        </button>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="type=='Other'">
+                                    <input onfocus="this.select()" class="pricing-input-xl input-text" type="text" [(ngModel)]="element[col]" (ngModelChange)="categoryTextInputChanged(element)">
+                                </ng-container>
+                                <ng-container *ngIf="type=='Service'">
+                                    <ng-container *ngIf="defaultServices.indexOf(element.category)===-1">
+                                        <input onfocus="this.select()" class="pricing-input-xl input-text" type="text" [(ngModel)]="element[col]" (ngModelChange)="categoryTextInputChanged(element)">
+                                    </ng-container>
+                                    <ng-container *ngIf="defaultServices.indexOf(element.category)>-1">
+                                        <span>{{ 'PROJECTS.PRICING.' + element[col] | translate}}</span>
+                                    </ng-container>
+                                </ng-container>
+
+                            </div>
+                            <div *ngSwitchCase="'name'">
+                                <ng-container *ngIf="type!=='Truck' && type!=='Other' && type!=='Service'">
+                                    <ng-container *ngIf="storage.categoriesWithoutName.indexOf(element.category)===-1">
+                                        <mat-select [(ngModel)]="element[col]" class="select-medium" (selectionChange)="nameChanged(element, type)">
+                                            <mat-option *ngFor="let val of allComp | filter: {key: 'category', value: element, strict: true}" [value]="val.name">
+                                                {{val.name}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </ng-container>
+                                </ng-container>
+                                <ng-container *ngIf="type=='Truck' || type=='Other' || type=='Service'">
+                                    <input onfocus="this.select()" class="pricing-input-large input-text" type="text" [(ngModel)]="element[col]" (ngModelChange)="categoryTextInputChanged(element)">
+                                </ng-container>
+
+                            </div>
+                            <div *ngSwitchCase="'comment'">
+                                <input onfocus="this.select()" class="pricing-input-medium input-text" type="text" [(ngModel)]="element[col]" (ngModelChange)="commentChanged(element)">
+                            </div>
+                            <div *ngSwitchCase="'number'">
+                                <input onfocus="this.select()" class="pricing-input-small" type="number" [(ngModel)]="element[col]" (ngModelChange)="numberChanged(type, element)">
+                            </div>
+                            <div *ngSwitchCase="'unit'">
+                                {{element[col] | translate}}
+                            </div>
+                            <div *ngSwitchCase="'price'">
+                                <ng-container *ngIf="(element.priceEditable && element.priceEdited) || type=='Other'">
+                                    <div fxLayout="row" fxLayoutAlign="start center">
+                                        <input fxFlex onfocus="this.select()" class="pricing-input-large" type="number" [(ngModel)]="element[col]" (ngModelChange)="priceChanged(type, element)">
+                                        <span>{{storage.currency}}</span>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="!element.priceEditable && type!='Other'">
+                                    <div fxLayout="row" fxLayoutAlign="start center">
+                                        <span>{{element[col] | translate}}</span>
+                                        <span>{{storage.currency}}</span>
+                                    </div>
+
+                                </ng-container>
+                                <ng-container *ngIf="element.priceEditable && !element.priceEdited  && type!='Other'">
+                                    <div fxLayout="row" fxLayoutAlign="center center">
+                                        <span>{{element[col] | translate}}</span>
+                                        <span>{{storage.currency}}</span>
+                                        <button (click)="editElementPrice(element)" mat-stroked-button class="btn-icon btn-small" style="margin-left:12px!important">
+                                            <mat-icon>edit</mat-icon>
+                                        </button>
+                                    </div>
+                                </ng-container>
+                            </div>
+                            <div *ngSwitchCase="'BTN_DISCOUNTS'">
+                                <button mat-raised-button class="btn-icon-large" style="background-color: transparent!important;">
+                                    <mat-icon style="margin:0!important;">monetization_on</mat-icon>
+                                </button>
+                            </div>
+                            <div *ngSwitchCase="'BTN_REMOVE'">
+                                <button mat-raised-button class="btn-icon-large" *ngIf="type!=='Service' || defaultServices.indexOf(element.category)===-1" (click)="removeRowClicked(type, element)" style="background-color: transparent!important;">
+                                    <mat-icon style="margin:0!important;">remove_circle_outline</mat-icon>
+                                </button>
+                            </div>
+                            <div *ngSwitchCase="'BTN_SAVE'">
+                                <button mat-raised-button [disabled]="saveBtnDisabled(element, type)" class="btn-icon-large" *ngIf="element.showSave" (click)="saveRow(type, element)">
+                                    <mat-icon style="color:var(--white)!important; margin:0!important;">save</mat-icon>
+                                </button>
+                            </div>
+                            <div *ngSwitchCase="'BTN_RESTORE'">
+                                <ng-container *ngIf="type!='Truck' && type!='Other' && type!=='Service'">
+                                    <button mat-raised-button class="btn-icon-large" style="background-color: var(--background-tertiary)!important;" *ngIf="element.showSave && element.selectedPricingComponentId" (click)="restoreRow(type, element.selectedPricingComponentId)">
+                                        <mat-icon style="margin:0!important;">refresh</mat-icon>
+                                    </button>
+                                </ng-container>
+                                <ng-container *ngIf="type=='Other' || type=='Service'">
+                                    <button mat-raised-button class="btn-icon-large" style="background-color: var(--background-tertiary)!important;" *ngIf="element.showSave && element.selectedPricingComponentId" (click)="restoreRowOther(type, element)">
+                                        <mat-icon style="margin:0!important;">refresh</mat-icon>
+                                    </button>
+                                </ng-container>
+                                <ng-container *ngIf="type=='Truck'">
+                                    <button mat-raised-button class="btn-icon-large" style="background-color: var(--background-tertiary)!important;" *ngIf="element.showSave && element.selectedPricingComponentId" (click)="restoreRowTruck(type, element)">
+                                        <mat-icon style="margin:0!important;">refresh</mat-icon>
+                                    </button>
+                                </ng-container>
+                            </div>
+                            <div *ngSwitchDefault>
+                                {{element[col]}}{{storage.currency}}
+                            </div>
+                        </ng-container>
+                    </ng-container>
+
+
+                </mat-cell>
+            </ng-container>
+
+        </ng-container>
+
+        <ng-container *ngIf="type!=='Totals' && type!=='TotalTotals' && type!=='TotalMarginRisk'">
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        </ng-container>
+
+        <mat-row class="element-row" [class.even]="i % 2 !== 0" mat-row
+                 *matRowDef="let row; columns: displayedColumns; let i = index;"></mat-row>
+        <div class="w-full h-[48px]" fxLayout="row" fxLayoutAlign="center center" *matNoDataRow>
+            <mat-icon>info_outline</mat-icon>
+            <span class="ml-2">{{ 'PROJECTS.PRICING.NOCOMPONENTS' | translate }}</span>
+        </div>
+    </mat-table>
+</ng-template>
+
+
+
+<div class="appFrame" fxLayout="column" fxLayoutAlign="start start">
+    <div fxLayout="row" fxLayoutAlign="start center">
+        <h1 class="!mr-6">{{'PROJECTS.PRICING.TITLE' | translate}}</h1>
+        <button mat-stroked-button class="btn-icon btn-small" [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="togglePurchasePrice()"><mat-icon *ngIf="storage.showPurchasePrice">check_box</mat-icon><mat-icon *ngIf="!storage.showPurchasePrice">check_box_outline_blank</mat-icon>{{ 'PROJECTS.PRICING.SHOWHIDEPURCHASEPRICE' | translate }}</button>
+            <button mat-menu-item (click)="toggleRetailPrice()"><mat-icon *ngIf="storage.showRetailPrice">check_box</mat-icon><mat-icon *ngIf="!storage.showRetailPrice">check_box_outline_blank</mat-icon>{{ 'PROJECTS.PRICING.SHOWHIDERETAILPRICE' | translate }}</button>
+            <button mat-menu-item (click)="generateExport()"><mat-icon>description</mat-icon>{{ 'PROJECTS.PRICING.GENERATEEXPORT' | translate }}</button>
+            <button mat-menu-item (click)="calculateEfforts()"><mat-icon>play_arrow</mat-icon>{{ 'PROJECTS.PRICING.CALCEFFORTS' | translate }}</button>
+            <button mat-menu-item (click)="showUserGuidance()">
+                <mat-icon>live_help</mat-icon>{{'PROJECTS.PRICING.SHOW_USERGUIDANCE' | translate}}
+            </button>
+        </mat-menu>
+    </div>
+    <h2>{{'PROJECTS.PRICING.SUB' | translate}}</h2>
+
+    <!-- TRUCKS -->
+    <div class="w-full mt-10" fxLayout="row" fxLayoutAlign="space-between center">
+        <div fxLayout="row" fxLayoutAlign="start center">
+            <h3>{{'PROJECTS.PRICING.TRUCKS' | translate}}</h3>
+        </div>
+        <div>
+            <button mat-stroked-button class="btn-icon btn-small" (click)="addEmptyRow('Truck')">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+
+    </div>
+    <mat-divider class="w-full !mt-4"></mat-divider>
+    <ng-container *ngTemplateOutlet="tableTemplate;context:{dataSource: dataSourceTrucks, allComp:storage.trucks, type: 'Truck'}"></ng-container>
+
+    <ng-container *ngTemplateOutlet="tableTemplate;context:{dataSource: trucksTotals, allComp:null, type: 'Totals'}"></ng-container>
+
+
+
+
+    <!-- ENERGY CONCEPT -->
+    <div class="w-full mt-10" fxLayout="row" fxLayoutAlign="space-between center">
+        <div fxLayout="row" fxLayoutAlign="start center">
+            <h3>{{'PROJECTS.PRICING.ENERGYCONCEPT' | translate}}</h3>
+        </div>
+        <div>
+            <button mat-stroked-button class="btn-icon btn-small" (click)="addEmptyRow('Energy')">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+
+    </div>
+    <mat-divider class="w-full !mt-4"></mat-divider>
+    <ng-container *ngTemplateOutlet="tableTemplate;context:{dataSource: dataSourceEnergyConcept, allComp:storage.energyConcept, type: 'Energy'}"></ng-container>
+
+
+
+    <!-- IT OPTIONS -->
+    <div class="w-full mt-10" fxLayout="row" fxLayoutAlign="space-between center">
+        <div fxLayout="row" fxLayoutAlign="start center">
+            <h3>{{'PROJECTS.PRICING.ITOPTIONS' | translate}}</h3>
+        </div>
+        <div>
+            <button mat-stroked-button class="btn-icon btn-small" (click)="addEmptyRow('IT')">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+
+    </div>
+    <mat-divider class="w-full !mt-4"></mat-divider>
+    <ng-container *ngTemplateOutlet="tableTemplate;context:{dataSource: dataSourceItOptions, allComp:storage.itOptions, type: 'IT'}"></ng-container>
+
+
+
+    <!-- OTHER COMPONENTS -->
+    <div class="w-full mt-10" fxLayout="row" fxLayoutAlign="space-between center">
+        <div fxLayout="row" fxLayoutAlign="start center">
+            <h3>{{'PROJECTS.PRICING.OTHERCOMPONENTS' | translate}}</h3>
+        </div>
+        <div>
+            <button mat-stroked-button class="btn-icon btn-small" (click)="addEmptyRow('Other')">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+
+    </div>
+    <mat-divider class="w-full !mt-4"></mat-divider>
+    <ng-container *ngTemplateOutlet="tableTemplate;context:{dataSource: dataSourceOtherComponents, allComp:storage.otherComponents, type: 'Other'}"></ng-container>
+
+
+    <ng-container *ngTemplateOutlet="tableTemplate;context:{dataSource: componentsTotals, allComp:null, type: 'Totals'}"></ng-container>
+
+
+
+    <!-- Services -->
+    <div class="w-full mt-10" fxLayout="row" fxLayoutAlign="space-between center">
+        <div fxLayout="row" fxLayoutAlign="start center">
+            <h3>{{'PROJECTS.PRICING.SERVICES' | translate}}</h3>
+        </div>
+        <div>
+            <button mat-stroked-button class="btn-icon btn-small" (click)="addEmptyRow('Service')">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+
+    </div>
+    <mat-divider class="w-full !mt-4"></mat-divider>
+    <ng-container *ngTemplateOutlet="tableTemplate;context:{dataSource: dataSourceServices, allComp:null, type: 'Service'}"></ng-container>
+
+    <ng-container *ngTemplateOutlet="tableTemplate;context:{dataSource: servicesTotals, allComp:null, type: 'Totals'}"></ng-container>
+
+    <ng-container *ngTemplateOutlet="tableTemplate;context:{dataSource: totalTotals, allComp:null, type: 'TotalTotals'}"></ng-container>
+    <ng-container *ngTemplateOutlet="tableTemplate;context:{dataSource: totalMarginRisk, allComp:null, type: 'TotalMarginRisk'}"></ng-container>
+
+
+</div>

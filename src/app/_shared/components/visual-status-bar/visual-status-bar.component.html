@@ -1,0 +1,23 @@
+<div class="container" fxLayout="row" fxLayoutAlign="start center">
+<!--    <div class="error" fxLayout="row" fxLayoutAlign="end center" [style.width]="((visualStatusBarStorage.error/visualStatusBarStorage.total)*100)+'%'">
+        <span class="info" [class.fade-in]="loaded">{{visualStatusBarStorage.error}} {{'VISUAL_STATUS_BAR.ERROR' | translate}}</span>
+    </div>
+    <div class="in-progress" fxLayout="row" fxLayoutAlign="end center" [style.width]="(((visualStatusBarStorage.error+visualStatusBarStorage.inProgress)/visualStatusBarStorage.total)*100)+'%'">
+        <span class="contrast" [class.fade-in]="loaded">{{visualStatusBarStorage.inProgress}} {{'VISUAL_STATUS_BAR.IN_PROGRESS' | translate}}</span>
+    </div>
+    <div class="completed" fxLayout="row" fxLayoutAlign="end center" [style.width]="(((visualStatusBarStorage.error+visualStatusBarStorage.inProgress+visualStatusBarStorage.completed)/visualStatusBarStorage.total)*100)+'%'">
+        <span class="info" [class.fade-in]="loaded">{{visualStatusBarStorage.completed}} {{'VISUAL_STATUS_BAR.COMPLETED' | translate}}</span>
+    </div>-->
+
+    <div class="error" [ngStyle]="visualStatusBarStorage.loading && {'background-color':'lightgrey', 'width':'0'} || !visualStatusBarStorage.loading && {'width':((visualStatusBarStorage.error/visualStatusBarStorage.total)*100)+'%'}" fxLayout="row" fxLayoutAlign="end center">
+        <span class="info" [hidden]="visualStatusBarStorage.error===0" [class.fade-in]="!visualStatusBarStorage.loading">{{visualStatusBarStorage.error}} {{'VISUAL_STATUS_BAR.ERROR' | translate}}</span>
+    </div>
+
+    <div class="in-progress" [ngStyle]="visualStatusBarStorage.loading && {'background-color':'lightgrey', 'width':'100%'} || !visualStatusBarStorage.loading && {'width':((visualStatusBarStorage.inProgress/visualStatusBarStorage.total)*100)+'%', 'background-color':'#f6f487'}" fxLayout="row" fxLayoutAlign="end center">
+        <span class="contrast" [hidden]="visualStatusBarStorage.inProgress===0" [class.fade-in]="!visualStatusBarStorage.loading">{{visualStatusBarStorage.inProgress}} {{'VISUAL_STATUS_BAR.IN_PROGRESS' | translate}}</span>
+    </div>
+
+    <div class="completed" [ngStyle]="visualStatusBarStorage.loading && {'background-color':'lightgrey', 'width':'0'}" fxFlex fxLayout="row" fxLayoutAlign="end center">
+        <span class="info" [hidden]="visualStatusBarStorage.completed===0" [class.fade-in]="!visualStatusBarStorage.loading">{{visualStatusBarStorage.completed}} {{'VISUAL_STATUS_BAR.COMPLETED' | translate}}</span>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+<mat-toolbar>
+    <span fxFlex class="dragHandle" cdkDrag cdkDragRootElement=".cdk-overlay-pane" cdkDragHandle>{{ 'RELEASE_NOTES' | translate }}</span>
+    <button mat-icon-button (click)="closePopup()" class="svgIcon">
+        <mat-icon aria-label="info icon" svgIcon="close-cancel"></mat-icon>
+    </button>
+</mat-toolbar>
+<div mat-dialog-content fxFlex fxLayout="column">
+    <mat-card *ngFor="let note of notes" class="MB16" [class.developerNews]="note.isDevelopment">
+        <mat-card-header>
+            <div mat-card-avatar class="lmh-header-image"></div>
+            <mat-card-title>{{ note.title }}</mat-card-title>
+            <mat-card-subtitle>{{ note.version }} / {{ note.date }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <p *ngFor="let change of note.CHANGES">{{ change }}</p>
+        </mat-card-content>
+    </mat-card>
+</div>
+<div mat-dialog-actions>
+    <div fxFlex>&nbsp;</div>
+    <button mat-flat-button color="accent" class="textLimit" title="{{ 'GLOBAL.OK' | translate}}"  (click)="closePopup()">{{ 'GLOBAL.OK' | translate }}</button>
+</div>

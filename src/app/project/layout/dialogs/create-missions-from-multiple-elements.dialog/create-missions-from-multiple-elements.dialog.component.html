@@ -1,0 +1,49 @@
+<h1 mat-dialog-title>{{ 'PROJECTS.LAYOUT.ADDELEMENTSTOMISSIONDIALOG_H1' | translate }}</h1>
+<div mat-dialog-content fxLayout="column" style="min-height:220px;">
+
+    <div fxLayout="row" fxLayoutAlign="start center" class="w-full">
+       <mat-form-field floatLabel="always" class="mt-4">
+            <mat-label>{{ 'PROJECTS.LAYOUT.ADDELEMENTSTOMISSIONDIALOG_D1' | translate }}:</mat-label>
+            <input matInput [(ngModel)]="newName">
+        </mat-form-field>
+        <div class="colorIndicator" (click)="changeColor()" style="margin-top:0;" [ngStyle]="{'background-color':color}"></div>
+    </div>
+
+    <div *ngIf="options.opts.length>0" fxLayout="column" fxLayoutAlign="start center" style="padding:10px;width:100%;">
+        <div fxLayout="row" fxLayoutAlign="space-between center" style="width:100%">
+            <span>{{options.opts[0].customName}}</span>
+            <mat-radio-group fxLayout="row" [(ngModel)]="options.bool">
+                <mat-radio-button value="true" class="md-primary">Source</mat-radio-button>
+                <mat-radio-button value="false"> Destination </mat-radio-button>
+            </mat-radio-group>
+        </div>
+        <div *ngIf="options.opts.length>1" fxLayout="row" fxLayoutAlign="space-between center" style="width:100%;margin-top:10px;">
+            <span>{{options.opts[1].customName}}</span>
+            <mat-radio-group fxLayout="row" [disabled]="true" [(ngModel)]="options.bool">
+                <mat-radio-button value="false" class="md-primary">Source</mat-radio-button>
+                <mat-radio-button value="true"> Destination </mat-radio-button>
+            </mat-radio-group>
+        </div>
+
+    </div>
+
+
+    <div *ngIf="(missionElements.source!==null || (options.opts.length===1 && options.bool==='true') || options.opts.length>1)" fxLayout="row" fxLayoutAlign="start center" style="width:100%;margin-top:15px;margin-bottom:10px;">
+            <mat-form-field>
+                <mat-label>{{ 'PROJECTS.LAYOUT.ADDELEMENTSTOMISSIONDIALOG_D3' | translate }}</mat-label>
+                <input matInput [(ngModel)]="options.flow" type="number">
+            </mat-form-field>
+    </div>
+
+    <mat-checkbox [disabled]="!bothDirPossible" [(ngModel)]="bothDir" aria-label="bothDir" class="mt-2">
+        <span style="line-height:20px;">{{ 'PROJECTS.LAYOUT.ADDELEMENTSTOMISSIONDIALOG_D5' | translate }}</span>
+    </mat-checkbox>
+
+
+    <span style="color:#BA1126; margin-top:15px;" *ngIf="inputsRequired">{{ 'PROJECTS.LAYOUT.ADDELEMENTSTOMISSIONDIALOG_INPUTREQUIRED' | translate }}</span>
+
+</div>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between center">
+    <button mat-button (click)="cancel()">{{ 'GLOBAL.CANCEL' | translate}}</button>
+    <button mat-button (click)="save()" cdkFocusInitial>{{ 'GLOBAL.SAVE' | translate}}</button>
+</div>

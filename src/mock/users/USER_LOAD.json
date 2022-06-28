@@ -1,0 +1,15 @@
+{
+    "lastName": "Admin",
+    "firstName": "Super",
+    "languageId": "DE",
+    "userName": "admin@admin.com",
+    "email": "admin@admin.com",
+    "createdOn": "0001-01-01T00:00:00",
+    "userRoles": [
+        {
+            "userId": "a568fc20-88a4-4d22-9b24-e366f433082c",
+            "roleId": "SuperAdmin",
+            "clients": []
+        }
+    ]
+}

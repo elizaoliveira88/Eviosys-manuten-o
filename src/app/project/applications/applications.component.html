@@ -1,0 +1,199 @@
+<div class="appFrame" fxLayout="column" fxLayoutAlign="start start">
+    <div fxLayout="column">
+        <h1>{{'PROJECTS.APPLICATIONS.TITLE' | translate}}</h1>
+        <h2>{{'PROJECTS.APPLICATIONS.SUB' | translate}}</h2>
+    </div>
+
+    <div class="w-full h-[65px]" fxLayout="row" fxLayoutAlign="space-between center">
+
+        <button mat-button class="btn-small" (click)="addApplication()"><mat-icon>add</mat-icon>{{'PROJECTS.APPLICATIONS.ADD_APPLICATION_BTN' | translate}}</button>
+        <mat-button-toggle-group [(ngModel)]="viewMode" (ngModelChange)="setViewMode()" aria-label="View">
+            <mat-button-toggle value="cards">{{'COMPONENTS.CARDS_TABLE_SWITCH.CARDS' | translate}}</mat-button-toggle>
+            <mat-button-toggle value="table">{{'COMPONENTS.CARDS_TABLE_SWITCH.TABLE' | translate}}</mat-button-toggle>
+        </mat-button-toggle-group>
+    </div>
+
+    <div fxLayout="column" class="pt-2 pl-10 w-full">
+        <div fxLayout="row wrap" fxLayoutAlign="start center" class="tableToolbar">
+            <h3>{{'PROJECTS.APPLICATIONS.ALL_APPLICATIONS' | translate}}</h3>
+            <div fxFlex=""></div>
+            <div fxLayoutAlign="start center" class="PDL8">
+                <div fxLayoutAlign="start center">
+                    <div class="divider"></div>
+                    <search-input-table [(filter)]="dataSource.filter"></search-input-table>
+                    <button mat-button aria-label="refresh data" (click)="refreshData()">
+                        <mat-icon aria-label="refresh" fontIcon="LMH-reload"></mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <mat-divider class="w-full"></mat-divider>
+
+        <mat-table *ngIf="viewMode==='table'" mat-table class="mt-4" [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" [matSortActive]="displayedColumns[1]" matSortDirection="asc" matSortDisableClear>
+
+            <ng-container *ngFor="let col of displayedColumns; let index = index" [matColumnDef]="col">
+                <mat-header-cell mat-header-cell mat-sort-header="{{col}}" class="applications-table-column-{{col}}" *matHeaderCellDef>
+                    <span *ngIf="col.indexOf('BTN_')===-1 && col!=='IMG'">{{col}}</span>
+                </mat-header-cell>
+                <mat-cell class="applications-table-column-{{col}}" *matCellDef="let element">
+                    <ng-container *ngIf="col.indexOf('BTN')===-1 && col !== 'applicationType' && col !== 'IMG' && col !== 'flowPlan'">
+                        <span *ngIf="element[col] && element[col]!==''">{{element[col]}}</span>
+                        <span *ngIf="!element[col] || element[col]===''">-</span>
+                    </ng-container>
+
+                    <ng-container *ngIf="col === 'IMG'">
+                        <div class="img-container-table mr-2" fxLayout="row" fxLayoutAlign="start center">
+                            <img class="table-type-image" [src]="'../../../assets/img/Task_Pics/logisticFunctionType_'+normalizeApplicationType(element['applicationType'])+'.jpg'">
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="col === 'flowPlan'">
+                        <span *ngIf="!element[col]">-</span>
+                        <svg *ngIf="element[col]" style="width:20px; height:20px;margin-left:5px;fill:#5d5d5d;" id="intralogistics" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><title>LMH_Icons_intralogistics_white</title><path class="cls-1" d="M10,19.56,16,23l6-3.44V12.44L16,9l-6,3.44Zm2-4.91,3,1.64v3.82l-3-1.68Zm8,3.78-3,1.68V16.29l3-1.64ZM18.94,13,16,14.5,13.06,13,16,11.33Z"/><path class="cls-1" d="M16,27A11,11,0,0,1,8,8.52l.26,2.4,2-.22L9.59,5l-5.94.65.22,2,2.45-.27A13,13,0,0,0,20.58,28.15l-.23-2.05A10.93,10.93,0,0,1,16,27Z"/><path class="cls-1" d="M25.74,24.58A13,13,0,0,0,11.48,3.83l.23,2A11,11,0,0,1,24.1,23.41L23.84,21l-2,.22.63,5.7,5.94-.65-.22-2Z"/></svg>
+                    </ng-container>
+
+                    <ng-container *ngIf="col === 'applicationType' ">
+                        <span>{{'FUNCTIONTYPE_'+normalizeApplicationType(element[col]) | translate}}</span>
+                    </ng-container>
+
+                    <ng-container *ngIf="col==='BTN_ARCHIVE'">
+                        <button mat-icon-button (click)="archiveApplication(element); $event.stopPropagation()">
+                            <mat-icon style="margin:0!important;">archive</mat-icon>
+                        </button>
+                    </ng-container>
+
+                    <ng-container *ngIf="col==='BTN_REMOVE'">
+                        <button mat-icon-button (click)="deleteApplication(element); $event.stopPropagation()">
+                            <mat-icon style="margin:0!important;">remove_circle_outline</mat-icon>
+                        </button>
+                    </ng-container>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row class="element-row" [class.even]="i % 2 !== 0" mat-row
+                     *matRowDef="let row; columns: displayedColumns; let i = index;" (click)="openApplication(row); $event.stopPropagation()" style="cursor:pointer;"></mat-row>
+            <div class="w-full h-[48px]" fxLayout="row" fxLayoutAlign="center center" *matNoDataRow>
+                <mat-icon>info_outline</mat-icon>
+                <span class="ml-2">{{ 'PROJECTS.APPLICATIONS.NOCOMPONENTS' | translate }}</span>
+            </div>
+        </mat-table>
+        <div *ngIf="viewMode==='cards'" class="mt-4 w-full" style="margin-left:-4px;">
+            <div class="application-container" (click)="openApplication(app)" *ngFor="let app of dataSource.filteredData" fxLayout="column" fxLayoutAlign="start start">
+                <h1>{{app.name}}</h1>
+                <h2>Name</h2>
+                <div fxFlex fxLayout="column" class="w-full mt-2" fxLayoutAlign="space-between center">
+                    <div class="w-full" fxLayout="row" fxLayoutAlign="space-between none">
+                        <img class="card-type-image" [src]="'../../../assets/img/Task_Pics/logisticFunctionType_'+normalizeApplicationType(app.applicationType)+'.jpg'">
+                        <div class="ml-2 image-right-side textLimit" fxLayout="column" fxLayoutAlign="start dtretch">
+                            <div fxLayout="row wrap w-full">
+                                <h3 class="textLimit">{{'FUNCTIONTYPE_'+normalizeApplicationType(app.applicationType) | translate}}</h3>
+                            </div>
+                            <h2>Type</h2>
+                        </div>
+                    </div>
+                    <div fxLayout="column" fxLayoutAlign="start end" class="w-full">
+                        <h2>{{app.creationDate | date:'short'}}</h2>
+                        <h2>Created at</h2>
+                        <h2 *ngIf="app.lastModified">{{app.lastModified | date:'short'}}</h2>
+                        <h2 *ngIf="app.lastModified">Last modified</h2>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+
+        <div fxLayout="row wrap" fxLayoutAlign="start center" class="tableToolbar mt-4">
+            <h3>{{'PROJECTS.APPLICATIONS.ARCHIVED_APPLICATIONS' | translate}}</h3>
+            <div fxFlex=""></div>
+            <div fxLayoutAlign="start center" class="PDL8">
+                <button mat-icon-button (click)="toggleCollapsableArchived()">
+                    <mat-icon class="collapse-icon" [ngStyle]="!storage.collapsableArchive && {'transform':'rotate(180deg)'}">keyboard_arrow_down</mat-icon>
+                </button>
+            </div>
+        </div>
+        <mat-divider class="w-full"></mat-divider>
+
+        <mat-table *ngIf="viewMode==='table' && !storage.collapsableArchive" mat-table class="mt-4" [dataSource]="dataSource2" matSort (matSortChange)="sortData2($event)" [matSortActive]="displayedColumns[1]" matSortDirection="asc" matSortDisableClear>
+
+            <ng-container *ngFor="let col of displayedColumns; let index = index" [matColumnDef]="col">
+                <mat-header-cell mat-header-cell mat-sort-header="{{col}}" class="applications-table-column-{{col}}" *matHeaderCellDef>
+                    <span *ngIf="col.indexOf('BTN_')===-1 && col!=='IMG'">{{col}}</span>
+                </mat-header-cell>
+                <mat-cell class="applications-table-column-{{col}}" *matCellDef="let element">
+                    <ng-container *ngIf="col.indexOf('BTN')===-1 && col !== 'applicationType' && col !== 'IMG' && col !== 'flowPlan'">
+                        <span *ngIf="element[col] && element[col]!==''">{{element[col]}}</span>
+                        <span *ngIf="!element[col] || element[col]===''">-</span>
+                    </ng-container>
+
+                    <ng-container *ngIf="col === 'IMG'">
+                        <div class="img-container-table mr-2" fxLayout="row" fxLayoutAlign="start center">
+                            <img class="table-type-image" [src]="'../../../assets/img/Task_Pics/logisticFunctionType_'+normalizeApplicationType(element['applicationType'])+'.jpg'">
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="col === 'flowPlan'">
+                        <span *ngIf="!element[col]">-</span>
+                        <svg *ngIf="element[col]" style="width:20px; height:20px;margin-left:5px;fill:#5d5d5d;" id="intralogistics" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><title>LMH_Icons_intralogistics_white</title><path class="cls-1" d="M10,19.56,16,23l6-3.44V12.44L16,9l-6,3.44Zm2-4.91,3,1.64v3.82l-3-1.68Zm8,3.78-3,1.68V16.29l3-1.64ZM18.94,13,16,14.5,13.06,13,16,11.33Z"/><path class="cls-1" d="M16,27A11,11,0,0,1,8,8.52l.26,2.4,2-.22L9.59,5l-5.94.65.22,2,2.45-.27A13,13,0,0,0,20.58,28.15l-.23-2.05A10.93,10.93,0,0,1,16,27Z"/><path class="cls-1" d="M25.74,24.58A13,13,0,0,0,11.48,3.83l.23,2A11,11,0,0,1,24.1,23.41L23.84,21l-2,.22.63,5.7,5.94-.65-.22-2Z"/></svg>
+                    </ng-container>
+
+                    <ng-container *ngIf="col === 'applicationType' ">
+                        <span>{{'FUNCTIONTYPE_'+normalizeApplicationType(element[col]) | translate}}</span>
+                    </ng-container>
+
+                    <ng-container *ngIf="col==='BTN_ARCHIVE'">
+                        <button mat-icon-button (click)="unarchiveApplication(element); $event.stopPropagation()">
+                            <mat-icon style="margin:0!important;">unarchive</mat-icon>
+                        </button>
+                    </ng-container>
+
+                    <ng-container *ngIf="col==='BTN_REMOVE'">
+                        <button mat-icon-button (click)="deleteApplication(element); $event.stopPropagation()">
+                            <mat-icon style="margin:0!important;">remove_circle_outline</mat-icon>
+                        </button>
+                    </ng-container>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row class="element-row" [class.even]="i % 2 !== 0" mat-row
+                     *matRowDef="let row; columns: displayedColumns; let i = index;" (click)="openApplication(row); $event.stopPropagation()" style="cursor:pointer;"></mat-row>
+            <div class="w-full h-[48px]" fxLayout="row" fxLayoutAlign="center center" *matNoDataRow>
+                <mat-icon>info_outline</mat-icon>
+                <span class="ml-2">{{ 'PROJECTS.APPLICATIONS.NOCOMPONENTS' | translate }}</span>
+            </div>
+        </mat-table>
+        <div *ngIf="viewMode==='cards' && !storage.collapsableArchive" class="mt-4 w-full" style="margin-left:-4px;">
+            <div class="application-container" (click)="openApplication(app)" *ngFor="let app of dataSource2.filteredData" fxLayout="column" fxLayoutAlign="start start">
+                <h1>{{app.name}}</h1>
+                <h2>Name</h2>
+                <div fxFlex fxLayout="column" class="w-full mt-2" fxLayoutAlign="space-between center">
+                    <div class="w-full" fxLayout="row" fxLayoutAlign="space-between none">
+                        <img class="card-type-image" [src]="'../../../assets/img/Task_Pics/logisticFunctionType_'+normalizeApplicationType(app.applicationType)+'.jpg'">
+                        <div class="ml-2 image-right-side textLimit" fxLayout="column" fxLayoutAlign="start dtretch">
+                            <div fxLayout="row wrap w-full">
+                                <h3 class="textLimit">{{'FUNCTIONTYPE_'+normalizeApplicationType(app.applicationType) | translate}}</h3>
+                            </div>
+                            <h2>Type</h2>
+                        </div>
+                    </div>
+                    <div fxLayout="column" fxLayoutAlign="start end" class="w-full">
+                        <h2>{{app.creationDate | date:'short'}}</h2>
+                        <h2>Created at</h2>
+                        <h2 *ngIf="app.lastModified">{{app.lastModified | date:'short'}}</h2>
+                        <h2 *ngIf="app.lastModified">Last modified</h2>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+</div>

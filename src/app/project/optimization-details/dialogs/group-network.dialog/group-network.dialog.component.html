@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>{{ "PROJECTS.OPTIMIZATION_DETAILS.GROUP_NETWORK.TITLE" | translate }} {{selectedOpt.name}}</h1>
+<div mat-dialog-content fxLayout="column" fxLayoutAlign="start start">
+
+    <div id="mynetwork" class="h-full">
+    </div>
+
+</div>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+    <button mat-button (click)="close()" cdkFocusInitial>{{ "GLOBAL.OK" | translate}}</button>
+</div>

@@ -1,0 +1,34 @@
+.theme-LMH {
+
+    .mat-autocomplete-panel,
+    .mat-select-panel {
+        background: var(--white);
+        box-shadow: 0 0 5px rgb(0 0 0 / 20%);
+        font-weight: normal;
+    }
+
+    ::ng-deep .mat-select-arrow {
+        border-left: 15px solid transparent !important;
+        border-right: none !important;
+        border-top: 15px solid transparent !important;
+        border-image-source: url('src/assets/icons/LMH_icons/drop_down_arrow_down_icon.svg') !important;
+        border-image-repeat: stretch !important;
+    }
+
+    .mat-menu-panel {
+        background: var(--white);
+        box-shadow: 0 0 5px rgb(0 0 0 / 20%);
+    }
+
+    button.mat-menu-item {
+        background-color: transparent;
+        color: var(--text-700);
+    }
+    button.mat-menu-item:hover {
+        background-color: var(--background-secondary);
+    }
+    button.mat-menu-item.selected {
+        color: var(--brand-500);
+    }
+
+}

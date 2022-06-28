@@ -1,0 +1,57 @@
+
+.projects-table-column-type{
+    min-width: 60px;
+    max-width: 60px;
+}
+
+.projects-table-column-name{
+    min-width: 20%;
+    max-width: 20%;
+}
+
+.projects-table-column-customerData{
+    min-width: 15%;
+    max-width: 15%;
+}
+
+.projects-table-column-externalId{
+    min-width: 10%;
+    max-width: 10%;
+}
+
+.projects-table-column-createdBy{
+    min-width: 10%;
+    max-width: 10%;
+}
+
+.projects-table-column-lastOpenedDate{
+    min-width: 15%;
+    max-width: 15%;
+}
+
+.projects-table-column-BTN_REMOVE{
+    text-align: end;
+    justify-content: flex-end;
+    min-width: 60px;
+    max-width: 60px;
+}
+
+.projects-table-column-BTN_ARCHIVE{
+    text-align: end;
+    justify-content: flex-end;
+}
+
+.highlight-path{
+    cursor: pointer;
+}
+.highlight-path:hover{
+    color:var(--brand-500);
+}
+
+.folder-icon{
+    font-size:80px;
+    line-height: 80px;
+    width:80px;
+    height:80px;
+    color:var(--brand-500);
+}

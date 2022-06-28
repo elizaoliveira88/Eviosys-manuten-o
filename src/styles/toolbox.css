@@ -1,0 +1,358 @@
+/**
+
+COLORS
+
+**/
+/*TODO: ADD ALL COLORS TO ROOT BETTER WAY TO USE ON CLASSES  */
+:root {
+    color-scheme: light;
+    --background-selected: rgb(200, 200, 200);
+    --light-background: #FFFFFF;
+    --light-grey: #666666;
+    --medium-grey: #585858;
+    --dark-grey: #4D4F5C;
+    --light-grey-icon: #707070;
+    --light-grey-background: #f0f0f0;
+    --light-grey-border: rgb(228, 228, 228);
+    --dark-red-linde: #fcb900;
+    --icon-light-gray: #c7c7c7;
+    --scrollbar-background-color: #f1f1f1;
+    --scrollbar-handle-color: #adabab;
+    --lightBackgroundGrey: #f4f5f7;
+
+    --balyo-blue: #42a7ef;
+}
+/**
+
+MARGIN
+
+**/
+
+.M0 { margin: 0px }
+.M16 { margin: 16px }
+.M12 { margin: 12px }
+.M8 { margin: 8px }
+.M0 { margin: 0px; }
+
+.MB0 { margin-bottom: 0px }
+.MB4 { margin-bottom: 4px }
+.MB8 { margin-bottom: 8px }
+.MB10 { margin-bottom: 10px }
+.MB12 { margin-bottom: 12px }
+.MB16 { margin-bottom: 16px }
+.MB20 { margin-bottom: 20px }
+.MB30 { margin-bottom: 30px }
+.MB50 { margin-bottom: 50px }
+
+
+.ML0 { margin-left: 0px }
+.ML4 { margin-left: 4px }
+.ML8 { margin-left: 8px }
+.ML16 { margin-left: 16px }
+.ML32 { margin-left: 32px }
+
+.MR0 { margin-right: 0px }
+.MR0i { margin-right: 0px !important; }
+.MR4 { margin-right: 4px }
+.MR8 { margin-right: 8px }
+.MR16 { margin-right: 16px }
+.MR20 { margin-right: 20px }
+.MR40 { margin-right: 40px }
+.MR96 { margin-right: 96px }
+
+.MT0 { margin-top: 0px }
+.MT8 { margin-top: 8px }
+.MT10 { margin-top: 10px }
+.MT16 { margin-top: 16px }
+.MT18 { margin-top: 18px }
+.MT18i { margin-top: 18px !important}
+.MT20 { margin-top: 20px }
+.MT40 { margin-top: 40px }
+.MT40i { margin-top: 40px !important;}
+.MT50 { margin-top: 50px }
+
+/**
+
+PADDING
+
+**/
+.PD0 {padding: 0px !important; }
+.PD8 { padding: 8px }
+.PD16 { padding: 16px }
+.PD20 { padding: 20px }
+.PD24 { padding: 24px }
+.PD10 { padding: 10px; }
+.PDT0 { padding-top: 0px }
+.PDT5 { padding-top: 5px }
+.PDT10 { padding-top: 10px }
+.PDT15 { padding-top: 15px }
+.PDT40 { padding-top: 40px }
+
+.PDR8 { padding-right: 8px !important; }
+.PDR12 { padding-right: 12px }
+.PDR16 { padding-right: 16px }
+.PDR20 { padding-right: 20px }
+.PDR30 { padding-right: 30px }
+
+.PDL8 { padding-left: 8px !important; }
+.PDL12 { padding-left: 12px }
+.PDL15 { padding-left: 15px }
+.PDL16 { padding-left: 16px }
+.PDL20 { padding-left: 20px }
+.PDL30 { padding-left: 30px }
+
+.PDB8 { padding-bottom: 8px }
+.PDB20 { padding-bottom: 20px }
+/**
+
+HEIGHT
+
+**/
+.MH40{
+    min-height:40px;
+}
+.MH55{
+    min-height:55px;
+}
+.MAXH100{
+    max-height: 100%;
+}
+.fullHeight{
+    height: 100%;
+}
+/**
+
+WIDTH
+
+**/
+.fullWidth { width: 100%; }
+.MW100{ max-width: 100%; }
+.MW50{ max-width: 50%; }
+.W100{ width: 100%; }
+.mW33{ min-width: 33px; }
+
+
+
+/**
+
+TEXT
+
+**/
+
+.icon2 { color: #959291 }
+.CL { color: #666666 }
+.CTT { color: #4D4F5C; }
+.CTSU { color: #808080; }
+.CLIcon { color: #707070 }
+.CLPanel { color: #a2acba }
+.CLBlue { color: #007DC0 }
+.CLYellow { color: #FFC516; }
+.CLGreen { color: green; }
+.CLRed { color: #A00020 }
+.CLGrayout { color: #A8A8A8 }
+.CLBottomSheet { color: #363636 }
+.CLBottomSheetActiveIcon, .CLPopuoIcon { color: #B21122 }
+.CLGreyInfo { color: grey }
+.CLSelectedStatusButton, .CLCalenderBTN { color: #BA2611 }
+.CLDashboardGray { color: #666B71 }
+.CLAccordionIcons { color: #707070 }
+.CLResultTab { color: #969696 }
+.CLModalHeader { color: #FFFFFF }
+.CLMatCell { color: #585858 !important }
+.CLindeR { color: #A00020 !important }
+.CSL, .CLTask, .CLStatusIcons { color: #A2ACBA }
+.CLTableHeader { color: rgba(0, 0, 0, 0.54) }
+.CLCardTitle, .CLEquipmentNameNr { color: #5A6779 }
+.BGHL { background-color: #F2F2F2;}
+.CHL, .CHLErrorText { color: #BA1126 }
+
+.FS9 { font-size: 9px }
+.FS11 { font-size: 11px }
+.FS12 { font-size: 12px }
+.FS13 { font-size: 13px }
+.FS14 { font-size: 14px }
+.FS15 { font-size: 15px }
+.FS16 { font-size: 16px }
+.FS18 { font-size: 18px }
+.FS20 { font-size: 20px }
+.FS22 { font-size: 22px }
+.FS24 { font-size: 24px }
+.FS28 { font-size: 28px }
+.FS60 { font-size: 60px }
+
+.LHN { line-height: normal }
+.LH15 { line-height: 15px }
+.LH16 { line-height: 16px }
+.LH18 { line-height: 18px }
+.LH20 { line-height: 20px }
+.LH24 { line-height: 24px }
+.LH25 { line-height: 25px }
+.LH40 { line-height: 40px }
+
+.FW300 { font-weight: 300 }
+.FW400 { font-weight: 400 }
+.FW500 { font-weight: 500 }
+.FB { font-weight: bold }
+.FWN { font-weight: normal }
+
+.OYA{ overflow-y: auto; }
+.OXA{ overflow-x: auto; }
+
+.TAC { text-align:center; }
+.TAR { text-align:right; }
+.TAL { text-align:left; }
+.TAJ { text-align:justify; }
+
+.TOE {
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+}
+
+/**
+
+BORDER
+
+**/
+
+.NoB {
+    border: none !important;
+}
+
+.BB1S {
+    border-bottom: 1px solid lightgray;
+}
+
+.BRA7 {
+    border-radius: 7px;
+}
+.BRBR7 {
+    border-bottom-right-radius: 7px;
+}
+
+.BA1SCard {
+    border: 1px solid #EEEFF3;
+}
+.BB1SCard {
+    border: 1px solid #EEEFF3;
+}
+
+/**
+
+BACKGROUND
+
+**/
+
+.BGCard {
+    background-color: var(--light-background);
+}
+
+.BGL {
+    background-color: #303030;
+}
+
+.BGLHL {
+    background-color: whitesmoke;
+}
+
+.BGLPopupColumnRight {
+    background-color: #FFFFFF;
+}
+.BGLPopupColumnRight {
+    background-color: #F2F2F2;
+}
+
+.BGLToolbar {
+    background-color: #EEEFF3;
+}
+
+.BGLModalToolbar {
+    background-color: #363636 !important;
+}
+
+.BGTableToolbar {
+    background-color: #FFFFFF;
+}
+
+.BGLNavbarSubButton {
+    background-color: #E6E5E5;
+}
+
+.BGSelectedRow,
+.BGExpandedRow {
+    background-color: #bbbbbb !important;
+}
+
+.BGLBottomSheet {
+    background-color: #FFFFFF;
+}
+
+.BGLProgressBar {
+    background-color: #B21122 !important;
+}
+
+.BGLCheckbox {
+    background-color: #A00020 !important;
+}
+
+.BGLTBH {
+    background-color: #E1E1E1 !important;
+}
+
+.BGLGreenBar{
+    background-color: #60BA44;
+}
+
+.BGLOrangeBar{
+    background-color: #EF951A;
+}
+
+.BGLRedBar{
+    background-color: #ba2e2f;
+}
+
+.BGLGreyBar{
+    background-color: #A3A3A3;
+}
+
+/* Display */
+.hidden { display: none !important; }
+.block { display: block !important; }
+
+.FST {
+    text-decoration: line-through;
+}
+
+/* DARK MODE */
+
+.BGD {
+    background-color: #424242;
+}
+
+.BGDToolbar {
+    background-color: #FFFFFF;
+}
+
+.BGDTBH {
+    background-color: #E1E1E1 !important;
+}
+
+.BGDTBE {
+    background-color: #FFFFFF;
+}
+
+.BGDTBO {
+    background-color: whitesmoke;
+}
+
+.deleted {
+    text-decoration: line-through;
+}
+
+/* Positions */
+.PR{
+    position: relative;
+}
+
+.BorderR_GREY{
+    border-right: 1px solid rgb(225 225 225);
+}

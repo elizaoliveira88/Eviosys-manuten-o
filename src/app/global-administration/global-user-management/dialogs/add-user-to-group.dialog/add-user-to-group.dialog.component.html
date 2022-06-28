@@ -1,0 +1,21 @@
+<h1 mat-dialog-title>{{ 'GLOBAL_ADMINISTRATION.USERS.ADDUSERTOGROUP_TITLE' | translate }}</h1>
+<div mat-dialog-content fxLayout="column">
+    <p>{{ 'GLOBAL_ADMINISTRATION.USERS.ADDUSERTOGROUP_CONTENT' | translate }}</p>
+    <mat-form-field class="mt-4">
+        <mat-label>{{ 'GLOBAL_ADMINISTRATION.USERS.ADDUSERTOGROUP_NAME' | translate }}</mat-label>
+        <mat-select multiple [(ngModel)]="storage.selectedUsers">
+            <div fxLayout="row" class="no-label-padding">
+                <mat-form-field floatLabel="never" class="select-search" fxFlex>
+                    <mat-label>{{ 'GLOBAL_ADMINISTRATION.USERS.ADDUSERTOGROUP_SEARCH' | translate }}</mat-label>
+                    <input class="search-inset" matInput [(ngModel)]="storage.searchTerm" />
+                </mat-form-field>
+            </div>
+
+            <mat-option [disabled]="checkUserInGroup(el.id)" *ngFor="let el of storage.allUsers | searchFilter:'userName':storage.searchTerm" [value]="el">{{el.userName}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between center">
+    <button mat-button (click)="cancel()">{{ 'GLOBAL.CANCEL' | translate}}</button>
+    <button mat-button (click)="save()" cdkFocusInitial>{{ 'GLOBAL.ADD' | translate}}</button>
+</div>

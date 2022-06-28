@@ -1,0 +1,102 @@
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// **Be sure that you only ever include this mixin once!**
+@include mat.core();
+
+$md-acc: (
+    50 : #fbd9dd,
+    100 : #f5939f,
+    200 : #f05f71,
+    300 : #ea1e37,
+    400 : #d6142c,
+    500 : #ba1126,
+    600 : #9e0e20,
+    700 : #820c1b,
+    800 : #660915,
+    900 : #4a070f,
+    A100 : #ffcbd1,
+    A200 : #363636, //#ff6578,
+    A400 : #fc0221,
+    A700 : #d70d26,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #ffffff,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #FFFFFF,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
+);
+
+$md-prim: (
+    50 : #ffffff,
+    100 : #ffffff,
+    200 : #ffffff,
+    300 : #ffffff,
+    400 : #ffffff,
+    500 : #eeeff3,
+    600 : #dcdee6,
+    700 : #cacdda,
+    800 : #b8bccd,
+    900 : #a6abc0,
+    A100 : #ffffff,
+    A200 : #ffffff,
+    A400 : #ffffff,
+    A700 : #fdfdfe,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #000000,
+        900 : #000000,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+
+
+// Define the default theme (same as the example above).
+$LMH-light-primary: mat.define-palette($md-prim);
+$LMH-light-accent:  mat.define-palette($md-acc, A200, A100, A400);
+$LMH-light-theme:   mat.define-light-theme($LMH-light-primary, $LMH-light-accent);
+
+// Include the default theme styles.
+//@include mat.all-component-themes($LMH-light-theme);
+
+
+// Define an alternate dark theme.
+$LMH-dark-primary: mat.define-palette($md-prim);
+$LMH-dark-accent:  mat.define-palette(mat.$blue-grey-palette, A200, A100, A400);
+$LMH-dark-warn:    mat.define-palette($md-acc);
+$LMH-dark-theme:   mat.define-dark-theme($LMH-dark-primary, $LMH-dark-accent, $LMH-dark-warn);
+
+body.theme-default {
+    @include mat.all-component-themes($LMH-light-theme);
+    /*
+    @media (prefers-color-scheme: light) {
+        @include mat.all-component-themes($LMH-light-theme);
+    }
+    @media (prefers-color-scheme: dark) {
+        @include mat.all-component-themes($LMH-dark-theme);
+    }
+    */
+}

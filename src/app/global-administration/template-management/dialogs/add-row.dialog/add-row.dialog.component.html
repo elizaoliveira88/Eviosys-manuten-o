@@ -1,0 +1,36 @@
+<h1 mat-dialog-title>{{ 'GLOBAL_ADMINISTRATION.USERS.ADDUSERTOGROUP_TITLE' | translate }}</h1>
+<div mat-dialog-content fxLayout="column">
+    <div fxLayout="column" fxLayoutAlign="center start" style="padding: 5px;height: 100%;">
+        <span>Choose row layout</span>
+
+        <div style="width:100%; margin-top:5px;" fxLayout="row" fxLayoutAlign="space-around center">
+
+            <div (click)="selectOption(1)" class="templaterRowLayoutBtn" fxLayout="row" fxLayoutAlign="center center">
+                <div class="formContainer" fxLayout="row" fxLayoutAlign="center center">
+                    <div fxFlex style="height:100%;"></div>
+                </div>
+            </div>
+
+            <div (click)="selectOption(2)" class="templaterRowLayoutBtn" fxLayout="row" fxLayoutAlign="center center">
+                <div class="formContainer" fxLayout="row" fxLayoutAlign="center center">
+                    <div fxFlex="50" style="border-right:1px solid #8c8c8c;height:100%;"></div>
+                    <div fxFlex style="height:100%;"></div>
+                </div>
+            </div>
+
+            <div (click)="selectOption(3)" class="templaterRowLayoutBtn" fxLayout="row" fxLayoutAlign="center center">
+                <div class="formContainer" fxLayout="row" fxLayoutAlign="center center">
+                    <div fxFlex="33" style="border-right:1px solid #8c8c8c;height:100%;"></div>
+                    <div fxFlex style="height:100%;"></div>
+                </div>
+            </div>
+
+            <div (click)="selectOption(4)" class="templaterRowLayoutBtn" fxLayout="row" fxLayoutAlign="center center">
+                <div class="formContainer" fxLayout="row" fxLayoutAlign="center center">
+                    <div fxFlex="66" style="border-right:1px solid #8c8c8c;height:100%;"></div>
+                    <div fxFlex style="height:100%;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

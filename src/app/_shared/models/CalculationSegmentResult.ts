@@ -1,0 +1,21 @@
+export interface CalculationSegmentResult_DATA  {
+    "actualConsumption": number,
+    "actualConsumptionUnit": string,
+    "breakTime": number,
+    "carCount": number,
+    "carNumber": number,
+    "consumption": number,
+    "consumptionUnit": string,
+    "errorMessages": string[],
+    "executed": string,
+    "flow": number,
+    "hourCounter": number,
+    "id": number,
+    "numberLoadingDock": number,
+    "purchaser": number,
+    "ratioPick": number,
+    "successful": boolean,
+    "timeCycle": number,
+    "totalCost": number,
+    "utilization": number
+}

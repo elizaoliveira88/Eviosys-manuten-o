@@ -1,0 +1,195 @@
+<h1 mat-dialog-title>{{ "PROJECTS.PRICING.TRUCKCONFIGURATOR.TITLE" | translate }}</h1>
+<div mat-dialog-content fxLayout="column">
+
+    <div *ngIf="baseModel!==null" style="width:100%;" fxLayout="row" fxLayoutAlign="start center">
+        <div>
+            <span>{{baseModel.componentGroup}}</span>
+        </div>
+        <div style="width:50px;">
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center">
+            <span>{{ "PROJECTS.PRICING.TRUCKCONFIGURATOR.STANDARDCONFIG_H1" | translate}}</span>
+            <button mat-button (click)="openStandardConfig()" style="text-transform: inherit;background-color: #eeeff3;margin-left: 20px;"><mat-icon>open_in_new</mat-icon>{{"PROJECTS.PRICING.TRUCKCONFIGURATOR.SHOWSTANDARDCONFIG" | translate}}</button>
+        </div>
+        <div fxFlex></div>
+        <div fxLayout="column" fxLayoutAlign="start start">
+            <table style="margin:0 0 5px 0; width:100%; min-width:200px;">
+                <col>
+                <col width="50">
+                <col width="100">
+                <tr>
+                    <td><span>{{ "PROJECTS.PRICING.TRUCKCONFIGURATOR.BASETRUCK_LINDE" | translate }}</span></td>
+                    <td><mat-checkbox aria-label="selectOpt" (ngModelChange)="updateSelectedConfiguration()" [disabled]="true" [(ngModel)]="baseModel.selected" style="margin: 0 0 0 10px;"></mat-checkbox></td>
+                    <td style="text-align:end;">{{storage.baseTruckPrice | currency:currency}}</td>
+                </tr>
+                <tr>
+                    <td><span>{{ "PROJECTS.PRICING.TRUCKCONFIGURATOR.AUTOMATION_BALYO" | translate }}</span></td>
+                    <td><mat-checkbox aria-label="selectOpt" (ngModelChange)="updateSelectedConfiguration()" [disabled]="true" [(ngModel)]="baseModel.selected" style="margin: 0 0 0 10px;"></mat-checkbox></td>
+                    <td style="text-align:end;">{{storage.automationPartPrice | currency:currency}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="header-1">
+        <div style="color:white;padding:6px;">{{ "PROJECTS.PRICING.TRUCKCONFIGURATOR.OPTION_LINDE" | translate }}</div>
+    </div>
+    <table *ngIf="lindeOpts.length>0" style="margin:0 0 5px 0; width:100%; min-width:500px;">
+        <col width="50">
+        <col width="50">
+        <col>
+        <col width="50">
+        <col width="80">
+        <tr *ngFor=" let comp of lindeOpts; let index = index" style="background-color: #f3f3f3;" [ngStyle]="index%2!==0 && {'background-color':'white'}">
+            <td *ngIf="comp.additionalInfo!=='custom option' && comp.additionalInfo!=='custom option changed'">{{comp.property}}</td>
+            <td *ngIf="comp.additionalInfo==='custom option' || comp.additionalInfo==='custom option changed'">
+                <input class="mini-input" [(ngModel)]="comp.property" type="text" style="height:23px;width:38px;text-align:start;">
+            </td>
+
+            <td *ngIf="comp.additionalInfo!=='custom option' && comp.additionalInfo!=='custom option changed'">{{comp.propertyValue}}</td>
+            <td *ngIf="comp.additionalInfo==='custom option' || comp.additionalInfo==='custom option changed'">
+                <input class="mini-input"[(ngModel)]="comp.propertyValue" type="text" style="height:23px;width:38px;text-align:start;">
+            </td>
+
+            <td *ngIf="comp.additionalInfo!=='custom option' && comp.additionalInfo!=='custom option changed'" class="preventOverflow">{{comp.name}}</td>
+            <td *ngIf="comp.additionalInfo==='custom option' || comp.additionalInfo==='custom option changed'" class="preventOverflow" style="max-height:40px; height:40px; line-height:5px;">
+                <div style="width:100%;" fxLayout="row" fxLayoutAlign="start center">
+                    <input class="mini-input" [(ngModel)]="comp.name" type="text" style="width: calc(100% - 22px);height:23px;text-align:start;">
+                    <mat-icon (click)="removeOption(comp, 'linde')" style="cursor:pointer;">delete</mat-icon>
+                </div>
+
+            </td>
+
+            <td><mat-checkbox aria-label="selectOpt" (change)="checkOtherOptions(lindeOpts,comp);updateSelectedConfiguration()" [disabled]="(comp.componentGroup==='K-Matic' && comp.standardConfig)" [(ngModel)]="comp.selected" style="margin: 0 0 0 10px;"></mat-checkbox></td>
+            <td style="min-width:120px; text-align:end;" fxLayout="row" fxLayoutAlign="end center">
+                <ng-container *ngIf="!comp.customPrice">
+                    {{comp.price}}<span>{{currency}}</span>
+                </ng-container>
+
+                <ng-container *ngIf="comp.customPrice && ( comp.price!== 0 || (comp.additionalInfo==='CO request changed' || comp.additionalInfo==='custom option changed'))">
+                    <input class="mini-input" (ngModelChange)="updateSelectedConfiguration()" [(ngModel)]="comp.price" type="number" style="height:23px;width:70px;">
+                    <span>{{currency}}</span>
+                </ng-container>
+
+                <ng-container *ngIf="comp.customPrice && comp.price === 0 && comp.additionalInfo!=='CO request changed' && comp.additionalInfo!=='custom option changed'">
+                    <mat-icon (click)="changePrice(comp)" style="cursor:pointer;">edit</mat-icon>
+                    {{comp.customPrice | additionalInfoFilter}}
+                </ng-container>
+            </td>
+        </tr>
+    </table>
+    <div *ngIf="lindeOpts.length===0" style="width:100%;margin:15px;" fxLayout="column" fxLayoutAlign="center center">
+        <mat-icon>info_outline</mat-icon>
+        <span style="margin-top:4px;">{{"PROJECTS.PRICING.TRUCKCONFIGURATOR.NOOPTIONS" | translate}}</span>
+    </div>
+
+    <div style="width:100%;padding: 6px 10px;" fxLayout="row" fxLayoutAlign="start center">
+        <button mat-stroked-button (click)="addOption('linde')"><mat-icon>add</mat-icon>{{"PROJECTS.PRICING.TRUCKCONFIGURATOR.ADDLINDEOPT" | translate}}</button>
+    </div>
+
+    <div *ngIf="baseModel!==null" style="width:100%;padding: 6px 10px;margin-top:6px;" fxLayout="row" fxLayoutAlign="space-between center">
+        <span>{{"PROJECTS.PRICING.TRUCKCONFIGURATOR.D6" | translate}}</span>
+        <span style="font-weight:bold;">{{storage.sumLindeOption | currency:currency}}</span>
+    </div>
+
+
+    <div class="header-2">
+        <div style="color:white;padding:6px;">{{"PROJECTS.PRICING.TRUCKCONFIGURATOR.OPTION_BALYO" | translate}}</div>
+    </div>
+    <table *ngIf="balyoOpts.length>0" style="margin:0 0 5px 0; width:100%; min-width:500px;">
+        <col width="50">
+        <col width="50">
+        <col>
+        <col width="50">
+        <col width="80">
+        <tr *ngFor="let comp of balyoOpts; let index = index" style="background-color: #f3f3f3;" [ngStyle]="index%2!==0 && {'background-color':'white'}">
+            <td *ngIf="comp.additionalInfo!=='custom option' && comp.additionalInfo!=='custom option changed'">{{comp.property}}</td>
+            <td *ngIf="comp.additionalInfo==='custom option' || comp.additionalInfo==='custom option changed'">
+                <input class="mini-input" [(ngModel)]="comp.property" type="text" style="height:23px;width:38px;text-align:start;">
+            </td>
+
+            <td *ngIf="comp.additionalInfo!=='custom option' && comp.additionalInfo!=='custom option changed'">{{comp.propertyValue}}</td>
+            <td *ngIf="comp.additionalInfo==='custom option' || comp.additionalInfo==='custom option changed'">
+                <input class="mini-input"[(ngModel)]="comp.propertyValue" type="text" style="height:23px;width:38px;text-align:start;">
+            </td>
+
+            <td *ngIf="comp.additionalInfo!=='custom option' && comp.additionalInfo!=='custom option changed'" class="preventOverflow">{{comp.name}}</td>
+            <td *ngIf="comp.additionalInfo==='custom option' || comp.additionalInfo==='custom option changed'" class="preventOverflow" style="max-height:40px; height:40px; line-height:5px;">
+                <div style="width:100%;" fxLayout="row" fxLayoutAlign="start center">
+                    <input class="mini-input" [(ngModel)]="comp.name" type="text" style="height:23px;width: calc(100% - 22px);text-align:start;">
+                    <mat-icon (click)="removeOption(comp, 'balyo')" style="cursor:pointer;">delete</mat-icon>
+                </div>
+            </td>
+            <td><mat-checkbox aria-label="selectOpt" (change)="checkOtherOptions(balyoOpts,comp);updateSelectedConfiguration()" [disabled]="comp.category==='base model'" [(ngModel)]="comp.selected" style="margin: 0 0 0 10px;"></mat-checkbox></td>
+
+            <td style="min-width:120px; text-align:end;" fxLayout="row" fxLayoutAlign="end center">
+                <ng-container *ngIf="!comp.customPrice">
+                    {{comp.price}}<span>{{currency}}</span>
+                </ng-container>
+
+                <ng-container *ngIf="comp.customPrice && ( comp.price!== 0 || (comp.additionalInfo==='CO request changed' || comp.additionalInfo==='custom option changed'))">
+                    <input class="mini-input" (ngModelChange)="updateSelectedConfiguration()" [(ngModel)]="comp.price" type="number" style="height:23px;width:70px;">
+                    <span>{{currency}}</span>
+                </ng-container>
+
+                <ng-container *ngIf="comp.customPrice && comp.price === 0 && comp.additionalInfo!=='CO request changed' && comp.additionalInfo!=='custom option changed'">
+                    <mat-icon (click)="changePrice(comp)" style="cursor:pointer;">edit</mat-icon>
+                    {{comp.customPrice | additionalInfoFilter}}
+                </ng-container>
+            </td>
+
+        </tr>
+    </table>
+    <div *ngIf="balyoOpts.length===0" style="width:100%;margin:15px;" fxLayout="column" fxLayoutAlign="center center">
+        <mat-icon>info_outline</mat-icon>
+        <span style="margin-top:4px;">{{"PROJECTS.PRICING.TRUCKCONFIGURATOR.NOOPTIONS" | translate}}</span>
+    </div>
+
+    <div style="width:100%;padding: 6px 10px;" fxLayout="row" fxLayoutAlign="start center">
+        <button mat-stroked-button (click)="addOption('balyo')"><mat-icon>add</mat-icon>{{"PROJECTS.PRICING.TRUCKCONFIGURATOR.ADDBALYOOPT" | translate}}</button>
+    </div>
+
+    <div *ngIf="baseModel!==null" style="width:100%;padding: 6px 10px;margin-top:6px;" fxLayout="row" fxLayoutAlign="space-between center">
+        <span>{{"PROJECTS.PRICING.TRUCKCONFIGURATOR.D6" | translate}}</span>
+        <span style="font-weight:bold;">{{storage.sumBalyoOption | currency:currency}}</span>
+    </div>
+
+    <mat-divider style="margin:10px;"></mat-divider>
+
+    <div style="width:100%;padding: 6px 10px;margin-top:1px;" fxLayout="row" fxLayoutAlign="space-between center">
+        <span>{{"PROJECTS.PRICING.TRUCKCONFIGURATOR.D1" | translate}}</span>
+        <span style="font-weight:bold;">{{storage.grossPrice | currency:currency}}</span>
+    </div>
+
+    <div style="width:100%;padding:6px 10px;margin-top:1px;" fxLayout="row" fxLayoutAlign="space-between center">
+        <span>{{"PROJECTS.PRICING.TRUCKCONFIGURATOR.D8" | translate}}</span>
+        <span style="font-weight:bold;">{{storage.discountPriceTruck | currency:currency}}</span>
+    </div>
+
+    <div style="background-color: #ba1126; width:100%;padding:6px 10px;margin-top:1px;" fxLayout="row" fxLayoutAlign="space-between center">
+        <span style="color:white;">{{"PROJECTS.PRICING.TRUCKCONFIGURATOR.D3" | translate}}</span>
+        <span style="font-weight:bold;color:white;">{{storage.discountPriceLinde | currency:currency}}</span>
+    </div>
+
+    <div style="background-color: #42a7ef; width:100%;padding:6px 10px;margin-top:1px;" fxLayout="row" fxLayoutAlign="space-between center">
+        <span style="color:white;">{{"PROJECTS.PRICING.TRUCKCONFIGURATOR.D4" | translate}}</span>
+        <span style="font-weight:bold;color:white;">{{storage.discountPriceBalyo | currency:currency}}</span>
+    </div>
+
+    <div style="background-color: grey; width:100%;padding:6px 10px;margin-top:1px;" fxLayout="row" fxLayoutAlign="space-between center">
+        <span style="color:white;">{{"PROJECTS.PRICING.TRUCKCONFIGURATOR.D7" | translate}}</span>
+        <span style="font-weight:bold;color:white;">{{storage.discountPriceCo | currency:currency}}</span>
+    </div>
+    <mat-divider></mat-divider>
+
+    <div style="width:100%;padding:6px 10px;" fxLayout="row" fxLayoutAlign="space-between center">
+        <span>{{"PROJECTS.PRICING.TRUCKCONFIGURATOR.D5" | translate}}</span>
+        <span style="font-weight:bold;">{{storage.purchasePrice | currency:currency }}</span>
+    </div>
+
+</div>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between center">
+    <button mat-button (click)="cancel()">{{ "GLOBAL.CANCEL" | translate}}</button>
+    <button mat-button (click)="save()" cdkFocusInitial>{{ "GLOBAL.ADD" | translate}}</button>
+</div>
